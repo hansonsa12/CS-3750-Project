@@ -22,7 +22,7 @@ export default function LoginForm() {
 
   return (
     <div>
-      <h1>Ky Kartchner Login System</h1>
+      <h1>Login</h1>
       <FForm onSubmit={onSubmit}>
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>

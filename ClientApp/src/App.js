@@ -1,22 +1,57 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-
-import './custom.css'
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LoginForm from "./components/auth_components/LoginForm";
+import SignUpForm from "./components/auth_components/SignUpForm";
+import AppContainer from "./components/AppContainer";
+import React, { Component } from "react";
+import axios from "axios";
 export default class App extends Component {
-  static displayName = App.name;
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: undefined,
+      loading: true,
+    };
 
-  render () {
+    if (localStorage["authToken"]) {
+      this.getUser();
+    } else {
+      this.state.loading = false;
+    }
+  }
+
+  getUser() {
+    axios
+      .get("user", {
+        headers: {
+          Authorization: `Bearer ${localStorage["authToken"]}`,
+        },
+      })
+      .then(
+        res => {
+          this.setState({ user: res.data, loading: false });
+        },
+        err => {
+          console.error(err.message);
+        }
+      );
+  }
+
+  render() {
+    const { loading, user } = this.state;
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
+      !loading && (
+        <Router>
+          <Switch>
+            <Route exact path="/signup">
+              <SignUpForm />
+            </Route>
+
+            <Route path="/">
+              {user ? <AppContainer user={user} /> : <LoginForm />}
+            </Route>
+          </Switch>
+        </Router>
+      )
     );
   }
 }
