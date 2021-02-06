@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Form as FForm, Field } from "react-final-form";
-import { KeyboardDatePicker, TextField } from "mui-rff";
+import { KeyboardDatePicker, makeValidate, Radios, TextField } from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   Button,
@@ -9,16 +9,45 @@ import {
   makeStyles,
   CssBaseline,
   Typography,
+  RadioGroup,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import * as Yup from "yup";
 import axios from "axios";
 
 import background from "../../images/textbooks.jpg";
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: "100%",
+    backgroundImage: `url(${background})`,
+    height: "100vh",
+    /* Center and scale the image nicely */
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+    justifyContent: "center",
+    padding: 20,
+    maxWidth: "450px",
+    height: "100vh",
+    marginRight: "auto",
+  },
+}));
+
 export default function SignUpForm(props) {
   const textFields = ["firstName", "lastName", "email"].map(name => (
-    <TextField name={name} label={_.startCase(name)} variant="outlined" />
+    <TextField
+      name={name}
+      label={_.startCase(name)}
+      variant="outlined"
+      required={true}
+    />
   ));
 
   const passwordFields = ["password", "confirmPassword"].map(name => (
@@ -27,15 +56,15 @@ export default function SignUpForm(props) {
       label={_.startCase(name)}
       variant="outlined"
       type="password"
+      required={true}
     />
   ));
 
   const formFields = [
     ...textFields,
-    ...passwordFields,
 
     <KeyboardDatePicker
-      name="birthDate"
+      name="birthDay"
       disableToolbar
       variant="inline"
       format="MM/dd/yyyy"
@@ -43,49 +72,54 @@ export default function SignUpForm(props) {
       placeholder="mm/dd/yyyy"
       label="Birth Date"
       inputVariant="outlined"
+      required={true}
+    />,
+
+    ...passwordFields,
+
+    <Radios
+      variant="inline"
+      name="accountType"
+      data={[
+        { label: "Student", value: "student" },
+        { label: "Instructor", value: "instructor" },
+      ]}
+      radioGroupProps={{ row: true }}
     />,
   ];
 
   const onSubmit = values => {
-    axios
-      .post("/auth/signup", values)
-      .then(res => {
-        localStorage["authToken"] = res.data.token;
-        window.location = "/";
-      })
-      .catch(err => {
-        alert(err.message);
-        console.error(err.message);
-      });
+    console.log(JSON.stringify(values));
+    window.alert("ToDo: Send user info to sign up route");
+    // axios
+    //   .post("/auth/signup", values)
+    //   .then(res => {
+    //     localStorage["authToken"] = res.data.token;
+    //     window.location = "/";
+    //   })
+    //   .catch(err => {
+    //     alert(err.message);
+    //     console.error(err.message);
+    //   });
   };
 
-  const useStyles = makeStyles(theme => ({
-    root: {
-      width: "100%",
-      backgroundImage: `url(${background})`,
-      height: "100%",
-      /* Full height */
-      height: "100%",
-
-      /* Center and scale the image nicely */
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-    },
-    paper: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      textAlign: "center",
-      justifyContent: "center",
-      padding: 20,
-      maxWidth: "450px",
-      height: "100vh",
-      marginRight: "auto",
-    },
-  }));
-
   const classes = useStyles();
+
+  const initialValues = {
+    accountType: "student",
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Please enter a valid email"),
+    // birthDate: Yup.date().required("Please enter your birthday"),
+    password: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password")],
+      "Passwords must match"
+    ),
+  });
+
+  const validate = makeValidate(validationSchema);
 
   return (
     <div className={classes.root}>
@@ -101,7 +135,11 @@ export default function SignUpForm(props) {
           <Grid item>
             <Typography variant="h3">Sign Up</Typography>
           </Grid>
-          <FForm onSubmit={onSubmit}>
+          <FForm
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validate={validate}
+          >
             {({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Grid
@@ -116,11 +154,9 @@ export default function SignUpForm(props) {
                       {item}
                     </Grid>
                   ))}
-                  <Grid item xs={12}>
-                    <Button type="submit" variant="contained" color="primary">
-                      Submit
-                    </Button>
-                  </Grid>
+                  <Button type="submit" variant="contained" color="primary">
+                    Submit
+                  </Button>
                 </Grid>
               </form>
             )}
