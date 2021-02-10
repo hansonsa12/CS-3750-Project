@@ -9,6 +9,7 @@ export default class AppContainer extends Component {
     return (
       <div>
         <h1>Welcome, {`${user?.first_name} ${user?.last_name}`}!</h1>
+        <h1>TEST</h1>
         <button
           onClick={() => {
             localStorage.removeItem("authToken");
