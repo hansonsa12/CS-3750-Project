@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         maxWidth: "450px",
         height: "100vh",
         marginRight: "auto",
-    },
+    }, 
 }));
 
 export default function SignUpForm(props) {
