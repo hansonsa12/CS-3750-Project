@@ -5,53 +5,52 @@ import AppContainer from "./components/AppContainer";
 import React, { Component } from "react";
 import axios from "axios";
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: undefined,
-      loading: true,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: localStorage['user'],
+            loading: false,
+        };
 
-    if (localStorage["authToken"]) {
-      this.getUser();
-    } else {
-      this.state.loading = false;
+        //  this.getUser();
+        //} else {
+        //  this.state.loading = false;
+        //}
     }
-  }
 
-  getUser() {
-    axios
-      .get("user", {
-        headers: {
-          Authorization: `Bearer ${localStorage["authToken"]}`,
-        },
-      })
-      .then(
-        res => {
-          this.setState({ user: res.data, loading: false });
-        },
-        err => {
-          console.error(err.message);
-        }
-      );
-  }
+    //getUser() {
+    //  axios
+    //    .get("user", {
+    //      headers: {
+    //        Authorization: `Bearer ${localStorage["authToken"]}`,
+    //      },
+    //    })
+    //    .then(
+    //      res => {
+    //        this.setState({ user: res.data, loading: false });
+    //      },
+    //      err => {
+    //        console.error(err.message);
+    //      }
+    //    );
+    //}
 
-  render() {
-    const { loading, user } = this.state;
-    return (
-      !loading && (
-        <Router>
-          <Switch>
-            <Route exact path="/signup">
-              <SignUpForm />
-            </Route>
+    render() {
+        const { loading, user } = this.state;
+        return (
+            !loading && (
+                <Router>
+                    <Switch>
+                        <Route exact path="/signup">
+                            <SignUpForm />
+                        </Route>
 
-            <Route path="/">
-              {user ? <AppContainer user={user} /> : <LoginForm />}
-            </Route>
-          </Switch>
-        </Router>
-      )
-    );
-  }
+                        <Route path="/">
+                            {user ? <AppContainer user={user} /> : <LoginForm />}
+                        </Route>
+                    </Switch>
+                </Router>
+            )
+        );
+    }
 }

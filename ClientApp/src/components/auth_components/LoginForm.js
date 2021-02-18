@@ -43,11 +43,11 @@ const useStyles = makeStyles(theme => ({
         maxWidth: "450px",
         height: "100vh",
         marginRight: "auto",
-    }, 
+    },
 }));
 
 export default function SignUpForm(props) {
-    const textFields = ["userName"].map(name => (
+    const textFields = ["email"].map(name => (
         <TextField
             name={name}
             label={_.startCase(name)}
@@ -74,18 +74,26 @@ export default function SignUpForm(props) {
     ];
 
     const onSubmit = values => {
-        console.log(JSON.stringify(_.omit(values, "confirmPassword")));
-        window.alert("ToDo: Send user info to sign up route");
+        console.log(JSON.stringify(values));
+        axios
+            .post("api/auth/login", values)
+            .then(res => {
+                localStorage["authToken"] = res.data.authToken;
+                localStorage["user"] = res.data.user;
+                window.location = "/";
+            })
+            .catch(err => {
+                alert(err.message);
+                console.error(err.message);
+            });
     };
 
     const classes = useStyles();
 
-    const initialValues = {
-        accountType: "student",
-    };
-
     const validationSchema = Yup.object().shape({
-        userName: Yup.string().required("User name is required"),
+        email: Yup.string()
+            .required("Email is required")
+            .email("Please enter a valid email"),
         password: Yup.string().required("Password is required"),
 
     });
@@ -102,7 +110,6 @@ export default function SignUpForm(props) {
                     </Grid>
                     <FForm
                         onSubmit={onSubmit}
-                        initialValues={initialValues}
                         validate={validate}
                     >
                         {({ handleSubmit }) => (

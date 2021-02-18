@@ -1,13 +1,18 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace final_project
 {
+    using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.AspNetCore.Authentication.OAuth;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Text;
+    using final_project.Data;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -20,7 +25,26 @@ namespace final_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddAuthentication("OAuth")
+                .AddJwtBearer("OAuth", config =>
+                {
+                    var key = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(Configuration["JWTConfigs:Secret"])
+                    );
+                    config.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["JWTConfigs:Issuer"],
+                        ValidAudience = Configuration["JWTConfigs:Audience"],
+                        IssuerSigningKey = key
+                    };
+                });
+
+            services.AddDbContext<LMSContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.Configure<JWTConfigs>(Configuration.GetSection("JWTConfigs"));
+
+            services.AddControllers();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
