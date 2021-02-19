@@ -6,7 +6,10 @@
     public class User : BasicUserInfo
     {
         [Required]
-        [Column(TypeName = "varchar(60)")]
+        [Column(TypeName = "nvarchar(128)")]
         public string Password { get; set; }
+        
+        [Column(TypeName = "nvarchar(128)")]
+        public string Salt { get; set; }
     }
 }

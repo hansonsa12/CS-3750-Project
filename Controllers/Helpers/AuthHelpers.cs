@@ -7,12 +7,52 @@
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
     using System.Security.Claims;
+    using System.Security.Cryptography;
+    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+
+    public struct HashResult {
+        public HashResult(string hashedPassword, string salt)
+        {
+            this.Password = hashedPassword;
+            this.Salt = salt;
+        }
+        public string Salt { get; }
+        public string Password { get; }
+    }
 
     public class AuthHelpers
     {
+        public static HashResult HashPassword(string password, string storedSalt = null)
+        {
+            /*** References ***
+             * code example: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-5.0
+             * explanation of salt, pepper, and password hashing: https://www.youtube.com/watch?v=eicDtA9Yu-A
+             ******************/
+
+            byte[] salt;
+            if (storedSalt == null)
+            {
+                salt = new byte[128 / 8]; // assign salt if it is null
+                RandomNumberGenerator.Create().GetBytes(salt);
+            }
+            else
+            {
+                salt = Convert.FromBase64String(storedSalt);
+            }
+
+            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8)
+            );
+
+            return new HashResult(hashedPassword, Convert.ToBase64String(salt));
+        }
 
         /* Create and return a json web token */
-        public async Task<String> CreateJsonWebToken(JWTConfigs jwt_configs, User user)
+        public static async Task<String> CreateJsonWebToken(JWTConfigs jwt_configs, User user)
         {
             return await Task.Run(() =>
                 {
