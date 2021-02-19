@@ -35,7 +35,7 @@
             _jwtConfigs = jwtConfigs.Value;
             authHelpers = new AuthHelpers();
             contractResolver = new DefaultContractResolver
-            {
+            { // This is to make .NET objects return in lowerCamelCase instead of UpperCamelCase (PascalCase)
                 NamingStrategy = new CamelCaseNamingStrategy()
             };
         }
