@@ -73,6 +73,12 @@ namespace final_project
 
             app.UseRouting();
 
+            // who are you?
+            app.UseAuthentication();
+
+            // are you allowed?
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

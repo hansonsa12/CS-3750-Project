@@ -19,7 +19,7 @@
     {
         private readonly LMSContext _context;
         private readonly JWTConfigs _jwtConfigs;
-        private readonly AuthHelpers authHelpers;
+        private readonly AuthHelpers AuthHelpers;
         private readonly DefaultContractResolver contractResolver;
 
         [Authorize]
@@ -33,9 +33,9 @@
         {
             _context = context;
             _jwtConfigs = jwtConfigs.Value;
-            authHelpers = new AuthHelpers();
+            AuthHelpers = new AuthHelpers();
             contractResolver = new DefaultContractResolver
-            {
+            { // This is to make .NET objects return in lowerCamelCase instead of UpperCamelCase (PascalCase)
                 NamingStrategy = new CamelCaseNamingStrategy()
             };
         }
@@ -45,28 +45,31 @@
         {
             try
             {
-                /* * Search for email/password combination. If no user is found
-                 * an InvalidOperation is thrown due to First() being called on 
-                 * an empty list */
-                var hashedPassword = user.Password;
-                var foundUser = (await _context.Users
-                    .Where(x => x.Email == user.Email)
-                    .Where(x => x.Password.Equals(hashedPassword))
-                    .ToListAsync()).First();
 
-                /* Create and return a json web token */
-                string token = await authHelpers.CreateJsonWebToken(_jwtConfigs, foundUser);
-                return Ok(new
+                /* Search for user with specified email and verify the provided password is correct */
+                User foundUser = _context.Users.Where(u => u.Email.Equals(user.Email)).First();
+                HashResult hashResult = AuthHelpers.HashPassword(user.Password, foundUser.Salt);
+
+                if (foundUser.Password.Equals(hashResult.Password))
                 {
-                    user = JsonConvert.SerializeObject(new BasicUserInfo(foundUser), new JsonSerializerSettings
+                    /* Create and return a json web token */
+                    string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, foundUser);
+                    return Ok(new
                     {
-                        ContractResolver = contractResolver,
-                        Formatting = Formatting.Indented
-                    }),
-                    authToken = token
-                });
+                        user = JsonConvert.SerializeObject(new BasicUserInfo(foundUser), new JsonSerializerSettings
+                        {
+                            ContractResolver = contractResolver,
+                            Formatting = Formatting.Indented
+                        }),
+                        authToken = token
+                    });
+                }
+                else
+                {
+                    return StatusCode(401);
+                }
             }
-            catch (InvalidOperationException)
+            catch (Exception)
             {
                 // User not found, so return error.
                 return StatusCode(401);
@@ -78,13 +81,15 @@
         public async Task<IActionResult> PostSignUp([FromBody] User user)
         {
             // hash password
-            user.Password = user.Password;
+            HashResult hashResult = AuthHelpers.HashPassword(user.Password);
+            user.Password = hashResult.Password;
+            user.Salt = hashResult.Salt;
 
             // store user and hashed password in database
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            string token = await authHelpers.CreateJsonWebToken(_jwtConfigs, user);
+            string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, user);
             return Ok(new
             {
                 user = JsonConvert.SerializeObject(new BasicUserInfo(user), new JsonSerializerSettings

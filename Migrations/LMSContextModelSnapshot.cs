@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using final_project.Data;
 
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210215001149_CreateUsersTable")]
-    partial class CreateUsersTable
+    partial class LMSContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +47,15 @@ namespace final_project.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varchar(60)");
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });
