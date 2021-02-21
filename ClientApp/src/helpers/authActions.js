@@ -1,6 +1,5 @@
 ﻿function logout() {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
+    localStorage.clear();
     window.location = "/";
 }
 

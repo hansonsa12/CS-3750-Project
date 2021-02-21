@@ -1,26 +1,50 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { authActions } from "../helpers/authActions";
+import SideNavigation from "./SideNavigation";
+import MainView from "./MainView";
+import { withStyles, CssBaseline } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-export default class AppContainer extends Component {
+const styles = theme => ({
+    root: {
+        display: 'flex'
+    },
+});
+
+class AppContainer extends Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
-    }
+
     render() {
+        const { classes } = this.props;
         const user = JSON.parse(localStorage["user"]);
+
         return (
-            <div>
-                <h1>Welcome, {`${user?.firstName} ${user?.lastName}`}!</h1>
-                <button
-                    onClick={() => {
-                        authActions.logout();
-                    }}
-                >
-                    Logout
-                </button>
+            <div className={classes.root}>
+                <CssBaseline />
+                <SideNavigation />
+                <Switch>
+                    <Route exact path="/profile">
+                        <MainView title={`Profile`}>
+                        </MainView>
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <MainView title={`Dashboard`}>
+                        </MainView>
+                    </Route>
+                    <Route exact path="/calendar">
+                        <MainView title={`Calendar`}>
+                        </MainView>
+                    </Route>
+
+                    <Redirect to="/dashboard" />
+                </Switch>
+
             </div>
         );
     }
 }
+
+export default withStyles(styles, { withTheme: true })(AppContainer);
