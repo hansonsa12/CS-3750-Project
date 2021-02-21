@@ -21,15 +21,6 @@ import axios from "axios";
 import background from "../../images/textbooks.jpg";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        width: "100%",
-        backgroundImage: `url(${background})`,
-        height: "100vh",
-        /* Center and scale the image nicely */
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-    },
     paper: {
         display: "flex",
         flexDirection: "column",
@@ -97,7 +88,7 @@ export default function SignUpForm(props) {
     const validate = makeValidate(validationSchema);
 
     return (
-        <div className={classes.root}>
+        <div className={props.className}>
             <CssBaseline />
             <Paper className={classes.paper}>
                 <Grid container spacing={2} justify="center">

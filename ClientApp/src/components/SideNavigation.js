@@ -12,10 +12,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { authActions } from "../helpers/authActions";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
     const openDrawerWidth = 180;
     const closedDrawerWidth = theme.spacing(7) + 1;
+
     return {
         drawer: {
             width: closedDrawerWidth,
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
             }),
+            overflowX: "hidden",
         },
         drawerClose: {
             transition: theme.transitions.create("width", {
@@ -41,18 +44,21 @@ const useStyles = makeStyles((theme) => {
             margin: "auto 0 0 auto"
         },
         list: {
-            marginTop: "80px"
+            marginTop: "65px"
         }
     };
 });
 
 export default function SideNavigation() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(localStorage["navBarOpen"] || true);
 
     const handleDrawerToggle = () => {
+        localStorage["navBarOpen"] = !open; 
         setOpen(!open);
     };
+
+    const history = useHistory();
 
     return (
         <Drawer
@@ -70,20 +76,26 @@ export default function SideNavigation() {
         >
             <List className={classes.list}>
                 {[
-                    { text: "Profile", icon: <AccountCircle /> },
                     {
-                        text: "Dashboard", icon: <HomeRounded />
+                        text: "Profile", icon: <AccountCircle />,
+                        onClick: () => history.push("/profile")
                     },
-                    { text: "Calendar", icon: <EventRounded /> },
+                    {
+                        text: "Dashboard", icon: <HomeRounded />,
+                        onClick: () => history.push("/dashboard")
+                    },
+                    {
+                        text: "Calendar", icon: <EventRounded />,
+                        onClick: () => history.push("/calendar")
+                    },
                     {
                         addSpacer: true,
-                        text: "Logout", icon: <ExitToAppRounded />, props: {
-                            onClick: authActions.logout
-                        }
+                        text: "Logout", icon: <ExitToAppRounded />,
+                        onClick: authActions.logout
                     }
                 ].map((item, index) => (
-                    <ListItem button key={item.text} {...item.props} >
-                        { item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+                    <ListItem button key={item.text} onClick={item.onClick}>
+                        {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
                         <ListItemText primary={item.text} />
                     </ListItem>
                 ))}

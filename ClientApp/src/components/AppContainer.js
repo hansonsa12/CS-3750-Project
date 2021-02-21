@@ -4,6 +4,7 @@ import { authActions } from "../helpers/authActions";
 import SideNavigation from "./SideNavigation";
 import MainView from "./MainView";
 import { withStyles, CssBaseline } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 const styles = theme => ({
     root: {
@@ -24,9 +25,23 @@ class AppContainer extends Component {
             <div className={classes.root}>
                 <CssBaseline />
                 <SideNavigation />
-                <MainView>
-                    <h1>Welcome, {`${user?.firstName} ${user?.lastName}`}!</h1>
-                </MainView>
+                <Switch>
+                    <Route exact path="/profile">
+                        <MainView title={`Profile`}>
+                        </MainView>
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <MainView title={`Dashboard`}>
+                        </MainView>
+                    </Route>
+                    <Route exact path="/calendar">
+                        <MainView title={`Calendar`}>
+                        </MainView>
+                    </Route>
+
+                    <Redirect to="/dashboard" />
+                </Switch>
+
             </div>
         );
     }

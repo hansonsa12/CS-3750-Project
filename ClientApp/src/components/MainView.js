@@ -1,5 +1,6 @@
 ﻿import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Container, Divider, Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Notifications } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -15,6 +16,15 @@ export default function MiniDrawer(props) {
 
     return (
         <main className={classes.content}>
+            <Grid container justify="space-between">
+                <Typography variant="h4">
+                    {props.title}
+                </Typography>
+                <IconButton>
+                    <Notifications />
+                </IconButton>
+            </Grid>
+            <Divider />
             {props.children}
         </main>
     );
