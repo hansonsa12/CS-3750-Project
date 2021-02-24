@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "msjsdiag.debugger-for-chrome",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "humao.rest-client",
+        "sonarsource.sonarlint-vscode",
+    ]
+}

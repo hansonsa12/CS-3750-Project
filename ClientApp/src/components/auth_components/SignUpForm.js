@@ -161,7 +161,7 @@ export default function SignUpForm(props) {
                                     <Grid item xs={12}>
                                         <Button type="submit" variant="contained" color="primary">
                                             Submit
-                    </Button>
+                                        </Button>
                                     </Grid>
                                 </Grid>
                             </form>
