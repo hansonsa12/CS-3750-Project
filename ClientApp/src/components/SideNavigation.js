@@ -1,11 +1,8 @@
 ﻿import React from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import { ChevronLeft, ChevronRight, AccountCircle, HomeRounded, EventRounded, ExitToAppRounded } from "@material-ui/icons";
 import ListItem from "@material-ui/core/ListItem";
@@ -54,7 +51,7 @@ export default function SideNavigation() {
     const [open, setOpen] = React.useState(localStorage["navBarOpen"] || true);
 
     const handleDrawerToggle = () => {
-        localStorage["navBarOpen"] = !open; 
+        localStorage["navBarOpen"] = !open;
         setOpen(!open);
     };
 
@@ -95,7 +92,7 @@ export default function SideNavigation() {
                     }
                 ].map((item, index) => (
                     <ListItem button key={item.text} onClick={item.onClick}>
-                        {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+                        <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText primary={item.text} />
                     </ListItem>
                 ))}

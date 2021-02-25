@@ -1,6 +1,6 @@
 ﻿import React from "react";
-import { Container, Divider, Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
-import { Notifications } from "@material-ui/icons";
+import { Divider, makeStyles } from "@material-ui/core";
+import TopBar from "./TopBar/TopBar";
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -16,14 +16,7 @@ export default function MiniDrawer(props) {
 
     return (
         <main className={classes.content}>
-            <Grid container justify="space-between">
-                <Typography variant="h4">
-                    {props.title}
-                </Typography>
-                <IconButton>
-                    <Notifications />
-                </IconButton>
-            </Grid>
+            <TopBar title={props.title} />
             <Divider />
             {props.children}
         </main>
