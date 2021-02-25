@@ -5,8 +5,8 @@
             "name": "Launch Chrome",
             "request": "launch",
             "type": "pwa-chrome",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}"
+            "url": "https://localhost:5001",
+            "webRoot": "${workspaceFolder}/ClientApp/src"
         },
         {
             // Use IntelliSense to find out which attributes exist for C# debugging
@@ -38,6 +38,12 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Server/Client",
+            "configurations": [".NET Core Launch (web)", "Launch Chrome"]
         }
     ]
 }

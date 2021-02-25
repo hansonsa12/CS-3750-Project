@@ -18,8 +18,6 @@ import _ from "lodash";
 import * as Yup from "yup";
 import axios from "axios";
 
-import background from "../../images/textbooks.jpg";
-
 const useStyles = makeStyles(theme => ({
     paper: {
         display: "flex",

@@ -4,10 +4,9 @@ import { authActions } from "../helpers/authActions";
 import SideNavigation from "./SideNavigation";
 import MainView from "./MainView";
 import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-
 
 const styles = theme => ({
     root: {
@@ -39,7 +38,6 @@ class AppContainer extends Component {
 
     render() {
         const { classes } = this.props;
-        const user = JSON.parse(localStorage["user"]);
 
         return (
             <div className={classes.root}>
@@ -123,6 +121,7 @@ class AppContainer extends Component {
                     </Route>
                     <Route exact path="/calendar">
                         <MainView title={`Calendar`}>
+
                         </MainView>
                     </Route>
 
