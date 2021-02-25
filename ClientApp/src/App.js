@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
+//import Calendar from "./components/Calendar";
 import AppContainer from "./components/AppContainer";
 import React, { Component } from "react";
 import background from "./images/textbook.png";
