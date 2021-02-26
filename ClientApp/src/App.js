@@ -1,52 +1,49 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
+//import Calendar from "./components/Calendar";
 import AppContainer from "./components/AppContainer";
 import React, { Component } from "react";
-import axios from "axios";
-export default class App extends Component {
+import background from "./images/textbook.png";
+import { withStyles } from "@material-ui/core";
+
+const styles = theme => ({
+    root: {
+        width: "100%",
+        backgroundImage: `url(${background})`,
+        height: "100vh",
+        /* Center and scale the image nicely */
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+    },
+});
+
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: localStorage['user'],
             loading: false,
         };
-
-        //  this.getUser();
-        //} else {
-        //  this.state.loading = false;
-        //}
     }
-
-    //getUser() {
-    //  axios
-    //    .get("user", {
-    //      headers: {
-    //        Authorization: `Bearer ${localStorage["authToken"]}`,
-    //      },
-    //    })
-    //    .then(
-    //      res => {
-    //        this.setState({ user: res.data, loading: false });
-    //      },
-    //      err => {
-    //        console.error(err.message);
-    //      }
-    //    );
-    //}
 
     render() {
         const { loading, user } = this.state;
+        const { classes } = this.props;
+
         return (
             !loading && (
                 <Router>
                     <Switch>
                         <Route exact path="/signup">
-                            <SignUpForm />
+                            <SignUpForm className={classes.root} />
                         </Route>
 
                         <Route path="/">
-                            {user ? <AppContainer user={user} /> : <LoginForm />}
+                            {user ? <AppContainer user={user} /> :
+                                <LoginForm className={classes.root} />
+                            }
                         </Route>
                     </Switch>
                 </Router>
@@ -54,3 +51,5 @@ export default class App extends Component {
         );
     }
 }
+
+export default withStyles(styles, { withTheme: true })(App);

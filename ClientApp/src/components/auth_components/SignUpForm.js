@@ -15,6 +15,7 @@ import {
     makeStyles,
     CssBaseline,
     Typography,
+    Divider,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import _ from "lodash";
@@ -22,18 +23,8 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import axios from "axios";
 
-import background from "../../images/textbooks.jpg";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        width: "100%",
-        backgroundImage: `url(${background})`,
-        height: "100vh",
-        /* Center and scale the image nicely */
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-    },
     paper: {
         display: "flex",
         flexDirection: "column",
@@ -70,6 +61,8 @@ export default function SignUpForm(props) {
 
     const formFields = [
         ...textFields,
+
+        <Divider />,
 
         <KeyboardDatePicker
             name="birthDay"
@@ -139,7 +132,7 @@ export default function SignUpForm(props) {
     const validate = makeValidate(validationSchema);
 
     return (
-        <div className={classes.root}>
+        <div className={props.className}>
             <CssBaseline />
             <Paper className={classes.paper}>
                 <Grid container spacing={2} justify="center">
@@ -168,7 +161,7 @@ export default function SignUpForm(props) {
                                     <Grid item xs={12}>
                                         <Button type="submit" variant="contained" color="primary">
                                             Submit
-                    </Button>
+                                        </Button>
                                     </Grid>
                                 </Grid>
                             </form>
