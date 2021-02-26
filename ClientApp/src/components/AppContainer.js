@@ -3,10 +3,14 @@ import axios from 'axios';
 import { authActions } from "../helpers/authActions";
 import SideNavigation from "./SideNavigation";
 import MainView from "./MainView";
+import Calendar from "./Calendar";
 import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/core";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+//Calendar
+import FullCalendar, { formatDate } from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 const styles = theme => ({
     root: {
@@ -119,9 +123,9 @@ class AppContainer extends Component {
                             </Card>
                         </MainView>
                     </Route>
-                    <Route exact path="/calendar">
+                    <Route exact path="/Calendar">
                         <MainView title={`Calendar`}>
-
+                            <Calendar className={classes.root} />
                         </MainView>
                     </Route>
 
