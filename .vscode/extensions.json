@@ -2,9 +2,14 @@
     "recommendations": [
         "ms-dotnettools.csharp",
         "msjsdiag.debugger-for-chrome",
-        "github.vscode-pull-request-github",
-        "eamodio.gitlens",
         "humao.rest-client",
         "sonarsource.sonarlint-vscode",
+        "dsznajder.es7-react-js-snippets",
+        "doggy8088.netcore-snippets",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "reptarsrage.vscode-manage-user-secrets",
+        "ms-mssql.mssql",
+        "humao.rest-client"
     ]
 }
