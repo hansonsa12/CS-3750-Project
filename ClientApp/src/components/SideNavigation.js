@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
-import { ChevronLeft, ChevronRight, AccountCircle, HomeRounded, EventRounded, ExitToAppRounded } from "@material-ui/icons";
+import { ChevronLeft, ChevronRight, AccountCircle, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks} from "@material-ui/icons";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -57,6 +57,8 @@ export default function SideNavigation() {
 
     const history = useHistory();
 
+    const user = JSON.parse(localStorage["user"]);
+
     return (
         <Drawer
             variant="permanent"
@@ -86,16 +88,28 @@ export default function SideNavigation() {
                         onClick: () => history.push("/calendar")
                     },
                     {
-                        addSpacer: true,
+                        for: "instructor",
+                        text: "Courses", icon: <LibraryBooks />,
+                        onClick: () => history.push("/courses")
+                    },
+                    {
+                        for: "student",
+                        text: "Registrations", icon: <LibraryBooks />,
+                        onClick: () => history.push("/registrations")
+                    },
+                    {
                         text: "Logout", icon: <ExitToAppRounded />,
                         onClick: authActions.logout
                     }
-                ].map((item, index) => (
-                    <ListItem button key={item.text} onClick={item.onClick}>
-                        <ListItemIcon>{item.icon}</ListItemIcon>
-                        <ListItemText primary={item.text} />
-                    </ListItem>
-                ))}
+                ].map((item, index) => {
+                    if (item.for && item.for !== user.accountType) return;
+                    return (
+                        <ListItem button key={item.text} onClick={item.onClick}>
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.text} />
+                        </ListItem>
+                    )
+                })}
             </List>
 
             <div className={classes.collapseToggle}>
