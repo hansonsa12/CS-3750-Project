@@ -1,5 +1,5 @@
-﻿import React from 'react';
-import { Divider, IconButton, makeStyles, Menu, Popover, Typography } from '@material-ui/core';
+﻿import React, { Fragment } from 'react';
+import { Divider, IconButton, makeStyles, Popover, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Close } from '@material-ui/icons';
 
@@ -28,8 +28,8 @@ export default function NotificationList({
         >
             <Typography variant="h6" className={classes.title}>Notifications</Typography>
             <Divider />
-            {notifications.map((notification) => (
-                <>
+            {notifications.map((notification, index) => (
+                <Fragment key={`notification-${index}`}>
                     <Alert
                         severity="info"
                         action={
@@ -46,7 +46,7 @@ export default function NotificationList({
                         {notification}
                     </Alert>
                     <Divider />
-                </>
+                </Fragment>
             ))}
         </Popover>
     )

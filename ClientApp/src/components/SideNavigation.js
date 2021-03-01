@@ -102,7 +102,7 @@ export default function SideNavigation() {
                         onClick: authActions.logout
                     }
                 ].map((item, index) => {
-                    if (item.for && item.for !== user.accountType) return;
+                    if (item.for && item.for !== user.accountType) return null;
                     return (
                         <ListItem button key={item.text} onClick={item.onClick}>
                             <ListItemIcon>{item.icon}</ListItemIcon>

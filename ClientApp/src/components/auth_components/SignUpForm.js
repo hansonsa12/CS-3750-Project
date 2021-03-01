@@ -7,7 +7,6 @@ import {
     TextField,
     showErrorOnBlur,
 } from "mui-rff";
-import DateFnsUtils from "@date-io/date-fns";
 import {
     Button,
     Paper,
@@ -69,7 +68,6 @@ export default function SignUpForm(props) {
             disableToolbar={false}
             variant="inline"
             format="MM/dd/yyyy"
-            dateFunsUtils={DateFnsUtils}
             placeholder="mm/dd/yyyy"
             label="Birth Date"
             inputVariant="outlined"
