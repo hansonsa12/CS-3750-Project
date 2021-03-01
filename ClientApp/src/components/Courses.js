@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core'
 import React, { Component } from 'react'
 import CourseForm from "./CourseForm";
 
@@ -16,4 +15,4 @@ export class Courses extends Component {
     }
 }
 
-export default withStyles(styles)(Courses);
+export default Courses;
