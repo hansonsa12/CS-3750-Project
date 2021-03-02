@@ -4,13 +4,15 @@ import {
     Grid,
     Typography,
     Avatar,
-    IconButton, 
+    IconButton,
     TextField,
     Divider,
  } from '@material-ui/core';
 import React from 'react';
 import Create from '@material-ui/icons/Create';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import PublicIcon from '@material-ui/icons/Public';
 
 
 export default function Profile_Static() {
@@ -19,21 +21,41 @@ export default function Profile_Static() {
     var lName = localStorage.getItem("user").split(",")[2].split(":")[1].replace('\"','');
     var email = localStorage.getItem("user").split(",")[3].split(":")[1].replace('\"','');
     var bDay =  localStorage.getItem("user").split(",")[4].split(":")[1].replace('\"','');
+    var bio = "BIO IN DATABASE";
     fName = fName.slice(1,fName.length-1);
     lName = lName.slice(1,lName.length-1);
     email = email.slice(1,email.length-1);
     bDay = bDay.slice(1,11).split("-");
     var year = bDay[0];
-    var month = bDay[1];
+    var month = bDay[1]-1;
     var day = bDay[2];
     //?? THis is not converting the date properly
-    var birthDay = new Date(year,month,day).toString();
+    var birthDay = new Date(year,month,day).toDateString();
 
     const EditButton = () =>(
         <IconButton>
             <Create />
         </IconButton>
     )
+
+    const GitHubButton = () =>(
+        <IconButton>
+            <GitHubIcon />
+        </IconButton>
+    )
+
+    function btnGithubClick(e) {
+        window.open("https://www.github.com");
+    }
+
+    function btnLinkedInClick(e) {
+        window.open("https://www.linkedin.com");
+    }
+    function btnOtherClick(e) {
+        window.open("https://www.google.com");
+    }
+
+    
 
     return (
         <div>
@@ -53,16 +75,14 @@ export default function Profile_Static() {
                             backgroundColor:"transparent",
                             
                         }}>
-                        Something very interesting about the person you curretly are looking at.
+                        {bio}
                     </textarea>
                     <br/>
                     <Button variant="outlined" color="primary">
                         Update Bio
                     </Button>
                     <div>
-                        <br/>
-                        <br/>
-                        <br/>
+                        <br/><br/><br/>
                     </div>
                         
                     <Grid>
@@ -87,9 +107,7 @@ export default function Profile_Static() {
                             />
                         </Grid>
                         <div>
-                            <br/>
-                            <br/>
-                            <br/>
+                            <br/><br/><br/>
                         </div>
                         <Grid>
                             <TextField
@@ -106,9 +124,7 @@ export default function Profile_Static() {
                             />
                         </Grid>
                         <div>
-                            <br/>
-                            <br/>
-                            <br/>
+                            <br/><br/><br/>
                         </div>
                         <Grid>
                             <TextField
@@ -133,20 +149,27 @@ export default function Profile_Static() {
                     </Grid>
 
                     <div>
-                        <br/>
-                        <br/>
-                        <br/>
+                        <br/><br/><br/>
                     </div>
 
-                    <Grid item style={{ marginTop: 10 }}>
-                        <a target="_blank" href="https://www.github.com" InputProps={{endAdornment: <EditButton />}}>Github</a>
-                    </Grid>
-                    <Grid item style={{ marginTop: 10 }}>
-                        <a target="_blank" href="https://www.linkedin.com" InputProps={{endAdornment: <EditButton />}}>LinkedIn</a>
-                    </Grid>
-                    <Grid item style={{ marginTop: 10 }}>
-                        <a target="_blank" href="https://www.google.com" InputProps={{endAdornment: <EditButton />}}>Extra Link</a>
-                    </Grid>    
+                    <Button 
+                        variant = "contained"
+                        startIcon={<GitHubIcon />}
+                        onClick={btnGithubClick}>
+                        GitHub
+                    </Button>
+                    <Button 
+                        variant = "contained"
+                        startIcon={<LinkedInIcon />}
+                            onClick={btnLinkedInClick}>
+                        LinkedIn
+                    </Button>
+                    <Button 
+                        variant = "contained"
+                        startIcon={<PublicIcon />}
+                        onClick={btnOtherClick}>
+                        Other
+                    </Button>
                 </Grid>
             </Grid>    
         </div>
