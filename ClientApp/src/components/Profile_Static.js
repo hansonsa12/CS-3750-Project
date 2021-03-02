@@ -39,67 +39,116 @@ export default function Profile_Static() {
         <div>
             <Grid>
                 <Avatar alt="Profile picture. This person looks Sharp!" src="C:\Users\Kronos\Documents\Programming\Web\React\CS-3750-Project\ClientApp\src\images\Profile_Pic.png"/>
-            <Grid item>
             
-            <Typography variant="h6">{fName} {lName}</Typography>
-            <TextField
-                    id="standard-name"
-                    label="Email: "
-                    value={email}
-                    InputProps={{endAdornment: <EditButton />}}
-                />
-                <TextField
-                    id="standard-name"
-                    label="Bio: "
-                    value="Something very interesting about the person you curretly are looking at."
-                    InputProps={{endAdornment: <EditButton />}}
-                />
-            <div>
-                <br/>
-                <br/>
-                <br/>
-            </div>
+                <Grid item>
                 
-                <Grid>
-                    <TextField
-                        id="standard-name"
-                        label="Birthday: "
-                        value={birthDay}
-                        InputProps={{endAdornment: <EditButton />}}
-                    />
-                    <TextField
-                        id="standard-name"
-                        label="Address: "
-                        value="ADDRESS"
-                        InputProps={{endAdornment: <EditButton />}}
-                    />
-                    <TextField
-                        id="standard-name"
-                        label="Phone: "
-                        value="PHONENUM"
-                        InputProps={{endAdornment: <EditButton />}}
-                    />
-                </Grid>
-
-                <div>
+                    <Typography variant="h6">{fName} {lName}</Typography>
+                    
+                    <label>Bio:</label>
                     <br/>
+                    <textarea
+                        style={{
+                            height:"200px",
+                            width:"500px",
+                            backgroundColor:"transparent",
+                            
+                        }}>
+                        Something very interesting about the person you curretly are looking at.
+                    </textarea>
                     <br/>
-                    <br/>
-                </div>
+                    <Button variant="outlined" color="primary">
+                        Update Bio
+                    </Button>
+                    <div>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                        
+                    <Grid>
+                        <Grid>
+                            <TextField
+                                id="standard-name"
+                                label="Email: "
+                                value={email}
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                            <TextField
+                                id="standard-name"
+                                label="Phone: "
+                                value="PHONENUM"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                            <TextField
+                                id="standard-name"
+                                label="Birthday: "
+                                value={birthDay}
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                        </Grid>
+                        <div>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <Grid>
+                            <TextField
+                                id="standard-name"
+                                label="Address 1: "
+                                value="ADDRESS"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                            <TextField
+                                id="standard-name"
+                                label="Address 2: "
+                                value="ADDRESS"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                        </Grid>
+                        <div>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <Grid>
+                            <TextField
+                                id="standard-name"
+                                label="City: "
+                                value="CITY"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                            <TextField
+                                id="standard-name"
+                                label="State: "
+                                value="STATE"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                            <TextField
+                                id="standard-name"
+                                label="Zip: "
+                                value="ZIPCODE"
+                                InputProps={{endAdornment: <EditButton />}}
+                            />
+                        </Grid>
+                    </Grid>
 
-                <Grid item style={{ marginTop: 10 }}>
-            
+                    <div>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
 
-                    <a target="_blank" href="https://www.github.com" InputProps={{endAdornment: <EditButton />}}>Github</a>
+                    <Grid item style={{ marginTop: 10 }}>
+                        <a target="_blank" href="https://www.github.com" InputProps={{endAdornment: <EditButton />}}>Github</a>
+                    </Grid>
+                    <Grid item style={{ marginTop: 10 }}>
+                        <a target="_blank" href="https://www.linkedin.com" InputProps={{endAdornment: <EditButton />}}>LinkedIn</a>
+                    </Grid>
+                    <Grid item style={{ marginTop: 10 }}>
+                        <a target="_blank" href="https://www.google.com" InputProps={{endAdornment: <EditButton />}}>Extra Link</a>
+                    </Grid>    
                 </Grid>
-                <Typography variant="h6">LINKEDIN LINK</Typography>
-                <Typography variant="h6">ETC LINK</Typography>
-                
-                </Grid>
-                <FormLabel>Hello</FormLabel>
-            </Grid>
-            
+            </Grid>    
         </div>
-        
     )
 }
