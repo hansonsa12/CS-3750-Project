@@ -11,6 +11,7 @@ import Card from '@material-ui/core/Card';
 //Calendar
 import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import TodoList from "./TodoList";
 
 const styles = theme => ({
     root: {
@@ -47,6 +48,7 @@ class AppContainer extends Component {
             <div className={classes.root}>
                 <CssBaseline />
                 <SideNavigation />
+             
                 <Switch>
                     <Route exact path="/profile">
                         <MainView title={`Profile`}>
@@ -121,7 +123,10 @@ class AppContainer extends Component {
                                     </Typography>
                                 </CardContent>
                             </Card>
+                        {/* to do list  */}
+                        <TodoList/>
                         </MainView>
+                       
                     </Route>
                     <Route exact path="/Calendar">
                         <MainView title={`Calendar`}>
