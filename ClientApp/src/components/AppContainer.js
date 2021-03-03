@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Courses from './Courses';
 import Registrations from './Registrations';
+import TodoList from "./TodoList";
 
 const styles = theme => ({
     root: {
@@ -44,6 +45,7 @@ class AppContainer extends Component {
             <div className={classes.root}>
                 <CssBaseline />
                 <SideNavigation />
+             
                 <Switch>
                     <Route exact path="/profile">
                         <MainView title="Profile">
@@ -118,7 +120,10 @@ class AppContainer extends Component {
                                     </Typography>
                                 </CardContent>
                             </Card>
+                        {/* to do list  */}
+                        <TodoList/>
                         </MainView>
+                       
                     </Route>
                     <Route exact path="/calendar">
                         <MainView title="Calendar">
