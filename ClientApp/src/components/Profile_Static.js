@@ -9,6 +9,7 @@ import {
     Divider,
  } from '@material-ui/core';
 import React from 'react';
+import _ from "lodash";
 import Create from '@material-ui/icons/Create';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -35,12 +36,6 @@ export default function Profile_Static() {
     const EditButton = () =>(
         <IconButton>
             <Create />
-        </IconButton>
-    )
-
-    const GitHubButton = () =>(
-        <IconButton>
-            <GitHubIcon />
         </IconButton>
     )
 
@@ -91,19 +86,16 @@ export default function Profile_Static() {
                                 id="standard-name"
                                 label="Email: "
                                 value={email}
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                             <TextField
                                 id="standard-name"
                                 label="Phone: "
                                 value="PHONENUM"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                             <TextField
                                 id="standard-name"
                                 label="Birthday: "
                                 value={birthDay}
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                         </Grid>
                         <div>
@@ -114,13 +106,11 @@ export default function Profile_Static() {
                                 id="standard-name"
                                 label="Address 1: "
                                 value="ADDRESS"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                             <TextField
                                 id="standard-name"
                                 label="Address 2: "
                                 value="ADDRESS"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                         </Grid>
                         <div>
@@ -131,19 +121,16 @@ export default function Profile_Static() {
                                 id="standard-name"
                                 label="City: "
                                 value="CITY"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                             <TextField
                                 id="standard-name"
                                 label="State: "
                                 value="STATE"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                             <TextField
                                 id="standard-name"
                                 label="Zip: "
                                 value="ZIPCODE"
-                                InputProps={{endAdornment: <EditButton />}}
                             />
                         </Grid>
                     </Grid>
@@ -171,7 +158,8 @@ export default function Profile_Static() {
                         Other
                     </Button>
                 </Grid>
-            </Grid>    
+            </Grid>   
+            
         </div>
     )
 }

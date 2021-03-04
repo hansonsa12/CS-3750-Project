@@ -29,6 +29,24 @@
         [Column(TypeName="varchar(10)")]
         public string AccountType { get; set; }
 
+
+        [Column(TypeName="varchar(255)")]
+        public string addressOne {get; set;}
+
+        [Column(TypeName="varchar(255)")]
+        public string addressTwo {get; set;}
+
+        [Column(TypeName="varchar(40)")]
+        public string city {get; set;}
+
+        [Column(TypeName="varchar(20)")]
+        public string state {get; set;}
+
+        [Column(TypeName="number")]
+        public string zipCode {get; set;}
+
+
+
         public BasicUserInfo() { }
 
         public BasicUserInfo (User user)
