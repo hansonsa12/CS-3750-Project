@@ -1,8 +1,18 @@
-import { Button } from '@material-ui/core'
-import React from 'react'
+import React, { Component } from 'react'
+import CourseForm from "./CourseForm";
 
-export default function Courses() {
-    return (
-        <Button color="primary">Add A Course</Button>
-    )
+export class Courses extends Component {
+    constructor(props) {
+        super(props);
+    }
+  
+    render() {
+        return (
+            <div>
+                <CourseForm />
+            </div>
+        )
+    }
 }
+
+export default Courses;

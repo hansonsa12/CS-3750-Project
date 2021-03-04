@@ -6,17 +6,15 @@ export default function TopBar({
     title = ""
 }) {
     return (
-        <div>
-            <Grid container justify="space-between">
-                <Grid item>
-                    <Typography variant="h4">
-                        {title}
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <NotificationBadge />
-                </Grid>
+        <Grid container justify="space-between">
+            <Grid item>
+                <Typography variant="h4">
+                    {title}
+                </Typography>
             </Grid>
-        </div >
+            <Grid item>
+                <NotificationBadge />
+            </Grid>
+        </Grid>
     )
 }
