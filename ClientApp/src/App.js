@@ -1,7 +1,6 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
-//import Calendar from "./components/Calendar";
 import AppContainer from "./components/AppContainer";
 import React, { Component } from "react";
 import background from "./images/textbook.png";
@@ -34,19 +33,17 @@ class App extends Component {
 
         return (
             !loading && (
-                <Router>
-                    <Switch>
-                        <Route exact path="/signup">
-                            <SignUpForm className={classes.root} />
-                        </Route>
+                <Switch>
+                    <Route exact path="/signup">
+                        <SignUpForm className={classes.root} />
+                    </Route>
 
-                        <Route path="/">
-                            {user ? <AppContainer user={user} /> :
-                                <LoginForm className={classes.root} />
-                            }
-                        </Route>
-                    </Switch>
-                </Router>
+                    <Route path="/">
+                        {user ? <AppContainer user={user} /> :
+                            <LoginForm className={classes.root} />
+                        }
+                    </Route>
+                </Switch>
             )
         );
     }
