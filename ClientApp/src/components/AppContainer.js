@@ -7,6 +7,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Card from '@material-ui/core/Card';
 import Courses from './Courses';
 import Registrations from './Registrations';
+import Profile from './Profile_Static';
 import TodoList from "./TodoList";
 
 const styles = theme => ({
@@ -31,6 +32,7 @@ class AppContainer extends Component {
                 <Switch>
                     <Route exact path="/profile">
                         <MainView title="Profile">
+                            <Profile></Profile>
                         </MainView>
                     </Route>
                     <Route exact path="/dashboard">
