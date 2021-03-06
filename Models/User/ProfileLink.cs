@@ -9,6 +9,5 @@ namespace final_project.Models.User
         public string Link { get; set; }
 
         public int UserId { get; set; }
-        public User Owner { get; set; }
     }
 }

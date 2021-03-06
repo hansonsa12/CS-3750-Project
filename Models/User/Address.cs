@@ -20,6 +20,6 @@ namespace final_project.Models.User
         [Column(TypeName="varchar(10)")]
         public string ZipCode { get; set; }
 
-        public virtual User AddressOwner { get; set; }
+        public int UserId { get; set; }
     }
 }

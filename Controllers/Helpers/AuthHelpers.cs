@@ -56,7 +56,7 @@
         {
             return await Task.Run(() =>
                 {
-                    var claims = new[] { new Claim(JwtRegisteredClaimNames.Sub, user.Email) };
+                    var claims = new[] { new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()) };
 
                     var key = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(jwt_configs.Secret)

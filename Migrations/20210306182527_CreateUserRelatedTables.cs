@@ -8,23 +8,6 @@ namespace final_project.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    AddressId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressOne = table.Column<string>(type: "varchar(60)", nullable: true),
-                    AddressTwo = table.Column<string>(type: "varchar(60)", nullable: true),
-                    City = table.Column<string>(type: "varchar(40)", nullable: true),
-                    State = table.Column<string>(type: "varchar(20)", nullable: true),
-                    ZipCode = table.Column<string>(type: "varchar(10)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -37,18 +20,35 @@ namespace final_project.Migrations
                     AccountType = table.Column<string>(type: "varchar(10)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(128)", nullable: false),
                     Salt = table.Column<string>(type: "nvarchar(128)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "varchar(15)", nullable: true),
-                    AddressId = table.Column<int>(type: "int", nullable: true)
+                    PhoneNumber = table.Column<string>(type: "varchar(15)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddressOne = table.Column<string>(type: "varchar(60)", nullable: true),
+                    AddressTwo = table.Column<string>(type: "varchar(60)", nullable: true),
+                    City = table.Column<string>(type: "varchar(40)", nullable: true),
+                    State = table.Column<string>(type: "varchar(20)", nullable: true),
+                    ZipCode = table.Column<string>(type: "varchar(10)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
                     table.ForeignKey(
-                        name: "FK_Users_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_Addresses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +93,12 @@ namespace final_project.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FileUploads_UserId",
                 table: "FileUploads",
                 column: "UserId");
@@ -101,13 +107,6 @@ namespace final_project.Migrations
                 name: "IX_ProfileLinks_UserId",
                 table: "ProfileLinks",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_AddressId",
-                table: "Users",
-                column: "AddressId",
-                unique: true,
-                filter: "[AddressId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -119,6 +118,9 @@ namespace final_project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "FileUploads");
 
             migrationBuilder.DropTable(
@@ -126,9 +128,6 @@ namespace final_project.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
         }
     }
 }

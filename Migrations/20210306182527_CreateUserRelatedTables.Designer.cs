@@ -10,7 +10,7 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210306171849_CreateUserRelatedTables")]
+    [Migration("20210306182527_CreateUserRelatedTables")]
     partial class CreateUserRelatedTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,10 +40,16 @@ namespace final_project.Migrations
                     b.Property<string>("State")
                         .HasColumnType("varchar(20)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ZipCode")
                         .HasColumnType("varchar(10)");
 
                     b.HasKey("AddressId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -104,9 +110,6 @@ namespace final_project.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
@@ -134,14 +137,21 @@ namespace final_project.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique()
-                        .HasFilter("[AddressId] IS NOT NULL");
-
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("final_project.Models.User.Address", b =>
+                {
+                    b.HasOne("final_project.Models.User.User", "AddressOwner")
+                        .WithOne("Address")
+                        .HasForeignKey("final_project.Models.User.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AddressOwner");
                 });
 
             modelBuilder.Entity("final_project.Models.User.FileUpload", b =>
@@ -168,20 +178,8 @@ namespace final_project.Migrations
 
             modelBuilder.Entity("final_project.Models.User.User", b =>
                 {
-                    b.HasOne("final_project.Models.User.Address", "Address")
-                        .WithOne("AddressOwner")
-                        .HasForeignKey("final_project.Models.User.User", "AddressId");
-
                     b.Navigation("Address");
-                });
 
-            modelBuilder.Entity("final_project.Models.User.Address", b =>
-                {
-                    b.Navigation("AddressOwner");
-                });
-
-            modelBuilder.Entity("final_project.Models.User.User", b =>
-                {
                     b.Navigation("FileUploads");
 
                     b.Navigation("ProfileLinks");
