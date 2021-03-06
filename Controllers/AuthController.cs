@@ -8,7 +8,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using final_project.Data;
-    using final_project.User.Models;
+    using final_project.Models.User;
     using final_project.Controllers.Helpers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -54,9 +54,12 @@
                 {
                     /* Create and return a json web token */
                     string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, foundUser);
+                    foundUser.Password = null;
+                    foundUser.Salt = null;
+                    
                     return Ok(new
                     {
-                        user = JsonConvert.SerializeObject(new BasicUserInfo(foundUser), new JsonSerializerSettings
+                        user = JsonConvert.SerializeObject(foundUser, new JsonSerializerSettings
                         {
                             ContractResolver = contractResolver,
                             Formatting = Formatting.Indented
@@ -90,9 +93,13 @@
             await _context.SaveChangesAsync();
 
             string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, user);
+
+            user.Password = null;
+            user.Salt = null;
+
             return Ok(new
             {
-                user = JsonConvert.SerializeObject(new BasicUserInfo(user), new JsonSerializerSettings
+                user = JsonConvert.SerializeObject(user, new JsonSerializerSettings
                 {
                     ContractResolver = contractResolver,
                     Formatting = Formatting.Indented

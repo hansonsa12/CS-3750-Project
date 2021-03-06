@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using final_project.User.Models;
+    using final_project.Models.User;
     using System.IdentityModel.Tokens.Jwt;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;

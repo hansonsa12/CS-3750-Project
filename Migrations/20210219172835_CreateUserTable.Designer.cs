@@ -21,7 +21,7 @@ namespace final_project.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("final_project.User.Models.User", b =>
+            modelBuilder.Entity("final_project.Models.User.User", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
