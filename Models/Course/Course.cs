@@ -20,7 +20,7 @@ namespace final_project.Models.Course
 
         [Required]
         public int InstructorId { get; set; }
-        public User Instructor { get; set; }
+        public Instructor Instructor { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(60)")]
@@ -50,5 +50,6 @@ namespace final_project.Models.Course
         public int? MaxCapacity { get; set; }
 
         // Student Registrations
+        public ICollection<Student> Registrations { get; set; }
     }
 }

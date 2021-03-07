@@ -19,9 +19,16 @@
 
         public DbSet<Course> Courses { get; set; }
 
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Student> Students { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<User>()
+                .HasDiscriminator(u => u.AccountType)
+                .HasValue<Instructor>("instructor")
+                .HasValue<Student>("student");
         }
     }
 }
