@@ -10,7 +10,7 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210307063729_CreateCoursesTable")]
+    [Migration("20210307082700_CreateCoursesTable")]
     partial class CreateCoursesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,8 +49,8 @@ namespace final_project.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<TimeSpan?>("EndTime")
-                        .HasColumnType("time");
+                    b.Property<string>("EndTime")
+                        .HasColumnType("varchar(8)");
 
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
@@ -64,8 +64,8 @@ namespace final_project.Migrations
                     b.Property<string>("RoomNumber")
                         .HasColumnType("varchar(10)");
 
-                    b.Property<TimeSpan?>("StartTime")
-                        .HasColumnType("time");
+                    b.Property<string>("StartTime")
+                        .HasColumnType("varchar(8)");
 
                     b.HasKey("CourseId");
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace final_project.Migrations
 {
@@ -22,8 +21,8 @@ namespace final_project.Migrations
                     BuildingName = table.Column<string>(type: "varchar(60)", nullable: true),
                     RoomNumber = table.Column<string>(type: "varchar(10)", nullable: true),
                     MeetingDays = table.Column<string>(type: "varchar(5)", nullable: true),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: true),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    StartTime = table.Column<string>(type: "varchar(8)", nullable: true),
+                    EndTime = table.Column<string>(type: "varchar(8)", nullable: true),
                     MaxCapacity = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

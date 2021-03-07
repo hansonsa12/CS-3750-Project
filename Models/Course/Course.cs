@@ -41,11 +41,11 @@ namespace final_project.Models.Course
         [Column(TypeName = "varchar(5)")]
         public string MeetingDays { get; set; }
 
-        [Column(TypeName = "time")]
-        public TimeSpan? StartTime { get; set; }
+        [Column(TypeName = "varchar(8)")]
+        public string StartTime { get; set; }
 
-        [Column(TypeName = "time")]
-        public TimeSpan? EndTime { get; set; }
+        [Column(TypeName = "varchar(8)")]
+        public string EndTime { get; set; }
 
         public int? MaxCapacity { get; set; }
 

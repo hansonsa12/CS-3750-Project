@@ -36,12 +36,13 @@ class AuthProvider extends Component {
             const authHeader = this.authHeader();
             if (!authHeader) return null;
 
-            const res = await axios.get("api/users/current", { headers: authHeader });
+            const res = await axios.get("api/users/current", authHeader);
 
             return res.data;
 
         } catch (err) {
             console.error(err);
+            localStorage.removeItem("authToken");
             return null;
         }
     }
@@ -78,7 +79,7 @@ class AuthProvider extends Component {
     authHeader = () => {
         const authToken = localStorage.getItem("authToken");
         if (!authToken) return null;
-        return { Authorization: `Bearer ${authToken}` };
+        return { headers: { Authorization: `Bearer ${authToken}` } };
     }
 
     render() {
@@ -91,7 +92,7 @@ class AuthProvider extends Component {
             login: this.login,
             logout: this.logout,
             signup: this.signup,
-            authHeader: this.authHeader
+            authHeader: this.authHeader()
         }}>
             {children}
         </AuthContext.Provider>
