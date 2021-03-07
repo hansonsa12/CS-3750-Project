@@ -1,43 +1,24 @@
-﻿namespace final_project.AuthController
+﻿namespace final_project.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Options;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using final_project.Data;
-    using final_project.User.Models;
     using final_project.Controllers.Helpers;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using final_project.Data;
+    using final_project.Models.User;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
-        private readonly LMSContext _context;
         private readonly JWTConfigs _jwtConfigs;
         private readonly AuthHelpers AuthHelpers;
-        private readonly DefaultContractResolver contractResolver;
-
-        [Authorize]
-        [HttpGet("hi")]
-        public string Test()
-        {
-            return "Hi there";
-        }
 
         public AuthController(LMSContext context, IOptions<JWTConfigs> jwtConfigs)
+            : base(context)
         {
-            _context = context;
             _jwtConfigs = jwtConfigs.Value;
             AuthHelpers = new AuthHelpers();
-            contractResolver = new DefaultContractResolver
-            { // This is to make .NET objects return in lowerCamelCase instead of UpperCamelCase (PascalCase)
-                NamingStrategy = new CamelCaseNamingStrategy()
-            };
         }
 
         [HttpPost("login")]
@@ -54,13 +35,9 @@
                 {
                     /* Create and return a json web token */
                     string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, foundUser);
+                    
                     return Ok(new
                     {
-                        user = JsonConvert.SerializeObject(new BasicUserInfo(foundUser), new JsonSerializerSettings
-                        {
-                            ContractResolver = contractResolver,
-                            Formatting = Formatting.Indented
-                        }),
                         authToken = token
                     });
                 }
@@ -90,13 +67,9 @@
             await _context.SaveChangesAsync();
 
             string token = await AuthHelpers.CreateJsonWebToken(_jwtConfigs, user);
+
             return Ok(new
             {
-                user = JsonConvert.SerializeObject(new BasicUserInfo(user), new JsonSerializerSettings
-                {
-                    ContractResolver = contractResolver,
-                    Formatting = Formatting.Indented
-                }),
                 authToken = token
             });
         }

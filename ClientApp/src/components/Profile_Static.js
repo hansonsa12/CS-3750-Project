@@ -8,15 +8,17 @@ import {
     TextField,
     Divider,
  } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import _ from "lodash";
 import Create from '@material-ui/icons/Create';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import PublicIcon from '@material-ui/icons/Public';
+import { AuthContext } from '../context/AuthProvider';
 
 
 export default function Profile_Static() {
+    const { user } = useContext(AuthContext);
 
     var fName = localStorage.getItem("user").split(",")[1].split(":")[1].replace('\"','');
     var lName = localStorage.getItem("user").split(",")[2].split(":")[1].replace('\"','');

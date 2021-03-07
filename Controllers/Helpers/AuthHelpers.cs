@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using final_project.User.Models;
+    using final_project.Models.User;
     using System.IdentityModel.Tokens.Jwt;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
@@ -56,7 +56,7 @@
         {
             return await Task.Run(() =>
                 {
-                    var claims = new[] { new Claim(JwtRegisteredClaimNames.Sub, user.Email) };
+                    var claims = new[] { new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()) };
 
                     var key = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(jwt_configs.Secret)

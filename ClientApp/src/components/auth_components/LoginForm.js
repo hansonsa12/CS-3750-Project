@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import {
     makeValidate,
@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import * as Yup from "yup";
-import axios from "axios";
+import { AuthContext } from '../../context/AuthProvider';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -58,19 +58,10 @@ export default function SignUpForm(props) {
         ...passwordFields,
     ];
 
+    const { login } = useContext(AuthContext);
+
     const onSubmit = values => {
-        console.log(JSON.stringify(values));
-        axios
-            .post("api/auth/login", values)
-            .then(res => {
-                localStorage["authToken"] = res.data.authToken;
-                localStorage["user"] = res.data.user;
-                window.location = "/";
-            })
-            .catch(err => {
-                alert(err.message);
-                console.error(err.message);
-            });
+        login(values);
     };
 
     const classes = useStyles();

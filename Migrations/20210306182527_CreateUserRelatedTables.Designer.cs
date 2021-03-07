@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using final_project.Data;
 
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    partial class LMSContextModelSnapshot : ModelSnapshot
+    [Migration("20210306182527_CreateUserRelatedTables")]
+    partial class CreateUserRelatedTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +110,6 @@ namespace final_project.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("Bio")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
@@ -146,11 +145,13 @@ namespace final_project.Migrations
 
             modelBuilder.Entity("final_project.Models.User.Address", b =>
                 {
-                    b.HasOne("final_project.Models.User.User", null)
+                    b.HasOne("final_project.Models.User.User", "AddressOwner")
                         .WithOne("Address")
                         .HasForeignKey("final_project.Models.User.Address", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AddressOwner");
                 });
 
             modelBuilder.Entity("final_project.Models.User.FileUpload", b =>
@@ -166,11 +167,13 @@ namespace final_project.Migrations
 
             modelBuilder.Entity("final_project.Models.User.ProfileLink", b =>
                 {
-                    b.HasOne("final_project.Models.User.User", null)
+                    b.HasOne("final_project.Models.User.User", "Owner")
                         .WithMany("ProfileLinks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("final_project.Models.User.User", b =>

@@ -4,11 +4,10 @@ import MainView from "./MainView";
 import Calendar from "./Calendar";
 import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/core";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Card from '@material-ui/core/Card';
 import Courses from './Courses';
 import Registrations from './Registrations';
 import Profile from './Profile_Static';
-import TodoList from "./TodoList";
+import Dashboard from './Dashboard/Dashboard';
 
 const styles = theme => ({
     root: {
@@ -17,9 +16,6 @@ const styles = theme => ({
 });
 
 class AppContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const { classes } = this.props;
@@ -37,77 +33,8 @@ class AppContainer extends Component {
                     </Route>
                     <Route exact path="/dashboard">
                         <MainView title="Dashboard">
-                            <Card>
-                                <CardContent>
-                                    <Typography className={classes.title} variant="h5" color="textPrimary" gutterBottom>
-                                        CS3550 Advanced Database Programming
-                                    </Typography>
-                                    <Typography>
-                                        Instructor Name
-                                    </Typography>
-                                    <Typography>
-                                        CA 141
-                                    </Typography>
-                                    <Typography>
-                                        Meeting Time
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                            <br></br>
-                            <Card className={classes.root}>
-                                <CardContent>
-                                    <Typography className={classes.title} variant="h5" color="textPrimary" gutterBottom>
-                                        CS3750 Software Engineering II
-                                    </Typography>
-                                    <Typography>
-                                        Instructor Name
-                                    </Typography>
-                                    <Typography>
-                                        CA 155
-                                    </Typography>
-                                    <Typography>
-                                        Meeting Time
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                            <br></br>
-                            <Card className={classes.root}>
-                                <CardContent>
-                                    <Typography className={classes.title} variant="h5" color="textPrimary" gutterBottom>
-                                        CS3540 Database Administration
-                                    </Typography>
-                                    <Typography>
-                                        Instructor Name
-                                    </Typography>
-                                    <Typography>
-                                        CA 175
-                                    </Typography>
-                                    <Typography>
-                                        Meeting Time
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                            <br></br>
-                            <Card className={classes.root}>
-                                <CardContent>
-                                    <Typography className={classes.title} variant="h5" color="textPrimary" gutterBottom>
-                                        CS3230 Object Oriented User Interface Development with Java
-                                    </Typography>
-                                    <Typography>
-                                        Instructor Name
-                                    </Typography>
-                                    <Typography>
-                                        CA 240
-                                    </Typography>
-                                    <Typography>
-                                        Meeting Time
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        {/* to do list  */}
-                        <TodoList/>
+                            <Dashboard />
                         </MainView>
-                       
                     </Route>
                     <Route exact path="/calendar">
                         <MainView title="Calendar">
