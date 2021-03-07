@@ -32,6 +32,9 @@
         [Column(TypeName="varchar(15)")]
         public string PhoneNumber { get; set; }
 
+        [Column(TypeName="text")]
+        public string Bio { get; set; }
+
         public virtual Address Address { get; set; }
 
         public ICollection<FileUpload> FileUploads { get; set; }
