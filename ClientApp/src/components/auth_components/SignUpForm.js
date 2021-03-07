@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import {
     KeyboardDatePicker,
@@ -21,6 +21,7 @@ import _ from "lodash";
 import * as Yup from "yup";
 import dayjs from "dayjs";
 import axios from "axios";
+import { AuthContext } from '../../context/AuthProvider';
 
 
 const useStyles = makeStyles(theme => ({
@@ -88,19 +89,10 @@ export default function SignUpForm(props) {
         />,
     ];
 
+    const { signup } = useContext(AuthContext);
+
     const onSubmit = values => {
-        console.log(JSON.stringify(_.omit(values, "confirmPassword")));
-        axios
-            .post("api/auth/signup", values)
-            .then(res => {
-                localStorage["authToken"] = res.data.authToken;
-                localStorage["user"] = res.data.user;
-                window.location = "/";
-            })
-            .catch(err => {
-                alert(err.message);
-                console.error(err.message);
-            });
+        signup(values);
     };
 
     const classes = useStyles();

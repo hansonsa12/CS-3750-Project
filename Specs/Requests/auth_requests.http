@@ -1,0 +1,32 @@
+### Signup
+POST https://localhost:5001/api/auth/signup
+Content-Type: application/json 
+
+{
+  "accountType": "instructor",
+  "firstName": "Philly",
+  "lastName": "Burtons",
+  "email": "philburtons@example.com",
+  "birthDay": "1986-02-09T15:53:00.000Z",
+  "password": "password1"
+}
+
+### Login
+POST https://localhost:5001/api/auth/login
+Content-Type: application/json 
+
+{
+  "email": "philburtons@example.com",
+  "password": "password1"
+}
+
+### Protected Route
+GET https://localhost:5001/api/users/current
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE1MDczNTMzLCJleHAiOjE2MTUwODQzMzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNzEifQ.IFchOpo2HfWvWPXkbwZi_bT8NpH8E8Goc8CBh9ipfNU 
+
+
+### Protected Route
+GET https://localhost:5001/api/users/current
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwibmJmIjoxNjE1MDY2NTQ4LCJleHAiOjE2MTUwNzczNDgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNzEifQ.4bACtf765PjvnJ9bTNJ1BSghpZHCA5SobUAQMVMWg0k 
+
+

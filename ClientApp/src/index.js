@@ -6,6 +6,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import "fontsource-roboto";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from "@date-io/date-fns";
+import AuthProvider from './context/AuthProvider';
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");
@@ -13,7 +14,9 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
     <BrowserRouter basename={baseUrl}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
         </MuiPickersUtilsProvider>
     </BrowserRouter>,
     rootElement

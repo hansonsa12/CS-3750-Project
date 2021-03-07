@@ -1,4 +1,4 @@
-﻿import React from "react";
+﻿import React, { useContext } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -8,8 +8,8 @@ import { ChevronLeft, ChevronRight, AccountCircle, HomeRounded, EventRounded, Ex
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { authActions } from "../helpers/authActions";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from '../context/AuthProvider';
 
 const useStyles = makeStyles((theme) => {
     const openDrawerWidth = 180;
@@ -57,7 +57,7 @@ export default function SideNavigation() {
 
     const history = useHistory();
 
-    const user = JSON.parse(localStorage["user"]);
+    const { user, logout } = useContext(AuthContext);
 
     return (
         <Drawer
@@ -99,7 +99,7 @@ export default function SideNavigation() {
                     },
                     {
                         text: "Logout", icon: <ExitToAppRounded />,
-                        onClick: authActions.logout
+                        onClick: logout
                     }
                 ].map((item, index) => {
                     if (item.for && item.for !== user.accountType) return null;
