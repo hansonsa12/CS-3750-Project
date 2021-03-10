@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using final_project.Data;
 
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    partial class LMSContextModelSnapshot : ModelSnapshot
+    [Migration("20210307082700_CreateCoursesTable")]
+    partial class CreateCoursesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.Property<int>("RegistrationsCourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RegistrationsUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RegistrationsCourseId", "RegistrationsUserId");
-
-                    b.HasIndex("RegistrationsUserId");
-
-                    b.ToTable("CourseStudent");
-                });
 
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
                 {
@@ -210,43 +197,12 @@ namespace final_project.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("AccountType").HasValue("User");
-                });
-
-            modelBuilder.Entity("final_project.Models.User.Instructor", b =>
-                {
-                    b.HasBaseType("final_project.Models.User.User");
-
-                    b.HasDiscriminator().HasValue("instructor");
-                });
-
-            modelBuilder.Entity("final_project.Models.User.Student", b =>
-                {
-                    b.HasBaseType("final_project.Models.User.User");
-
-                    b.HasDiscriminator().HasValue("student");
-                });
-
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.HasOne("final_project.Models.Course.Course", null)
-                        .WithMany()
-                        .HasForeignKey("RegistrationsCourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("final_project.Models.User.Student", null)
-                        .WithMany()
-                        .HasForeignKey("RegistrationsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
                 {
-                    b.HasOne("final_project.Models.User.Instructor", "Instructor")
-                        .WithMany("Courses")
+                    b.HasOne("final_project.Models.User.User", "Instructor")
+                        .WithMany()
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -290,11 +246,6 @@ namespace final_project.Migrations
                     b.Navigation("FileUploads");
 
                     b.Navigation("ProfileLinks");
-                });
-
-            modelBuilder.Entity("final_project.Models.User.Instructor", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

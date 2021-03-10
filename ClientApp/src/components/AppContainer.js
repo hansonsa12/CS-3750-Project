@@ -4,7 +4,7 @@ import MainView from "./MainView";
 import Calendar from "./Calendar";
 import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/core";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Courses from './Courses';
+import Courses from './Courses/Courses';
 import Registrations from './Registrations';
 import Profile from './Profile_Static';
 import Dashboard from './Dashboard/Dashboard';
