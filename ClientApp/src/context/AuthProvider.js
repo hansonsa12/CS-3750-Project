@@ -3,7 +3,30 @@ import React, { Component, createContext } from 'react';
 import axios from 'axios';
 
 const initialState = {
-    user: null,
+    user: { // setting initial state like this makes for better autocompletion
+        firstName: undefined,
+        lastName: undefined,
+        email: undefined,
+        birthDay: undefined,
+        accountType: undefined,
+        phoneNumber: undefined,
+        bio: undefined,
+        address: {
+            addressId: undefined,
+            addressOne: undefined,
+            addressTwo: undefined,
+            city: undefined,
+            state: undefined,
+            zipCode: undefined,
+            userId: undefined
+        },
+        // fileUploads: [{}],
+        profileLinks: [{
+            profileLinkId: undefined,
+            link: undefined,
+            userId: undefined
+        }]
+    },
     loading: true,
 }
 
