@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CourseForm from "./CourseForm";
-
+import CourseTable from "./CourseTable";
 export class Courses extends Component {
     constructor(props) {
         super(props);
@@ -9,10 +9,12 @@ export class Courses extends Component {
     render() {
         return (
             <div>
-                <CourseForm />
+                <CourseForm/>
+                <CourseTable />
             </div>
+            
         )
+
     }
 }
-
 export default Courses;
