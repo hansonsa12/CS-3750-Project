@@ -10,7 +10,7 @@ export class Courses extends Component {
         return (
             <div>
                 <CourseForm/>
-                <CourseTable></CourseTable>
+                <CourseTable />
             </div>
             
         )
