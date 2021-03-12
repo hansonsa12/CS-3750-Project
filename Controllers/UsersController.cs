@@ -17,6 +17,8 @@ namespace final_project.Controllers
         {
         }
 
+        
+
         [Authorize]
         [HttpGet("current")]
         public async Task<IActionResult> GetLoggedInUserInfo()
@@ -25,6 +27,16 @@ namespace final_project.Controllers
             User foundUser = await _context.Users.Include(u => u.Address)
                 .Include(u => u.ProfileLinks).FirstOrDefaultAsync(u => u.UserId == userId);
             return Ok(new UserInfo(foundUser));
+        }
+
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditUser(int id, User model)
+        {
+            // TODO: Your code here
+            await Task.Yield();
+
+            return NoContent();
         }
 
         // [HttpGet]
@@ -45,14 +57,6 @@ namespace final_project.Controllers
         //     return null;
         // }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> EditUser(int id, User model)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
-
-        //     return NoContent();
-        // }
 
         // [HttpDelete("{id}")]
         // public async Task<ActionResult<User>> DeleteUserById(int id)
