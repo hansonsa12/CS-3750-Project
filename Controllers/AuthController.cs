@@ -12,13 +12,10 @@
     public class AuthController : BaseController
     {
         private readonly JWTConfigs _jwtConfigs;
-        private readonly AuthHelpers AuthHelpers;
-
         public AuthController(LMSContext context, IOptions<JWTConfigs> jwtConfigs)
             : base(context)
         {
             _jwtConfigs = jwtConfigs.Value;
-            AuthHelpers = new AuthHelpers();
         }
 
         [HttpPost("login")]

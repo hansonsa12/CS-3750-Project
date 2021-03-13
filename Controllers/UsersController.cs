@@ -21,9 +21,7 @@ namespace final_project.Controllers
         [HttpGet("current")]
         public async Task<IActionResult> GetLoggedInUserInfo()
         {
-            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            User foundUser = await _context.Users.Include(u => u.Address)
-                .Include(u => u.ProfileLinks).FirstOrDefaultAsync(u => u.UserId == userId);
+            User foundUser = await base.GetCurrentUser();
             return Ok(new UserInfo(foundUser));
         }
 

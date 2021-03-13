@@ -1,6 +1,7 @@
 // reference: https://www.youtube.com/watch?v=XuFDcZABiDQ
 import React, { Component, createContext } from 'react';
 import axios from 'axios';
+import { AccountType } from '../helpers/constants';
 
 const initialState = {
     user: { // setting initial state like this makes for better autocompletion
@@ -83,7 +84,7 @@ class AuthProvider extends Component {
     }
 
     logout = () => {
-        localStorage.clear();
+        localStorage.removeItem("authToken");
         window.location = "/";
     }
 
@@ -115,7 +116,9 @@ class AuthProvider extends Component {
             login: this.login,
             logout: this.logout,
             signup: this.signup,
-            authHeader: this.authHeader()
+            authHeader: this.authHeader(),
+            isStudent: user?.accountType === AccountType.STUDENT,
+            isInstructor: user?.accountType === AccountType.INSTRUCTOR
         }}>
             {children}
         </AuthContext.Provider>

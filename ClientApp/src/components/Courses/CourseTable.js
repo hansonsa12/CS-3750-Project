@@ -8,22 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button'
+import { getFormattedTime } from '../../helpers/constants';
 
-function createData(courseName, courseNumber, department, location, room, days, time) {
-    return { courseName, courseNumber, department, location, room, days, time }
-
-}
-
-const rows = [
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-    createData('Advanced Databases', 'CS 3550', 'CS', 'Building D2', '306', 'MTWR', '10:30 - 11:30'),
-]
-
-export default function BasicTable() {
+export default function CourseTable ({
+    courses = []
+}) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -40,23 +29,26 @@ export default function BasicTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                                {row.courseName}
+                    {courses.length > 0 ? courses.map((course, index) => {
+                        const { courseName, courseNumber, department, buildingName, 
+                            roomNumber, meetingDays, startTime, endTime } = course;
+
+                        return (<TableRow key={`course-${index}`}>
+                            <TableCell component="th" scope="course">
+                                {courseName}
                             </TableCell>
-                            <TableCell align="right">{row.courseNumber}</TableCell>
-                            <TableCell align="right">{row.department}</TableCell>
-                            <TableCell align="right">{row.location}</TableCell>
-                            <TableCell align="right">{row.room}</TableCell>
-                            <TableCell align="right">{row.days}</TableCell>
-                            <TableCell align="right">{row.time}</TableCell>
+                            <TableCell align="right">{courseNumber}</TableCell>
+                            <TableCell align="right">{department}</TableCell>
+                            <TableCell align="right">{buildingName}</TableCell>
+                            <TableCell align="right">{roomNumber}</TableCell>
+                            <TableCell align="right">{meetingDays}</TableCell>
+                            <TableCell align="right">{getFormattedTime(startTime, endTime)}</TableCell>
                             <TableCell align="right">
                                 <Button variant="contained" color="primary">Edit</Button>
                                 <Button variant="contained" color="secondary">Delete</Button>
                             </TableCell>
-                        </TableRow>
-                    ))}
+                        </TableRow>)
+                    }) : <TableRow><TableCell colSpan={8} align="center">No courses</TableCell></TableRow>}
                 </TableBody>
             </Table>
         </TableContainer>

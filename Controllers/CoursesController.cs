@@ -2,7 +2,6 @@
 namespace final_project.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using final_project.Data;
@@ -32,13 +31,14 @@ namespace final_project.Controllers
             }
         }
 
-        // [Authorize]
-        // [HttpGet("")]
-        // public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
-        // {
-        //     var courses = await _context.Courses.ToListAsync<Course>();
-        //     return courses;
-        // }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetCourses()
+        {
+            int userId = base.GetCurrentUserId();
+            var courses = await _context.Courses.Where(c => c.InstructorId == userId).ToListAsync();
+            return Ok(courses);
+        }
 
         // [HttpGet("{id}")]
         // public async Task<ActionResult<Course>> GetCourseById(int id)

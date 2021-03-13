@@ -1,5 +1,6 @@
 import { Card, CardContent, Typography } from '@material-ui/core'
 import React from 'react'
+import { getFormattedTime } from '../../helpers/constants'
 
 export default function CourseCard({
     courseNumber,
@@ -18,7 +19,7 @@ export default function CourseCard({
                 </Typography>
                 <Typography>{instructorName}</Typography>
                 <Typography>{roomNumber}</Typography>
-                <Typography>{startTime} - {endTime}</Typography>
+                <Typography>{getFormattedTime(startTime, endTime)}</Typography>
             </CardContent>
         </Card>
     )

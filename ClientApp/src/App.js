@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import background from "./images/textbook.png";
 import { withStyles } from "@material-ui/core";
 
-import AuthProvider, { AuthContext } from './context/AuthProvider';
+import { AuthContext } from './context/AuthProvider';
 
 const styles = theme => ({
     root: {
