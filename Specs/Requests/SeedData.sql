@@ -1,5 +1,5 @@
 INSERT INTO 
-    [lms_dev].[dbo].[Addresses] (
+    [dbo].[Addresses] (
         [AddressOne],
         [AddressTwo],
         [City],
@@ -11,7 +11,7 @@ INSERT INTO
 GO
 
 INSERT INTO 
-    [lms_dev].[dbo].[ProfileLinks] (
+    [dbo].[ProfileLinks] (
         [Link],
         [UserId]
     )
@@ -19,7 +19,8 @@ INSERT INTO
     ('https://github.com/hansonsa12/CS-3750-Project/issues/29', '1')
 GO
 
-INSERT INTO [lms_dev].[dbo].[Courses] (
+INSERT INTO 
+    [dbo].[Courses] (
       [CourseName], 
       [CourseNumber],
       [InstructorId],

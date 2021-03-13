@@ -4,11 +4,11 @@ Content-Type: application/json
 
 {
   "accountType": "instructor",
-  "firstName": "Philly",
-  "lastName": "Burtons",
-  "email": "philburtons@example.com",
+  "firstName": "Joe",
+  "lastName": "Instructor",
+  "email": "joe@lms.com",
   "birthDay": "1986-02-09T15:53:00.000Z",
-  "password": "password1"
+  "password": "password"
 }
 
 ### Login
@@ -16,8 +16,8 @@ POST https://localhost:5001/api/auth/login
 Content-Type: application/json 
 
 {
-  "email": "philburtons@example.com",
-  "password": "password1"
+  "email": "joe@lms.com",
+  "password": "password"
 }
 
 ### Protected Route
