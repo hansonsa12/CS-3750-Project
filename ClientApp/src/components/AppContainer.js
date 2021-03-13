@@ -8,6 +8,8 @@ import Courses from './Courses/Courses';
 import Registrations from './Registrations';
 import Profile from './Profile_Static';
 import Dashboard from './Dashboard/Dashboard';
+import { AuthContext } from '../context/AuthProvider';
+import axios from 'axios';
 
 const styles = theme => ({
     root: {
@@ -16,15 +18,41 @@ const styles = theme => ({
 });
 
 class AppContainer extends Component {
+    static contextType = AuthContext;
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            courses: undefined,
+            registrations: undefined,
+        };
+    }
+
+    componentDidMount() {
+        const { isInstructor, authHeader } = this.context;
+        if (isInstructor) {
+            axios.get('api/courses', authHeader)
+                .then(res => {
+                    this.setState({ courses: res.data });
+                })
+                .catch(err => {
+                    alert(err);
+                    console.error(err);
+                });
+        }
+    }
 
     render() {
         const { classes } = this.props;
+        const { courses, registrations } = this.state;
+        const { isInstructor } = this.context;
 
         return (
             <div className={classes.root}>
                 <CssBaseline />
                 <SideNavigation />
-             
+
                 <Switch>
                     <Route exact path="/profile">
                         <MainView title="Profile">
@@ -33,7 +61,7 @@ class AppContainer extends Component {
                     </Route>
                     <Route exact path="/dashboard">
                         <MainView title="Dashboard">
-                            <Dashboard />
+                            <Dashboard courses={isInstructor ? courses : registrations} />
                         </MainView>
                     </Route>
                     <Route exact path="/calendar">
@@ -44,13 +72,13 @@ class AppContainer extends Component {
 
                     <Route exact path="/courses">
                         <MainView title="Courses">
-                            <Courses />
+                            <Courses courses={courses} />
                         </MainView>
                     </Route>
 
                     <Route exact path="/registrations">
                         <MainView title="Registrations">
-                            <Registrations />
+                            <Registrations registrations={registrations} />
                         </MainView>
                     </Route>
 

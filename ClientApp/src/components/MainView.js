@@ -18,6 +18,7 @@ export default function MiniDrawer(props) {
         <main className={classes.content}>
             <TopBar title={props.title} />
             <Divider />
+            <br />
             {props.children}
         </main>
     );

@@ -1,0 +1,11 @@
+POST https://localhost:5001/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"joe@instructor.com",
+    "password":"password"
+}
+
+###
+GET https://localhost:5001/api/courses HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE1NTcxNzgyLCJleHAiOjE2MTU1ODI1ODIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNzEifQ.Q_zob0AicG5uata5pudWnGD5-rWD7astKS1Au4dlPeI

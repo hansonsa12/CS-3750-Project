@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function SideNavigation() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(localStorage["navBarOpen"] || true);
+    const [open, setOpen] = React.useState(JSON.parse(localStorage["navBarOpen"]) ?? true);
 
     const handleDrawerToggle = () => {
         localStorage["navBarOpen"] = !open;

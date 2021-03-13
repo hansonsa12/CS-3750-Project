@@ -1,20 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import CourseForm from "./CourseForm";
 import CourseTable from "./CourseTable";
-export class Courses extends Component {
-    constructor(props) {
-        super(props);
-    }
-  
-    render() {
-        return (
-            <div>
-                <CourseForm/>
-                <CourseTable />
-            </div>
-            
-        )
 
-    }
+export default function Courses({
+    courses = []
+}) {
+
+    return (
+        <div>
+            <CourseForm />
+            <CourseTable courses={courses} />
+        </div>
+
+    )
+
 }
-export default Courses;
