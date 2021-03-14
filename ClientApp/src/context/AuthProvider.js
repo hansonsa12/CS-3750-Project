@@ -78,8 +78,8 @@ class AuthProvider extends Component {
                 this.setResponseToken(res);
             })
             .catch(err => {
-                alert(err.message);
-                console.error(err.message);
+                alert(`${err.message}\nCheck the console for more details.`);
+                console.error(`${err.message}:\n${err.response.data.error}`);
             });
     }
 

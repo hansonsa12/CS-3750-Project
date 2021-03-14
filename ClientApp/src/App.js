@@ -7,6 +7,7 @@ import background from "./images/textbook.png";
 import { withStyles } from "@material-ui/core";
 
 import { AuthContext } from './context/AuthProvider';
+import FileUploader from './components/FileUploading/FileUploader';
 
 const styles = theme => ({
     root: {
@@ -33,11 +34,14 @@ class App extends Component {
                     <SignUpForm className={classes.root} />
                 </Route>
 
-                <Route path="/">
-                    {user ? <AppContainer user={user} /> :
-                        <LoginForm className={classes.root} />
-                    }
+                <Route path="/test">
+                    <FileUploader />
                 </Route>
+
+                <Route path="/">
+                    {user ? <AppContainer /> : <LoginForm className={classes.root} />}
+                </Route>
+
             </Switch>
         );
     }

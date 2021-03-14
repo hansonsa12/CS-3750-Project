@@ -14,7 +14,6 @@
 
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<ProfileLink> ProfileLinks { get; set; }
 
         public DbSet<Course> Courses { get; set; }

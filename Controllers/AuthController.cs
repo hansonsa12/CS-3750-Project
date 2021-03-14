@@ -43,10 +43,10 @@
                     return StatusCode(401);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // User not found, so return error.
-                return StatusCode(401);
+                // Something else happened, so return error.
+                return StatusCode(500, new { error = e.Message });
             }
 
         }

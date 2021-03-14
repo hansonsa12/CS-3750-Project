@@ -37,7 +37,9 @@
 
         public virtual Address Address { get; set; }
 
-        public ICollection<FileUpload> FileUploads { get; set; }
+        [Column(TypeName="varchar(60)")]
+        public string ProfilePicName { get; set; }
+
         public ICollection<ProfileLink> ProfileLinks { get; set; }
 
         public UserInfo() { }
@@ -51,7 +53,6 @@
             this.AccountType = user.AccountType;
             this.PhoneNumber = user.PhoneNumber;
             this.Address = user.Address;
-            this.FileUploads = user.FileUploads;
             this.ProfileLinks = user.ProfileLinks;
         }
     }
