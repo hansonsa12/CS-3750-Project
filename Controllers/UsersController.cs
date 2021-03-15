@@ -33,11 +33,39 @@ namespace final_project.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditUser(int id, User model)
         {
-            // TODO: Your code here
-            await Task.Yield();
+            if(id != model.UserId)
+            {
+                return BadRequest();
+            }
 
+            _context.Entry(model).State = EntityState.Modified;
+
+            try 
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return NoContent();
         }
+
+
+        private bool UserExists(int id)
+        {
+            _context.Users.AnyAsync(e=> e.UserId == id);
+            //TODO: convert top line to return a bool
+            return false;
+        }
+        
 
         // [HttpGet]
         // public async Task<ActionResult<IEnumerable<User>>> GetUsers()

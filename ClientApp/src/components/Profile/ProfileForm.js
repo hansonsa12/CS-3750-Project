@@ -10,11 +10,16 @@ import {
   Divider,
 } from "@material-ui/core";
 
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import * as Yup from "yup";
 import _ from "lodash";
 import { Form as FForm } from "react-final-form";
 import {showErrorOnBlur } from "mui-rff";
 import { makeStyles } from "@material-ui/core/styles";
+import { AuthContext } from '../../context/AuthProvider';
+
+
 
 export default function ProfileForm() {
     const useStyles = makeStyles((theme) => ({
@@ -41,10 +46,13 @@ export default function ProfileForm() {
       setOpen(false);
     };
   
-    const onSubmit = (values) => {
-      alert("Success!");
-      
+     const { editProfile } = useContext(AuthContext);
+
+     const onSubmit = values => {
+       editProfile(values);
+       alert("Success!");
     };
+
 
     const TextEntry = (fieldProps) => (
         <Grid item xs={12} {..._.pick(fieldProps, ["sm"])}>
