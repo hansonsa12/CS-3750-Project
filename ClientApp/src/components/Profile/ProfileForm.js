@@ -11,8 +11,7 @@ import {
 } from "@material-ui/core";
 
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import * as Yup from "yup";
+
 import _ from "lodash";
 import { Form as FForm } from "react-final-form";
 import {showErrorOnBlur } from "mui-rff";
@@ -47,19 +46,26 @@ export default function ProfileForm() {
       setOpen(false);
     };
   
+    const { getCurrentUserInfo } = useContext(AuthContext);
 
-     const onSubmit = values => {
-      var id = userInfo.userId;
+    const onSubmit = values => {
+      //var id = userInfo.userId;
+      alert(getCurrentUserInfo());
+      var data = getCurrentUserInfo();
+
+      console.log(data);
+
       axios
         .put("api/users/${userInfo.userId}")
         .then(res => {
           this.setResponseToken(res);
         })
-        .catch(err.message);
-        console.error(err.message);
-      alert("Success!");
-    };
-
+        .catch(err => {
+          alert(err.message);
+          console.error(err.message);
+      });
+      
+    }
 
     const TextEntry = (fieldProps) => (
         <Grid item xs={12} {..._.pick(fieldProps, ["sm"])}>
