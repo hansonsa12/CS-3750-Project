@@ -99,19 +99,6 @@ class AuthProvider extends Component {
             });
     }
 
-    editProfile = (userInfo) => {
-        var id = userInfo.userId;
-        axios
-            .put("api/auth/EditUser", {id, userInfo} )
-            .then(res => {
-                this.setResponseToken(res);
-            })
-            .catch(err => {
-                alert(err.message);
-                console.error(err.message);
-            });
-    }
-
     authHeader = () => {
         const authToken = localStorage.getItem("authToken");
         if (!authToken) return null;

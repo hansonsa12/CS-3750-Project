@@ -18,6 +18,7 @@ import { Form as FForm } from "react-final-form";
 import {showErrorOnBlur } from "mui-rff";
 import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from '../../context/AuthProvider';
+import axios from "axios";
 
 
 
@@ -46,11 +47,17 @@ export default function ProfileForm() {
       setOpen(false);
     };
   
-     const { editProfile } = useContext(AuthContext);
 
      const onSubmit = values => {
-       editProfile(values);
-       alert("Success!");
+      var id = userInfo.userId;
+      axios
+        .put("api/users/${userInfo.userId}")
+        .then(res => {
+          this.setResponseToken(res);
+        })
+        .catch(err.message);
+        console.error(err.message);
+      alert("Success!");
     };
 
 
