@@ -46,17 +46,14 @@ export default function ProfileForm() {
       setOpen(false);
     };
   
-    const { getCurrentUserInfo } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const onSubmit = values => {
-      //var id = userInfo.userId;
-      alert(getCurrentUserInfo());
-      var data = getCurrentUserInfo();
-
-      console.log(data);
+      var id = user.userId;
+      alert(id);
 
       axios
-        .put("api/users/${userInfo.userId}")
+        .put("api/users/${user.userID}")
         .then(res => {
           this.setResponseToken(res);
         })

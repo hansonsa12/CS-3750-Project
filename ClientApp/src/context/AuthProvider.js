@@ -115,7 +115,6 @@ class AuthProvider extends Component {
             login: this.login,
             logout: this.logout,
             signup: this.signup,
-            getCurrentUserInfo: this.getCurrentUserInfo,
             authHeader: this.authHeader()
         }}>
             {children}
