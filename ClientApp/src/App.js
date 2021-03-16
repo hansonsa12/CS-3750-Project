@@ -35,7 +35,7 @@ class App extends Component {
                 </Route>
 
                 <Route path="/test">
-                    <FileUploader />
+                    <FileUploader imageOnly />
                 </Route>
 
                 <Route path="/">

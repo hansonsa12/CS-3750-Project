@@ -50,8 +50,7 @@ namespace final_project.Controllers
                 user.ProfilePicName = fileName;
                 await _context.SaveChangesAsync();
 
-                Byte[] image = await System.IO.File.ReadAllBytesAsync(filePath);
-                return Ok();
+                return Ok(new { filePath = $"/{filePath.Replace("\\", "/")}"});
 
             } catch (Exception e) {
                 Console.Error.WriteLine(e);
