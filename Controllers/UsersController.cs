@@ -1,27 +1,28 @@
 namespace final_project.Controllers
 {
-    using System.Collections.Generic;
-    using System.Security.Claims;
     using System.Threading.Tasks;
     using final_project.Data;
     using final_project.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using Microsoft.EntityFrameworkCore;
+    using final_project.Controllers.Helpers;
 
-    public class UsersController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UsersController : ControllerBase
     {
+        private readonly LMSContext _context;
+
         public UsersController(LMSContext context)
-            : base(context)
         {
+            _context = context;
         }
 
         [Authorize]
         [HttpGet("current")]
         public async Task<IActionResult> GetLoggedInUserInfo()
         {
-            User foundUser = await base.GetCurrentUser();
+            User foundUser = await AuthHelpers.GetCurrentUser(_context, User);
             return Ok(new UserInfo(foundUser));
         }
 

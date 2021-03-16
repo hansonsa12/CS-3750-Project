@@ -53,6 +53,7 @@
             this.AccountType = user.AccountType;
             this.PhoneNumber = user.PhoneNumber;
             this.Address = user.Address;
+            this.ProfilePicName = user.ProfilePicName;
             this.ProfileLinks = user.ProfileLinks;
         }
     }
@@ -65,7 +66,7 @@
         
         [Column(TypeName = "nvarchar(128)")]
         public string Salt { get; set; }
-    }
+   }
 
     public class LoginInfo
     {

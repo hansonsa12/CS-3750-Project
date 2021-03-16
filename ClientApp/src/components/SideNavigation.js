@@ -1,13 +1,11 @@
 ﻿import React, { useContext } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import IconButton from "@material-ui/core/IconButton";
-import { ChevronLeft, ChevronRight, AccountCircle, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks} from "@material-ui/icons";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import {
+    makeStyles, Avatar, Drawer, List, IconButton, ListItem, ListItemIcon, ListItemText
+} from "@material-ui/core";
+import {
+    ChevronLeft, ChevronRight, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks
+} from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 
@@ -76,7 +74,9 @@ export default function SideNavigation() {
             <List className={classes.list}>
                 {[
                     {
-                        text: "Profile", icon: <AccountCircle />,
+                        text: "Profile", 
+                        icon: <Avatar src={`/uploads/u${user.userId}/${user.profilePicName}`} 
+                         style={{ marginLeft: -5 }}/>,
                         onClick: () => history.push("/profile")
                     },
                     {

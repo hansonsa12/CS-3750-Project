@@ -1,42 +1,62 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using final_project.Data;
-using final_project.Models.User;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-//using final_project.Models;
-
 namespace final_project.Controllers
 {
-    public class FileUploadsController : BaseController
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using final_project.Controllers.Helpers;
+    using final_project.Data;
+    using final_project.Models.User;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
+    [ApiController]
+    [Route("api/[controller]")]
+    public class FileUploadsController : ControllerBase
     {
+        private readonly LMSContext _context;
+
         public FileUploadsController(LMSContext context)
-            :base(context)
         {
+            _context = context;
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> PostFileUpload([FromBody] FileUpload fileUpload)
+        [HttpPost("profilepic")]
+        public async Task<IActionResult> PostFileUpload(IFormFile file)
         {
             /* https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-5.0#upload-small-files-with-buffered-model-binding-to-physical-storage */
-            int userId = base.GetCurrentUserId();
-            IFormFile formFile = fileUpload.File;
+            try {
+                User user = await AuthHelpers.GetCurrentUser(_context, User);
+                var filePath = AuthHelpers.GetUploadBasePath(user.UserId);
 
-            var filePath = Path.Combine("uploads", $"u{userId.ToString()}");
-            Directory.CreateDirectory(filePath);
-            string fileName = Path.GetRandomFileName() + Path.GetExtension(formFile.FileName);
-            filePath = Path.Combine(filePath, fileName);
+                /* delete existing profile pic */
+                try {
+                    System.IO.File.Delete(Path.Combine(filePath, user.ProfilePicName));
+                } catch (Exception del) {
+                    Console.Error.WriteLine(del);
+                }
 
-            using (var stream = System.IO.File.Create(filePath)) {
-                await formFile.CopyToAsync(stream);
+                /* add new profile pic */
+                Directory.CreateDirectory(filePath);
+                string extension = Path.GetExtension(file.FileName);
+                string fileName = Path.GetRandomFileName() + extension;
+                filePath = Path.Combine(filePath, fileName);
+
+                using (var stream = System.IO.File.Create(filePath)) {
+                    await file.CopyToAsync(stream);
+                }
+
+                user.ProfilePicName = fileName;
+                await _context.SaveChangesAsync();
+
+                Byte[] image = await System.IO.File.ReadAllBytesAsync(filePath);
+                return Ok();
+
+            } catch (Exception e) {
+                Console.Error.WriteLine(e);
+                return StatusCode(500, new { error = e });
             }
-
-            return Ok();
         }
 
         // [HttpGet("")]

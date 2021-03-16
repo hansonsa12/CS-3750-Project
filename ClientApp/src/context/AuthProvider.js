@@ -21,6 +21,7 @@ const initialState = {
             zipCode: undefined,
             userId: undefined
         },
+        profilePicName: undefined,
         // fileUploads: [{}],
         profileLinks: [{
             profileLinkId: undefined,

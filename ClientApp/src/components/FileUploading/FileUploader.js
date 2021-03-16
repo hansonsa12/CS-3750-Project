@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthProvider';
 
@@ -14,18 +14,18 @@ export default function FileUploader() {
     };
 
     const onFileUpload = (e) => {
-        const body = {
-            attachableId: user.id,
-            attachableType: "User",
-            file: selectedFile
-        };
-        axios.post("api/fileuploads", body, authHeader);
+        const formData = new FormData();
+        formData.append("file", selectedFile, selectedFile.name);
+        axios.post("api/fileuploads/profilepic", formData, authHeader).then(() => {
+            window.location.reload();
+        });
     };
 
 
     return (
         <div>
-            <pre>{selectedFile?.name}</pre>
+            {user.profilePicName && <Avatar src={`/uploads/u${user.userId}/${user.profilePicName}`} 
+                style={{ width: 200, height: 200 }}/>}
             <Button variant="contained" color="primary" component="label">
                 SelectFile
                 <input accept="image/*" type="file" onChange={onFileChange} hidden />

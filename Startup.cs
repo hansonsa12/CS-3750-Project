@@ -12,6 +12,8 @@ namespace final_project
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
     using final_project.Data;
+    using System.IO;
+    using Microsoft.Extensions.FileProviders;
 
     public class Startup
     {
@@ -78,6 +80,14 @@ namespace final_project
 
             // are you allowed?
             app.UseAuthorization();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "uploads")),
+                    RequestPath="/uploads"
+                
+            });
 
             app.UseEndpoints(endpoints =>
             {

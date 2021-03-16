@@ -9,13 +9,17 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
 
-    public class AuthController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
+        private readonly LMSContext _context;
         private readonly JWTConfigs _jwtConfigs;
+
         public AuthController(LMSContext context, IOptions<JWTConfigs> jwtConfigs)
-            : base(context)
         {
             _jwtConfigs = jwtConfigs.Value;
+            _context = context;
         }
 
         [HttpPost("login")]

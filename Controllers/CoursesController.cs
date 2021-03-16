@@ -4,17 +4,21 @@ namespace final_project.Controllers
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using final_project.Controllers.Helpers;
     using final_project.Data;
     using final_project.Models.Course;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
-    public class CoursesController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CoursesController : ControllerBase
     {
+        private readonly LMSContext _context;
         public CoursesController(LMSContext context)
-            : base(context)
         {
+            _context = context;
         }
 
 
@@ -35,7 +39,7 @@ namespace final_project.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCourses()
         {
-            int userId = base.GetCurrentUserId();
+            int userId = AuthHelpers.GetCurrentUserId(User);
             var courses = await _context.Courses.Where(c => c.InstructorId == userId).ToListAsync();
             return Ok(courses);
         }
