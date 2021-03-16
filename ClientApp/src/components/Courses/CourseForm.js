@@ -10,13 +10,14 @@ import {
     Typography
 } from "@material-ui/core";
 import { Form as FForm } from "react-final-form";
-import { TextField, KeyboardTimePicker, Checkboxes, showErrorOnBlur, makeValidate } from "mui-rff";
+import { Checkboxes, makeValidate } from "mui-rff";
 import { Grid } from "@material-ui/core";
 import _ from "lodash";
 import dayjs from "dayjs";
 import * as Yup from "yup";
 import { AuthContext } from '../../context/AuthProvider';
 import axios from 'axios';
+import { TextEntryItem, TimeEntryItem } from '../StyledComponents';
 
 export default function CourseForm(props) {
     const [open, setOpen] = React.useState(false);
@@ -53,29 +54,6 @@ export default function CourseForm(props) {
                 console.error(err.message);
             });
     };
-
-    const TextEntry = (fieldProps) => (
-        <Grid item xs={12} {..._.pick(fieldProps, ['sm'])}>
-            <TextField size="small" label={_.startCase(fieldProps.name)}
-                variant="outlined" showError={showErrorOnBlur}
-                {..._.omit(fieldProps, ['sm'])}
-            />
-        </Grid>
-    )
-
-    const TimeEntry = (fieldProps) => (
-        <Grid item xs={12} {..._.pick(fieldProps, ['sm'])}>
-            <KeyboardTimePicker label={_.startCase(fieldProps.name)}
-                variant="inline"
-                ampm={true}
-                inputVariant="outlined"
-                size="small"
-                mask="__:__ _M"
-                placeholder="08:00 AM"
-                {..._.omit(fieldProps, ['sm'])}
-            />
-        </Grid>
-    );
 
     const SectionHeader = (fieldProps) => (
         <Grid item xs={12}>
@@ -115,20 +93,20 @@ export default function CourseForm(props) {
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
                                     <SectionHeader title="Course Information" />
-                                    <TextEntry name="courseName" sm={6} required={true} />
-                                    <TextEntry name="courseNumber" sm={6} required={true} />
-                                    <TextEntry name="description" rows={6} multiline />
-                                    <TextEntry name="department" sm={9} required={true} />
-                                    <TextEntry name="creditHours" select sm={3}>
+                                    <TextEntryItem name="courseName" sm={6} required={true} />
+                                    <TextEntryItem name="courseNumber" sm={6} required={true} />
+                                    <TextEntryItem name="description" rows={6} multiline />
+                                    <TextEntryItem name="department" sm={9} required={true} />
+                                    <TextEntryItem name="creditHours" select sm={3}>
                                         {["n/a", "1", "2", "3", "4", "5"].map((option, index) => (
                                             <MenuItem key={`creditHoursOption-${index}`} value={index}>
                                                 {option}
                                             </MenuItem>
                                         ))}
-                                    </TextEntry>
+                                    </TextEntryItem>
                                     <SectionHeader style={{ marginTop: 10 }} title="Meeting Location/Time" />
-                                    <TextEntry name="buildingName" sm={8} />
-                                    <TextEntry name="roomNumber" sm={4} />
+                                    <TextEntryItem name="buildingName" sm={8} />
+                                    <TextEntryItem name="roomNumber" sm={4} />
                                     <Grid item container xs={12} alignItems="center" justify="center">
                                         <Typography>Meeting Days:</Typography>
                                         <Checkboxes
@@ -140,9 +118,9 @@ export default function CourseForm(props) {
                                             formGroupProps={{ row: true }}
                                         />
                                     </Grid>
-                                    <TextEntry name="maxCapacity" sm={4} type="number" />
-                                    <TimeEntry name="startTime" sm={4} />
-                                    <TimeEntry name="endTime" sm={4} />
+                                    <TextEntryItem name="maxCapacity" sm={4} type="number" />
+                                    <TimeEntryItem name="startTime" sm={4} />
+                                    <TimeEntryItem name="endTime" sm={4} />
                                 </Grid>
                             </DialogContent>
                             <DialogActions>
