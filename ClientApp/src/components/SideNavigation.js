@@ -76,7 +76,7 @@ export default function SideNavigation() {
                     {
                         text: "Profile", 
                         icon: <Avatar src={`/uploads/u${user.userId}/${user.profilePicName}`} 
-                         style={{ marginLeft: -5 }}/>,
+                         style={{ marginLeft: -8 }}/>,
                         onClick: () => history.push("/profile")
                     },
                     {

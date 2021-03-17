@@ -107,6 +107,10 @@ class AuthProvider extends Component {
         return { headers: { Authorization: `Bearer ${authToken}` } };
     }
 
+    updateUser = (user) => {
+        this.setState({ user });
+    }
+
     render() {
         const { user, loading } = this.state;
         const { children } = this.props;
@@ -119,7 +123,8 @@ class AuthProvider extends Component {
             signup: this.signup,
             authHeader: this.authHeader(),
             isStudent: user?.accountType === AccountType.STUDENT,
-            isInstructor: user?.accountType === AccountType.INSTRUCTOR
+            isInstructor: user?.accountType === AccountType.INSTRUCTOR,
+            updateUser: this.updateUser
         }}>
             {children}
         </AuthContext.Provider>

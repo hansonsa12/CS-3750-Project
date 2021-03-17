@@ -3,11 +3,9 @@ import { Avatar, Button, Grid } from '@material-ui/core';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthProvider';
 
-export default function FileUploader({
-    imageOnly = false
-}) {
+export default function ProfilePicUploader() {
     // https://www.geeksforgeeks.org/file-uploading-in-react-js/
-    const { user, authHeader } = useContext(AuthContext);
+    const { user, authHeader, updateUser } = useContext(AuthContext);
 
     const getFileUrl = () => {
         // user? makes sure user is not null before accessing profilePicName.
@@ -18,14 +16,14 @@ export default function FileUploader({
 
     const [fileUrl, setFileUrl] = useState(getFileUrl());
 
-    const acceptedFileTypes = ["image/*", ".pdf", ".doc"].join(', ');
-
     const uploadFile = (e) => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("file", selectedFile, selectedFile.name);
         axios.post("api/fileuploads/profilepic", formData, authHeader).then((res) => {
-            setFileUrl(res.data.filePath);
+            const { data: { filePath, fileName } } = res;
+            setFileUrl(filePath);
+            updateUser({ ...user, profilePicName: fileName });
         });
     };
 
@@ -37,8 +35,7 @@ export default function FileUploader({
             <Grid item>
                 <Button variant="contained" color="primary" component="label">
                     Upload
-                <input accept={imageOnly ? "image/*" : acceptedFileTypes} 
-                    type="file" onChange={uploadFile} hidden />
+                <input accept={"image/*"} type="file" onChange={uploadFile} hidden />
                 </Button>
             </Grid>
         </Grid>

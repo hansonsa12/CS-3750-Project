@@ -50,7 +50,7 @@ namespace final_project.Controllers
                 user.ProfilePicName = fileName;
                 await _context.SaveChangesAsync();
 
-                return Ok(new { filePath = $"/{filePath.Replace("\\", "/")}"});
+                return Ok(new { filePath = $"/{filePath.Replace("\\", "/")}", fileName });
 
             } catch (Exception e) {
                 Console.Error.WriteLine(e);
