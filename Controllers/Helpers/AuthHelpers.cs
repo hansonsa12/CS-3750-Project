@@ -9,6 +9,9 @@
     using System.Security.Claims;
     using System.Security.Cryptography;
     using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+    using final_project.Data;
+    using Microsoft.EntityFrameworkCore;
+    using System.IO;
 
     public struct HashResult {
         public HashResult(string hashedPassword, string salt)
@@ -78,6 +81,20 @@
 
                     return tokenJson;
                 });
+        }
+        public static async Task<User> GetCurrentUser(LMSContext context, ClaimsPrincipal principal) {
+            int userId = GetCurrentUserId(principal);
+            User foundUser = await context.Users.Include(u => u.Address)
+                .Include(u => u.ProfileLinks).FirstOrDefaultAsync(u => u.UserId == userId);
+            return foundUser;
+        }        
+
+        public static int GetCurrentUserId(ClaimsPrincipal principle) {
+            return Int32.Parse(principle.FindFirstValue(ClaimTypes.NameIdentifier));
+        }        
+
+        public static string GetUploadBasePath(int userId) {
+            return Path.Combine("uploads", $"u{userId.ToString()}");
         }
     }
 }

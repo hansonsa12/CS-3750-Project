@@ -21,6 +21,7 @@ const initialState = {
             zipCode: undefined,
             userId: undefined
         },
+        profilePicName: undefined,
         // fileUploads: [{}],
         profileLinks: [{
             profileLinkId: undefined,
@@ -78,8 +79,8 @@ class AuthProvider extends Component {
                 this.setResponseToken(res);
             })
             .catch(err => {
-                alert(err.message);
-                console.error(err.message);
+                alert(`${err.message}\nCheck the console for more details.`);
+                console.error(`${err.message}:\n${err.response.data.error}`);
             });
     }
 
@@ -106,6 +107,10 @@ class AuthProvider extends Component {
         return { headers: { Authorization: `Bearer ${authToken}` } };
     }
 
+    updateUser = (user) => {
+        this.setState({ user });
+    }
+
     render() {
         const { user, loading } = this.state;
         const { children } = this.props;
@@ -118,7 +123,8 @@ class AuthProvider extends Component {
             signup: this.signup,
             authHeader: this.authHeader(),
             isStudent: user?.accountType === AccountType.STUDENT,
-            isInstructor: user?.accountType === AccountType.INSTRUCTOR
+            isInstructor: user?.accountType === AccountType.INSTRUCTOR,
+            updateUser: this.updateUser
         }}>
             {children}
         </AuthContext.Provider>

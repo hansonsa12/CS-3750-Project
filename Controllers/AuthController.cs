@@ -9,13 +9,17 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
 
-    public class AuthController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
+        private readonly LMSContext _context;
         private readonly JWTConfigs _jwtConfigs;
+
         public AuthController(LMSContext context, IOptions<JWTConfigs> jwtConfigs)
-            : base(context)
         {
             _jwtConfigs = jwtConfigs.Value;
+            _context = context;
         }
 
         [HttpPost("login")]
@@ -43,10 +47,10 @@
                     return StatusCode(401);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // User not found, so return error.
-                return StatusCode(401);
+                // Something else happened, so return error.
+                return StatusCode(500, new { error = e.Message });
             }
 
         }
