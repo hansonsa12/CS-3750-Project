@@ -18,6 +18,8 @@ namespace final_project.Controllers
             _context = context;
         }
 
+        
+
         [Authorize]
         [HttpGet("current")]
         public async Task<IActionResult> GetLoggedInUserInfo()
@@ -25,6 +27,44 @@ namespace final_project.Controllers
             User foundUser = await AuthHelpers.GetCurrentUser(_context, User);
             return Ok(new UserInfo(foundUser));
         }
+
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditUser(int id, User model)
+        {
+            if(id != model.UserId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(model).State = EntityState.Modified;
+
+            try 
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+
+        private bool UserExists(int id)
+        {
+            _context.Users.AnyAsync(e=> e.UserId == id);
+            //TODO: convert top line to return a bool
+            return false;
+        }
+        
 
         // [HttpGet]
         // public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -44,14 +84,6 @@ namespace final_project.Controllers
         //     return null;
         // }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> EditUser(int id, User model)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
-
-        //     return NoContent();
-        // }
 
         // [HttpDelete("{id}")]
         // public async Task<ActionResult<User>> DeleteUserById(int id)

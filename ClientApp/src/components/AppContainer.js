@@ -6,7 +6,7 @@ import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/c
 import { Switch, Route, Redirect } from "react-router-dom";
 import Courses from './Courses/Courses';
 import Registrations from './Registrations';
-import Profile from './Profile_Static';
+import Profile from './Profile/Profile_Static';
 import Dashboard from './Dashboard/Dashboard';
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
@@ -56,7 +56,7 @@ class AppContainer extends Component {
                 <Switch>
                     <Route exact path="/profile">
                         <MainView title="Profile">
-                            <Profile></Profile>
+                            <Profile />
                         </MainView>
                     </Route>
                     <Route exact path="/dashboard">
