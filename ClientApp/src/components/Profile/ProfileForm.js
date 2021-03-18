@@ -18,6 +18,7 @@ import {showErrorOnBlur } from "mui-rff";
 import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from '../../context/AuthProvider';
 import axios from "axios";
+import ProfilePicUploader from '../FileUploading/ProfilePicUploader';
 
 
 
@@ -111,22 +112,7 @@ export default function ProfileForm() {
                 <TextEntry name="link2" sm={6} />
                 <TextEntry name="link3" sm={6} />
                 <Grid item>
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component="span"
-                    >
-                      Upload
-                    </Button>
-                  </label>
+                    <ProfilePicUploader />
                 </Grid>
               </Grid>
             </DialogContent>

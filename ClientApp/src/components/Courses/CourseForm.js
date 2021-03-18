@@ -29,6 +29,7 @@ export default function CourseForm(props) {
 
     const handleClose = () => {
         setOpen(false);
+        window.location.reload();
     };
 
     const onSubmit = (values) => {

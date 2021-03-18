@@ -1,13 +1,14 @@
 ﻿import React, { useContext } from "react";
 import clsx from "clsx";
 import {
-    makeStyles, Avatar, Drawer, List, IconButton, ListItem, ListItemIcon, ListItemText
+    makeStyles, Drawer, List, IconButton, ListItem, ListItemIcon, ListItemText
 } from "@material-ui/core";
 import {
     ChevronLeft, ChevronRight, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks
 } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import { ProfilePic } from './Profile/ProfilePic';
 
 const useStyles = makeStyles((theme) => {
     const openDrawerWidth = 180;
@@ -75,8 +76,7 @@ export default function SideNavigation() {
                 {[
                     {
                         text: "Profile", 
-                        icon: <Avatar src={`/uploads/u${user.userId}/${user.profilePicName}`} 
-                         style={{ marginLeft: -8 }}/>,
+                        icon: <ProfilePic style={{ marginLeft: -8 }} />,
                         onClick: () => history.push("/profile")
                     },
                     {

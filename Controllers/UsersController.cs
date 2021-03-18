@@ -28,42 +28,53 @@ namespace final_project.Controllers
             return Ok(new UserInfo(foundUser));
         }
 
+        // [Authorize]
+        // [HttpPost]
+        // public async Task<IActionResult> UpdateUser([FromBody] User user) {
+        //     User foundUser = await AuthHelpers.GetCurrentUser(_context, User);
+        //     if (foundUser.UserId != user.UserId) {
+        //         return StatusCode(401); // forbidden
+        //     }
+
+        //     // assign foundUser attributes to user attributes
+        //     return Ok();
+        // }
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(int id, User model)
-        {
-            if(id != model.UserId)
-            {
-                return BadRequest();
-            }
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> EditUser(int id, User model)
+        // {
+        //     if(id != model.UserId)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(model).State = EntityState.Modified;
+        //     _context.Entry(model).State = EntityState.Modified;
 
-            try 
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch(DbUpdateConcurrencyException)
-            {
-                if(!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
+        //     try 
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch(DbUpdateConcurrencyException)
+        //     {
+        //         if(!UserExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
+        //     return NoContent();
+        // }
 
 
-        private bool UserExists(int id)
-        {
-            _context.Users.AnyAsync(e=> e.UserId == id);
-            //TODO: convert top line to return a bool
-            return false;
-        }
+        // private bool UserExists(int id)
+        // {
+        //     _context.Users.AnyAsync(e=> e.UserId == id);
+        //     //TODO: convert top line to return a bool
+        //     return false;
+        // }
         
 
         // [HttpGet]

@@ -6,7 +6,7 @@ import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/c
 import { Switch, Route, Redirect } from "react-router-dom";
 import Courses from './Courses/Courses';
 import Registrations from './Registrations';
-import Profile from './Profile/Profile_Static';
+import Profile from './Profile/ProfileStatic';
 import Dashboard from './Dashboard/Dashboard';
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';

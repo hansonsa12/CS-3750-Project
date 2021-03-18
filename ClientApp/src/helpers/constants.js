@@ -8,3 +8,7 @@ export const AccountType = {
 export const getFormattedTime = (startTime, endTime) => {
     return _.chain([startTime, endTime]).compact().join(" - ").value();
 };
+
+export const getFileUrl = (userId, fileName) => {
+    return (userId && fileName) ? `/uploads/u${userId}/${fileName}` : null;
+};
