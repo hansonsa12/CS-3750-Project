@@ -3,13 +3,10 @@ import {
   Grid,
   Typography,
   Avatar,
-  IconButton,
   TextField,
 } from "@material-ui/core";
 
 import React, { useContext } from "react";
-import _ from "lodash";
-import Create from "@material-ui/icons/Create";
 import { AuthContext } from "../../context/AuthProvider";
 import ProfileForm from "./ProfileForm";
 
