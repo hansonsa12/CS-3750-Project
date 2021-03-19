@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using final_project.Data;
 
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    partial class LMSContextModelSnapshot : ModelSnapshot
+    [Migration("20210319200531_CreateAssignmentTable")]
+    partial class CreateAssignmentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace final_project.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.Property<int?>("MaxPoints")
                         .HasColumnType("int");
