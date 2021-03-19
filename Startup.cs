@@ -40,7 +40,7 @@ namespace final_project
                         IssuerSigningKey = key
                     };
                 });
-
+                
             services.AddDbContext<LMSContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

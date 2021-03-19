@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import React, { useContext } from "react";
-
+import EditIcon from '@material-ui/icons/Edit';
 import _ from "lodash";
 import { Form as FForm } from "react-final-form";
 import {showErrorOnBlur } from "mui-rff";
@@ -47,13 +47,16 @@ export default function ProfileForm() {
     };
   
     const { user } = useContext(AuthContext);
+    const { authHeader } = useContext(AuthContext);
 
     const onSubmit = values => {
       var id = user.userId;
       alert(id);
 
       axios
-        .put("api/users/${user.userID}")
+        //.put("api/users/${user.userID}")
+        //TODO: how to pass userInfo
+        .put("api/users/UpdateUser", {user}, authHeader)
         .then(res => {
           this.setResponseToken(res);
         })
@@ -86,9 +89,11 @@ export default function ProfileForm() {
 
   return (
     <div>
-        <Button variant="contained" color="primary" onClick={handleClickOpen}>
-            Edit
-        </Button>
+        <Button 
+          color="primary"
+          variant="link"
+          startIcon={<EditIcon />}
+          onClick={handleClickOpen}></Button>
     <FForm onSubmit={onSubmit}>
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>

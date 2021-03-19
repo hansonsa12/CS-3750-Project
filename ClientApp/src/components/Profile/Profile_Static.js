@@ -16,6 +16,7 @@ import {
 import React, { Component, useContext } from "react";
 import _ from "lodash";
 import Create from "@material-ui/icons/Create";
+
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import PublicIcon from "@material-ui/icons/Public";
@@ -59,10 +60,14 @@ export default function Profile_Static(props) {
   return (
     <>
       <Grid>
-        <Avatar
-          alt="Profile picture. This person looks Sharp!"
-          src="C:\Users\Kronos\Documents\Programming\Web\React\CS-3750-Project\ClientApp\src\images\Profile_Pic.png"
-        />
+        <div>
+          <Avatar
+            alt="Profile picture. This person looks Sharp!"
+            src="C:\Users\Kronos\Documents\Programming\Web\React\CS-3750-Project\ClientApp\src\images\Profile_Pic.png"
+          />
+          <ProfileForm />
+        </div>
+        
 
         <Grid item>
           <Typography variant="h6">
@@ -81,9 +86,6 @@ export default function Profile_Static(props) {
             {bio}
           </textarea>
           <br />
-          <Button variant="outlined" color="primary">
-            Update Bio
-          </Button>
           <div>
             <br />
             <br />
@@ -137,28 +139,25 @@ export default function Profile_Static(props) {
 
           <Button
             variant="contained"
-            startIcon={<GitHubIcon />}
             onClick={btnGithubClick}
           >
             GitHub
           </Button>
           <Button
             variant="contained"
-            startIcon={<LinkedInIcon />}
             onClick={btnLinkedInClick}
           >
             LinkedIn
           </Button>
           <Button
             variant="contained"
-            startIcon={<PublicIcon />}
             onClick={btnOtherClick}
           >
             Other
           </Button>
         </Grid>
       </Grid>
-      <ProfileForm />
+      
     </>
   );
 }
