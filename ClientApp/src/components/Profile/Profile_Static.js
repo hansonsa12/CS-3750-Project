@@ -1,46 +1,20 @@
 import {
   Button,
-  FormLabel,
   Grid,
   Typography,
   Avatar,
   IconButton,
   TextField,
-  Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@material-ui/core";
 
-import React, { Component, useContext } from "react";
+import React, { useContext } from "react";
 import _ from "lodash";
 import Create from "@material-ui/icons/Create";
-
-import GitHubIcon from "@material-ui/icons/GitHub";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import PublicIcon from "@material-ui/icons/Public";
-import { SettingsPowerRounded } from "@material-ui/icons";
-import { Form as FForm } from "react-final-form";
-import { KeyboardTimePicker, Checkboxes, showErrorOnBlur } from "mui-rff";
-import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from "../../context/AuthProvider";
 import ProfileForm from "./ProfileForm";
 
 export default function Profile_Static(props) {
 
-
-  const EditButton = () => (
-    <IconButton>
-      <Create />
-    </IconButton>
-  );
-
-  const GitHubButton = () => (
-    <IconButton>
-      <GitHubIcon />
-    </IconButton>
-  );
 
   function btnGithubClick(e) {
     window.open("https://www.github.com");

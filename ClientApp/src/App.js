@@ -1,4 +1,4 @@
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
 import AppContainer from "./components/AppContainer";
@@ -7,7 +7,6 @@ import background from "./images/textbook.png";
 import { withStyles } from "@material-ui/core";
 
 import { AuthContext } from './context/AuthProvider';
-import ProfilePicUploader from './components/FileUploading/ProfilePicUploader';
 
 const styles = theme => ({
     root: {

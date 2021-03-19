@@ -46,7 +46,6 @@ namespace final_project.Controllers
             try
             {
                 // Do coode for updating user info
-                // hash password
             foundUser.PhoneNumber = "555-555-0124";
             user.PhoneNumber = "555-555-0125";
             //await _context.Users.AddAsync(user);
