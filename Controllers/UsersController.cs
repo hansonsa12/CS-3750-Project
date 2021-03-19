@@ -1,11 +1,15 @@
 namespace final_project.Controllers
 {
+    using System;
     using System.Threading.Tasks;
     using final_project.Data;
     using final_project.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using final_project.Controllers.Helpers;
+    using System.Diagnostics;
+    using System.Linq;
+    using Microsoft.Extensions.Options;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -27,44 +31,34 @@ namespace final_project.Controllers
             User foundUser = await AuthHelpers.GetCurrentUser(_context, User);
             return Ok(new UserInfo(foundUser));
         }
-
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(int id, User model)
-        {
-            if(id != model.UserId)
+
+        [Authorize]
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser([FromBody] User user){
+            Debug.WriteLine("Inside UserController");
+            Console.WriteLine("Inside UserController");
+            User foundUser = await 
+            AuthHelpers.GetCurrentUser(_context, User);
+            if(foundUser.UserId != user.UserId){
+                return StatusCode(401); // forbidden
+            }
+            try
             {
-                return BadRequest();
+                // Do coode for updating user info
+            foundUser.PhoneNumber = "555-555-0124";
+            user.PhoneNumber = "555-555-0125";
+            //await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, new { error = e.Message });
             }
 
-            _context.Entry(model).State = EntityState.Modified;
+            return Ok();
 
-            try 
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch(DbUpdateConcurrencyException)
-            {
-                if(!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
         }
-
-
-        private bool UserExists(int id)
-        {
-            _context.Users.AnyAsync(e=> e.UserId == id);
-            //TODO: convert top line to return a bool
-            return false;
-        }
-        
 
         // [HttpGet]
         // public async Task<ActionResult<IEnumerable<User>>> GetUsers()

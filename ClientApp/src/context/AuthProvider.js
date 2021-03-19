@@ -52,8 +52,12 @@ class AuthProvider extends Component {
     }
 
     setUser = async () => {
-        const user = await this.getCurrentUserInfo();
-        this.setState({ user, loading: false });
+        try{
+            const user = await this.getCurrentUserInfo();
+            this.setState({ user, loading: false });
+        } catch(err){
+            console.log(err);
+        }
     }
 
     getCurrentUserInfo = async () => {
