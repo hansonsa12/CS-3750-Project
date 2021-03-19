@@ -5,6 +5,25 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    public class User : UserInfo
+    {
+        [Required]
+        [Column(TypeName = "nvarchar(128)")]
+        public string Password { get; set; }
+        
+        [Column(TypeName = "nvarchar(128)")]
+        public string Salt { get; set; }
+
+        public void UpdateInfo(UserInfo newInfo) {
+            this.FirstName = newInfo.FirstName;
+            this.LastName = newInfo.LastName;
+            this.PhoneNumber = newInfo.PhoneNumber;
+            this.Address = newInfo.Address;
+            this.ProfileLinks = newInfo.ProfileLinks;
+        }
+    }
+
+    /* "View Only" models */
     public class UserInfo {
         [Required]
         public int UserId { get; set; }
@@ -58,15 +77,6 @@
         }
     }
 
-    public class User : UserInfo
-    {
-        [Required]
-        [Column(TypeName = "nvarchar(128)")]
-        public string Password { get; set; }
-        
-        [Column(TypeName = "nvarchar(128)")]
-        public string Salt { get; set; }
-   }
 
     public class LoginInfo
     {
