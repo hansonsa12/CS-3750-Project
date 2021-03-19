@@ -20,7 +20,6 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import * as Yup from "yup";
 import dayjs from "dayjs";
-import axios from "axios";
 import { AuthContext } from '../../context/AuthProvider';
 
 

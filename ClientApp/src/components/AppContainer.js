@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SideNavigation from "./SideNavigation";
 import MainView from "./MainView";
 import Calendar from "./Calendar";
-import { withStyles, CssBaseline, CardContent, Typography } from "@material-ui/core";
+import { withStyles, CssBaseline } from "@material-ui/core";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Courses from './Courses/Courses';
 import Registrations from './Registrations';

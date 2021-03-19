@@ -9,7 +9,7 @@ export default function CourseCardList({
         courses.length > 0 ? (
             <Grid container spacing={2}>
                 {courses.map((course) => (
-                    <Grid item xs={12}>
+                    <Grid key={`courseitem-${course.courseId}`} item xs={12}>
                         <CourseCard {...course} />
                     </Grid>
                 ))}
