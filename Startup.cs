@@ -81,12 +81,13 @@ namespace final_project
             // are you allowed?
             app.UseAuthorization();
 
+            string uploadPath = Path.Combine(env.ContentRootPath, "uploads");
+            Directory.CreateDirectory(uploadPath); // create if not exist
+
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(env.ContentRootPath, "uploads")),
-                    RequestPath="/uploads"
-                
+                FileProvider = new PhysicalFileProvider(uploadPath),
+                RequestPath = "/uploads"
             });
 
             app.UseEndpoints(endpoints =>

@@ -22,7 +22,7 @@ export default function TodoList() {
         <Divider />
         {
 
-          AssignmentList().map((assignment) => <TodoItem assignment={assignment} />)}
+          AssignmentList().map((assignment, index) => <TodoItem key={`todoitem-${index}`} assignment={assignment} />)}
         <Divider />
       </List>
     </div>
