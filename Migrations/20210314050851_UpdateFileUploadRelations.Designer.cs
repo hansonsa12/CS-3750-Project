@@ -179,7 +179,7 @@ namespace final_project.Migrations
                         .HasColumnType("varchar(15)");
 
                     b.Property<string>("ProfilePicName")
-                        .HasColumnType("varchar(60");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("Salt")
                         .HasColumnType("nvarchar(128)");

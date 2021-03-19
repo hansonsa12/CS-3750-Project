@@ -10,8 +10,8 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210319180055_CreateAssignmentTable")]
-    partial class CreateAssignmentTable
+    [Migration("20210319200917_UpdateDatetime")]
+    partial class UpdateDatetime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace final_project.Migrations
                     b.ToTable("CourseStudent");
                 });
 
-            modelBuilder.Entity("final_project.Models.Course.AssignmentInfo", b =>
+            modelBuilder.Entity("final_project.Models.Course.Assignment", b =>
                 {
                     b.Property<int>("AssignmentId")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace final_project.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DueDate")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("MaxPoints")
                         .HasColumnType("int");
@@ -257,7 +257,7 @@ namespace final_project.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("final_project.Models.Course.AssignmentInfo", b =>
+            modelBuilder.Entity("final_project.Models.Course.Assignment", b =>
                 {
                     b.HasOne("final_project.Models.Course.Course", null)
                         .WithMany("Assignment")

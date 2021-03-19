@@ -7,15 +7,6 @@ namespace final_project.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "ProfilePicName",
-                table: "Users",
-                type: "varchar(60)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(60",
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Assignments",
                 columns: table => new
@@ -50,15 +41,6 @@ namespace final_project.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Assignments");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ProfilePicName",
-                table: "Users",
-                type: "varchar(60",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(60)",
-                oldNullable: true);
         }
     }
 }

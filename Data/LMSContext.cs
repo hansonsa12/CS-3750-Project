@@ -21,7 +21,7 @@
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
 
-        public DbSet<AssignmentInfo> Assignments { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

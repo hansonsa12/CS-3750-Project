@@ -4,9 +4,7 @@ namespace final_project.Models.Course
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class AssignmentInfo {
-
-        [Key]
+    public class Assignment {
         public int AssignmentId { get; set; }
 
 
@@ -21,8 +19,6 @@ namespace final_project.Models.Course
         public string Description { get; set; }
 
         public int? MaxPoints { get; set; }
-
-        [Column (TypeName = "DATETIME")]
         public DateTime? DueDate { get; set; }
 
         [Required]

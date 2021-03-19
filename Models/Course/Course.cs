@@ -51,6 +51,6 @@ namespace final_project.Models.Course
 
         // Student Registrations
         public ICollection<Student> Registrations { get; set; }
-        public List<AssignmentInfo> Assignment { get; set; }
+        public List<Assignment> Assignment { get; set; }
     }
 }
