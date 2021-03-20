@@ -22,11 +22,5 @@ Content-Type: application/json
 
 ### Protected Route
 GET https://localhost:5001/api/users/current
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE1MDczNTMzLCJleHAiOjE2MTUwODQzMzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNzEifQ.IFchOpo2HfWvWPXkbwZi_bT8NpH8E8Goc8CBh9ipfNU 
-
-
-### Protected Route
-GET https://localhost:5001/api/users/current
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwibmJmIjoxNjE1MDY2NTQ4LCJleHAiOjE2MTUwNzczNDgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzcxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzNzEifQ.4bACtf765PjvnJ9bTNJ1BSghpZHCA5SobUAQMVMWg0k 
-
+Authorization: Bearer <replace with authToken> 
 

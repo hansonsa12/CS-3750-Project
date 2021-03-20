@@ -5,6 +5,26 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    public class User : UserInfo
+    {
+        [Required]
+        [Column(TypeName = "nvarchar(128)")]
+        public string Password { get; set; }
+        
+        [Column(TypeName = "nvarchar(128)")]
+        public string Salt { get; set; }
+
+        public void UpdateInfo(UserInfo newInfo) {
+            this.FirstName = newInfo.FirstName;
+            this.LastName = newInfo.LastName;
+            this.PhoneNumber = newInfo.PhoneNumber;
+            this.Address = newInfo.Address;
+            this.ProfileLinks = newInfo.ProfileLinks;
+            this.Biography = newInfo.Biography;
+        }
+    }
+
+    /* "View Only" models */
     public class UserInfo {
         [Required]
         public int UserId { get; set; }
@@ -33,7 +53,7 @@
         public string PhoneNumber { get; set; }
 
         [Column(TypeName="text")]
-        public string Bio { get; set; }
+        public string Biography { get; set; }
 
         public virtual Address Address { get; set; }
 
@@ -55,18 +75,10 @@
             this.Address = user.Address;
             this.ProfilePicName = user.ProfilePicName;
             this.ProfileLinks = user.ProfileLinks;
+            this.Biography = user.Biography;
         }
     }
 
-    public class User : UserInfo
-    {
-        [Required]
-        [Column(TypeName = "nvarchar(128)")]
-        public string Password { get; set; }
-        
-        [Column(TypeName = "nvarchar(128)")]
-        public string Salt { get; set; }
-   }
 
     public class LoginInfo
     {

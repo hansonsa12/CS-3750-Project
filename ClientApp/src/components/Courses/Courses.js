@@ -1,5 +1,4 @@
-import React from 'react'
-import CourseForm from "./CourseForm";
+import React from 'react';
 import CourseTable from "./CourseTable";
 
 export default function Courses({
@@ -8,7 +7,6 @@ export default function Courses({
 
     return (
         <div>
-            <CourseForm />
             <CourseTable courses={courses} />
         </div>
 
