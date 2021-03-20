@@ -1,34 +1,15 @@
 import {
-    Button,
     Card,
     CardContent,
     Grid,
-    Paper,
-    TextField,
     Typography
 } from "@material-ui/core";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import PublicIcon from "@material-ui/icons/Public";
 import dayjs from 'dayjs';
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import ProfilePicUploader from '../FileUploading/ProfilePicUploader';
-import { SectionHeaderItem } from '../FormComponents';
 
 export default function ProfileStatic(props) {
-
-    function btnGithubClick(e) {
-        window.open("https://www.github.com");
-    }
-
-    function btnLinkedInClick(e) {
-        window.open("https://www.linkedin.com");
-    }
-    function btnOtherClick(e) {
-        window.open("https://www.google.com");
-    }
-
     const {
         user: {
             email,

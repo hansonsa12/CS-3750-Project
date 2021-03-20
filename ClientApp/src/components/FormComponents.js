@@ -45,13 +45,17 @@ export const SectionHeaderItem = (props) => {
     const { 
         top,
         style = top ? {} : { marginTop: 10 }, 
-        title 
+        title,
+        action
     } = props;
 
     return (
-        <Grid item xs={12} {...gridPropsFrom(props)}>
-            <Typography style={style}>{title}</Typography>
-            <Divider />
+        <Grid item container justify="space-between" alignItems="flex-end"
+            xs={12} {...gridPropsFrom(props)}
+        >
+            <Grid item><Typography style={style}>{title}</Typography></Grid>
+            <Grid item>{action}</Grid>
+            <Grid item xs={12}><Divider /></Grid>
         </Grid>
     );
 };

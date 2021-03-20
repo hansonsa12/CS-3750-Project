@@ -5,12 +5,14 @@ import {
     IconButton,
     Tooltip
 } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
+import { Add, Edit } from '@material-ui/icons';
 import axios from 'axios';
+import arrayMutators from 'final-form-arrays';
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import { AuthContext } from '../../context/AuthProvider';
 import { SectionHeaderItem, TextEntryItem } from '../FormComponents';
+import { LinkForm } from './LinkForm';
 
 export default function ProfileForm() {
     const [open, setOpen] = React.useState(false);
@@ -39,20 +41,26 @@ export default function ProfileForm() {
 
     }
 
+    const { profileLinks = [{}, {}, {}] } = user;
+
     return (
         <div>
             <Tooltip title="Edit Profile" placement="right">
                 <IconButton onClick={handleClickOpen}>
-                    <EditIcon />
+                    <Edit />
                 </IconButton>
             </Tooltip>
             <FForm
                 onSubmit={onSubmit}
+                mutators={{
+                    ...arrayMutators
+                }}
                 initialValues={{
-                    ...user
+                    ...user,
+                    profileLinks
                 }}
             >
-                {({ handleSubmit }) => (
+                {({ handleSubmit, form: { mutators: { push, pop } }}, values) => (
                     <form onSubmit={handleSubmit}>
                         <Dialog
                             open={open}
@@ -64,12 +72,17 @@ export default function ProfileForm() {
                                 <Grid container spacing={2} justify="space-between">
                                     <TextEntryItem name="bio" rows={6} multiline />
                                     <TextEntryItem name="phoneNumber" sm={6} />
-                                    <SectionHeaderItem title="Profile Links" />
+                                    <SectionHeaderItem title="Links" action={
+                                        <Tooltip title="Add Link" placement="left">
+                                            <IconButton size="small" 
+                                                onClick={ () => push('profileLinks', undefined)}
+                                            >
+                                                <Add fontSize="small" />
+                                            </IconButton>
+                                        </Tooltip>
+                                    }/>
+                                    <LinkForm />
                                     {/* TODO Ky Add link field array */}
-                                    {/* <TextEntryItem name="link1" sm={6}/>
-                                    <TextEntryItem name="link2" sm={6} />
-                                    <TextEntryItem name="link3" sm={6} />
-                                    <TextEntryItem name="link3" sm={6} /> */}
                                     <SectionHeaderItem title="Address" />
                                     <TextEntryItem name="address.addressOne" sm={6} />
                                     <TextEntryItem name="address.addressTwo" sm={6} />
