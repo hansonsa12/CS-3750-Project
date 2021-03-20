@@ -1,12 +1,12 @@
-import { Switch, Route } from "react-router-dom";
+import { withStyles } from "@material-ui/core";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import AppContainer from "./components/AppContainer";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
-import AppContainer from "./components/AppContainer";
-import React, { Component } from "react";
-import background from "./images/textbook.png";
-import { withStyles } from "@material-ui/core";
-
 import { AuthContext } from './context/AuthProvider';
+import background from "./images/textbook.png";
+
 
 const styles = theme => ({
     root: {

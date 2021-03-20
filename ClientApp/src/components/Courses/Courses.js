@@ -1,6 +1,4 @@
 import React from 'react'
-import AssignmentForm from '../Assignments/AssignmentForm';
-import CourseForm from "./CourseForm";
 import CourseTable from "./CourseTable";
 
 export default function Courses({
@@ -9,7 +7,6 @@ export default function Courses({
 
     return (
         <div>
-            <CourseForm />
             <CourseTable courses={courses} />
         </div>
 

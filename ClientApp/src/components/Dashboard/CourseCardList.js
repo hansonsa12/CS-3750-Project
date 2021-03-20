@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import React from 'react'
+import React from 'react';
 import CourseCard from './CourseCard';
 
 export default function CourseCardList({

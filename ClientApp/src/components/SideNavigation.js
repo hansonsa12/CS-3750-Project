@@ -1,13 +1,12 @@
-﻿import React, { useContext } from "react";
-import clsx from "clsx";
+﻿import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
 import {
-    makeStyles, Avatar, Drawer, List, IconButton, ListItem, ListItemIcon, ListItemText
-} from "@material-ui/core";
-import {
-    ChevronLeft, ChevronRight, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks
+    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks
 } from "@material-ui/icons";
+import clsx from "clsx";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import { ProfilePic } from './Profile/ProfilePic';
 
 const useStyles = makeStyles((theme) => {
     const openDrawerWidth = 180;
@@ -45,10 +44,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SideNavigation() {
-    
     const classes = useStyles();
     const [open, setOpen] = React.useState(JSON.parse(localStorage["navBarOpen"] ?? null) ?? true);
-    
 
     const handleDrawerToggle = () => {
         localStorage["navBarOpen"] = !open;
@@ -76,13 +73,12 @@ export default function SideNavigation() {
             <List className={classes.list}>
                 {[
                     {
-                        text: "Profile", 
-                        icon: <Avatar src={`/uploads/u${user.userId}/${user.profilePicName}`} 
-                         style={{ marginLeft: -8 }}/>,
+                        text: "Profile",
+                        icon: <ProfilePic style={{ marginLeft: -8 }} />,
                         onClick: () => history.push("/profile")
                     },
                     {
-                        text: "Dashboard", icon: <HomeRounded />,
+                        text: "Dashboard", icon: <DashboardRounded />,
                         onClick: () => history.push("/dashboard")
                     },
                     {

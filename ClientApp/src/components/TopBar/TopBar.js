@@ -1,20 +1,23 @@
-﻿import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+﻿import { Box, Typography } from "@material-ui/core";
+import React from "react";
 import NotificationBadge from "./Notifications/NotificationBadge";
 
 export default function TopBar({
-    title = ""
+    title = "",
+    action = []
 }) {
     return (
-        <Grid container justify="space-between">
-            <Grid item>
+        <Box display="flex">
+            <Box>
                 <Typography variant="h4">
                     {title}
                 </Typography>
-            </Grid>
-            <Grid item>
+            </Box>
+            <Box>{action}</Box>
+            <Box flexGrow={1} />
+            <Box>
                 <NotificationBadge />
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     )
 }

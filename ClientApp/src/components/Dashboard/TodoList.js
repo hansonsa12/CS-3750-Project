@@ -1,6 +1,6 @@
-import React from 'react'
-import List from '@material-ui/core/List';
 import { Divider } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import React from 'react';
 import TodoItem from './TodoItem';
 
 function AssignmentList() {

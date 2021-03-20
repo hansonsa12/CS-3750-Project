@@ -1,6 +1,6 @@
 // reference: https://www.youtube.com/watch?v=XuFDcZABiDQ
-import React, { Component, createContext } from 'react';
 import axios from 'axios';
+import React, { Component, createContext } from 'react';
 import { AccountType } from '../helpers/constants';
 
 const initialState = {

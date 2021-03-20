@@ -34,29 +34,20 @@ namespace final_project.Controllers
         
 
         [Authorize]
-        [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody] User user){
-            Debug.WriteLine("Inside UserController");
-            Console.WriteLine("Inside UserController");
-            User foundUser = await 
-            AuthHelpers.GetCurrentUser(_context, User);
-            if(foundUser.UserId != user.UserId){
-                return StatusCode(401); // forbidden
-            }
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserInfo updatedUserInfo){
+            User currentUser = await AuthHelpers.GetCurrentUser(_context, User);
             try
-            {
-                // Do coode for updating user info
-            foundUser.PhoneNumber = "555-555-0124";
-            user.PhoneNumber = "555-555-0125";
-            //await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            {   
+                currentUser.UpdateInfo(updatedUserInfo);
+                await _context.SaveChangesAsync();
             }
             catch(Exception e)
             {
                 return StatusCode(500, new { error = e.Message });
             }
 
-            return Ok();
+            return Ok(new UserInfo(currentUser));
 
         }
 
