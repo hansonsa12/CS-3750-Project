@@ -20,7 +20,7 @@
             this.PhoneNumber = newInfo.PhoneNumber;
             this.Address = newInfo.Address;
             this.ProfileLinks = newInfo.ProfileLinks;
-            this.Bio = newInfo.Bio;
+            this.Biography = newInfo.Biography;
         }
     }
 
@@ -53,7 +53,7 @@
         public string PhoneNumber { get; set; }
 
         [Column(TypeName="text")]
-        public string Bio { get; set; }
+        public string Biography { get; set; }
 
         public virtual Address Address { get; set; }
 
@@ -75,7 +75,7 @@
             this.Address = user.Address;
             this.ProfilePicName = user.ProfilePicName;
             this.ProfileLinks = user.ProfileLinks;
-            this.Bio = user.Bio;
+            this.Biography = user.Biography;
         }
     }
 

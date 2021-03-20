@@ -12,3 +12,5 @@ export const getFormattedTime = (startTime, endTime) => {
 export const getFileUrl = (userId, fileName) => {
     return (userId && fileName) ? `/uploads/u${userId}/${fileName}` : null;
 };
+
+export const MAX_PROFILE_LINKS = 5;

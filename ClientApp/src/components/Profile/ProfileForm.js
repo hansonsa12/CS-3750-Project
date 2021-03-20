@@ -8,9 +8,12 @@ import {
 import { Add, Edit } from '@material-ui/icons';
 import axios from 'axios';
 import arrayMutators from 'final-form-arrays';
+import { makeValidate } from 'mui-rff';
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
+import * as Yup from "yup";
 import { AuthContext } from '../../context/AuthProvider';
+import { MAX_PROFILE_LINKS } from '../../helpers/constants';
 import { SectionHeaderItem, TextEntryItem } from '../FormComponents';
 import { LinkForm } from './LinkForm';
 
@@ -41,7 +44,13 @@ export default function ProfileForm() {
 
     }
 
-    const { profileLinks = [{}, {}, {}] } = user;
+    const validationSchema = Yup.object().shape({
+        profileLinks: Yup.array().of(Yup.object().shape({
+            link: Yup.string().required("Link cannot be blank")
+        }))
+    });
+
+    const validate = makeValidate(validationSchema);
 
     return (
         <div>
@@ -57,10 +66,10 @@ export default function ProfileForm() {
                 }}
                 initialValues={{
                     ...user,
-                    profileLinks
                 }}
+                validate={validate}
             >
-                {({ handleSubmit, form: { mutators: { push, pop } }}, values) => (
+                {({ handleSubmit, form: { mutators: { push, pop } }, values }) => (
                     <form onSubmit={handleSubmit}>
                         <Dialog
                             open={open}
@@ -70,12 +79,15 @@ export default function ProfileForm() {
                             <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
-                                    <TextEntryItem name="bio" rows={6} multiline />
+                                    <TextEntryItem name="biography" rows={6} multiline />
                                     <TextEntryItem name="phoneNumber" sm={6} />
                                     <SectionHeaderItem title="Links" action={
                                         <Tooltip title="Add Link" placement="left">
                                             <IconButton size="small" 
-                                                onClick={ () => push('profileLinks', undefined)}
+                                                onClick={() => { 
+                                                    push('profileLinks', undefined)
+                                                }}
+                                                disabled={values.profileLinks.length >= MAX_PROFILE_LINKS}
                                             >
                                                 <Add fontSize="small" />
                                             </IconButton>

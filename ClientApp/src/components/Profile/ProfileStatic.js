@@ -1,4 +1,5 @@
 import {
+    Button,
     Card,
     CardContent,
     Grid,
@@ -14,7 +15,7 @@ export default function ProfileStatic(props) {
         user: {
             email,
             birthDay,
-            bio,
+            biography,
             phoneNumber,
             address,
             profileLinks
@@ -24,8 +25,8 @@ export default function ProfileStatic(props) {
     const { addressOne, addressTwo, city, state, zipCode } = address ? address : {};
 
     return (
-        <Grid container justify="flex-start" spacing={2} style={{ width: 600 }}>
-            <Grid item xs={12} sm={4}>
+        <Grid container justify="center" spacing={2} style={{ maxWidth: 1200 }}>
+            <Grid item container xs={12} sm={4} justify="center">
                 <ProfilePicUploader />
             </Grid>
             <Grid item xs={12} sm={8}>
@@ -43,7 +44,7 @@ export default function ProfileStatic(props) {
                 <Card variant="outlined">
                     <CardContent>
                         <Typography variant="h6">Biography</Typography>
-                        <Typography variant="body1">{bio ? bio : "No biography has been added."}</Typography>
+                        <Typography variant="body1">{biography ? biography : "No biography has been added."}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
@@ -51,9 +52,16 @@ export default function ProfileStatic(props) {
                 <Card variant="outlined">
                     <CardContent>
                         <Typography variant="h6">Links</Typography>
-                        {profileLinks.length > 0 ? profileLinks.map(link => (
-                            <Typography variant="body1">{bio}</Typography>
-                        )) : "No Links have been added"}
+                        <Grid container spacing={1}>
+                            {profileLinks.length > 0 ? profileLinks.map(link => (
+                                <Grid item key={`link-${link.id}`}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => window.open(link.link)}
+                                    >{link.title || link.link}</Button>
+                                </Grid>
+                            )) : <Grid item>No Links have been added</Grid>}
+                        </Grid>
                     </CardContent>
                 </Card>
             </Grid>

@@ -10,13 +10,15 @@ export const LinkForm = (props) => {
         <FieldArray name="profileLinks">
             {({ fields }) => (
                 <Grid item container alignItems="center" justify="center" spacing={1} xs={12}>
-                    {fields.map((name, index) => (
+                    {fields.length > 0 ? (
+                        fields.map((name, index) => (
                         <Fragment key={`profileLink-${name}-${index}`}>
                             <TextEntryItem
                                 name={`${name}.title`} sm={4}
                             />
                             <TextEntryItem
                                 name={`${name}.link`} sm={7}
+                                required
                             />
                             <Grid item sm={1}>
                                 <IconButton
@@ -27,7 +29,7 @@ export const LinkForm = (props) => {
                                 </IconButton>
                             </Grid>
                         </Fragment>
-                    ))}
+                    ))) : <Grid item>No links have been added. Click the plus button to add some.</Grid>}
                 </Grid>
             )}
         </FieldArray>
