@@ -7,6 +7,7 @@
     using final_project.Data;
     using final_project.Models.User;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
 
     [ApiController]
@@ -29,7 +30,10 @@
             {
 
                 /* Search for user with specified email and verify the provided password is correct */
-                User foundUser = _context.Users.Where(u => u.Email.Equals(user.Email)).First();
+                User foundUser = await _context.Users.Where(u => u.Email.Equals(user.Email)).FirstOrDefaultAsync();
+                if (foundUser == null) {
+                    return StatusCode(404, new {error = "User with email does not exist"});
+                }
                 HashResult hashResult = AuthHelpers.HashPassword(user.Password, foundUser.Salt);
 
                 if (foundUser.Password.Equals(hashResult.Password))
