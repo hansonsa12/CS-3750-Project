@@ -1,17 +1,14 @@
 import {
     Button,
     Grid,
-
-    TextField, Typography
+    TextField
 } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import PublicIcon from "@material-ui/icons/Public";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-import ProfileForm from "./ProfileForm";
-import { ProfilePic } from './ProfilePic';
-
+import ProfilePicUploader from '../FileUploading/ProfilePicUploader';
 
 export default function ProfileStatic(props) {
 
@@ -27,20 +24,25 @@ export default function ProfileStatic(props) {
     }
 
     const {
-        user: { userId, firstName, lastName, email, birthDay, bio, profilePicName },
+        user: {
+            email,
+            birthDay,
+            bio,
+            phoneNumber,
+            address        
+        },
     } = useContext(AuthContext);
+
+    const { addressOne, addressTwo, city, state, zipCode } = address ? address : {};
 
     return (
         <>
-            <Grid>
-                <ProfilePic style={{ width: 150, height: 150 }} />
+            <Grid container justify="flex-start">
                 <Grid item>
-                    <Typography variant="h6">
-                        {firstName} {lastName}
-                    </Typography>
-
+                    <ProfilePicUploader />
+                </Grid>
+                <Grid item>
                     <label>Bio:</label>
-                    <br />
                     <textarea
                         style={{
                             height: "200px",
@@ -50,61 +52,38 @@ export default function ProfileStatic(props) {
                     >
                         {bio}
                     </textarea>
+                </Grid>
+                <Grid item>
                     <br />
                     <Button variant="outlined" color="primary">
                         Update Bio
-          </Button>
-                    <div>
-                        <br />
-                        <br />
-                        <br />
-                    </div>
-
+                    </Button>
                     <Grid>
                         <Grid>
-                            <TextField id="standard-name" label="Email: " value={email} />
-                            <TextField id="standard-name" label="Phone: " value="PHONENUM" />
-                            <TextField
-                                id="standard-name"
-                                label="Birthday: "
-                                value={birthDay}
+                            {/* TODO change text fiels to lables  */}
+                            <TextField label="Email: " value={email} />
+                            <TextField label="Phone: " value={phoneNumber} />
+                            <TextField label="Birthday: " value={birthDay}
                             />
                         </Grid>
-                        <div>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
                         <Grid>
                             <TextField
-                                id="standard-name"
+                                
                                 label="Address 1: "
-                                value="ADDRESS"
+                                value={addressOne}
                             />
                             <TextField
-                                id="standard-name"
+                                
                                 label="Address 2: "
-                                value="ADDRESS"
+                                value={addressTwo}
                             />
                         </Grid>
-                        <div>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
                         <Grid>
-                            <TextField id="standard-name" label="City: " value="CITY" />
-                            <TextField id="standard-name" label="State: " value="STATE" />
-                            <TextField id="standard-name" label="Zip: " value="ZIPCODE" />
+                            <TextField  label="City: " value={city} />
+                            <TextField  label="State: " value={state} />
+                            <TextField  label="Zip: " value={zipCode} />
                         </Grid>
                     </Grid>
-
-                    <div>
-                        <br />
-                        <br />
-                        <br />
-                    </div>
-
                     <Button
                         variant="contained"
                         startIcon={<GitHubIcon />}
@@ -128,7 +107,6 @@ export default function ProfileStatic(props) {
           </Button>
                 </Grid>
             </Grid>
-            <ProfileForm />
         </>
     );
 }

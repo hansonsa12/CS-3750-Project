@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { Avatar, Button, Grid } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import axios from 'axios';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import { ProfilePic } from '../Profile/ProfilePic';
 
@@ -19,16 +19,9 @@ export default function ProfilePicUploader() {
     };
 
     return (
-        <Grid container direction="column" justify="center" alignItems="center" spacing={1}>
-            <Grid item>
-                {<ProfilePic style={{ width: 150, height: 150 }} />}
-            </Grid>
-            <Grid item>
-                <Button variant="contained" color="primary" component="label">
-                    Upload
-                <input accept={"image/*"} type="file" onChange={uploadFile} hidden />
-                </Button>
-            </Grid>
-        </Grid>
+        <IconButton component="label" title="Upload New Profile Pic">
+            <ProfilePic style={{ width: 150, height: 150 }} />
+            <input accept={"image/*"} type="file" onChange={uploadFile} hidden />
+        </IconButton>
     )
 }

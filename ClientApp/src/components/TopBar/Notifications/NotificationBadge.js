@@ -1,6 +1,6 @@
-﻿import React, { Component } from "react";
-import { Badge, IconButton } from "@material-ui/core";
+﻿import { Badge, IconButton } from "@material-ui/core";
 import { Notifications } from "@material-ui/icons";
+import React, { Component } from "react";
 import NotificationList from "./NotificationList";
 
 class NotificationBadge extends Component {

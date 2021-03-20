@@ -1,11 +1,9 @@
-﻿import React, { useContext } from "react";
-import clsx from "clsx";
+﻿import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
 import {
-    makeStyles, Drawer, List, IconButton, ListItem, ListItemIcon, ListItemText
-} from "@material-ui/core";
-import {
-    ChevronLeft, ChevronRight, HomeRounded, EventRounded, ExitToAppRounded, LibraryBooks
+    ChevronLeft, ChevronRight, EventRounded, ExitToAppRounded, HomeRounded, LibraryBooks
 } from "@material-ui/icons";
+import clsx from "clsx";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import { ProfilePic } from './Profile/ProfilePic';

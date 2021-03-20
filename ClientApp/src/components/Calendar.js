@@ -1,6 +1,6 @@
-﻿import React from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
+﻿import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid'; // must come after FullCalendar import
+import React from 'react';
 
 export default class Calendar extends React.Component {
     render() {

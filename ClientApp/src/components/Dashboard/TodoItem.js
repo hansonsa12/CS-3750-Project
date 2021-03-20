@@ -1,12 +1,13 @@
-import React from 'react'
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Link from '@material-ui/core/Link';
-import Avatar from '@material-ui/core/Avatar';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import {
+    Avatar,
+    IconButton,
+    Link,
+    ListItem,
+    ListItemAvatar,
+    ListItemText
+} from '@material-ui/core';
+import { Assignment, Close } from '@material-ui/icons';
+import React from 'react';
 
 export default function TodoItem({
     assignment
@@ -15,7 +16,7 @@ export default function TodoItem({
         <ListItem >
             <ListItemAvatar>
                 <Avatar>
-                    <AssignmentIcon />
+                    <Assignment />
                 </Avatar>
             </ListItemAvatar>
             <div>
@@ -27,7 +28,7 @@ export default function TodoItem({
                 <ListItemText primary={assignment[2]} />
             </div>
             <IconButton edge="end" aria-label="close">
-                <CloseIcon />
+                <Close />
             </IconButton>
         </ListItem>
     )

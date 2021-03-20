@@ -1,5 +1,5 @@
 import { Avatar } from '@material-ui/core';
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import { getFileUrl } from '../../helpers/constants';
 

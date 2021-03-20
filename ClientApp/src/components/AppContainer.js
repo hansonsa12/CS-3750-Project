@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import SideNavigation from "./SideNavigation";
-import MainView from "./MainView";
-import Calendar from "./Calendar";
-import { withStyles, CssBaseline } from "@material-ui/core";
-import { Switch, Route, Redirect } from "react-router-dom";
-import Courses from './Courses/Courses';
-import Registrations from './Registrations';
-import Profile from './Profile/ProfileStatic';
-import Dashboard from './Dashboard/Dashboard';
-import { AuthContext } from '../context/AuthProvider';
+import { CssBaseline, withStyles } from "@material-ui/core";
 import axios from 'axios';
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { AuthContext } from '../context/AuthProvider';
+import Calendar from "./Calendar";
+import CourseForm from './Courses/CourseForm';
+import Courses from './Courses/Courses';
+import Dashboard from './Dashboard/Dashboard';
+import MainView from "./MainView";
+import ProfileForm from './Profile/ProfileForm';
+import Profile from './Profile/ProfileStatic';
+import Registrations from './Registrations';
+import SideNavigation from "./SideNavigation";
 
 const styles = theme => ({
     root: {
@@ -46,7 +48,7 @@ class AppContainer extends Component {
     render() {
         const { classes } = this.props;
         const { courses, registrations } = this.state;
-        const { isInstructor } = this.context;
+        const { isInstructor, user } = this.context;
 
         return (
             <div className={classes.root}>
@@ -55,7 +57,8 @@ class AppContainer extends Component {
 
                 <Switch>
                     <Route exact path="/profile">
-                        <MainView title="Profile">
+                        <MainView title={`${user.firstName} ${user.lastName}`}
+                            action={<ProfileForm />}>
                             <Profile />
                         </MainView>
                     </Route>
@@ -71,7 +74,7 @@ class AppContainer extends Component {
                     </Route>
 
                     <Route exact path="/courses">
-                        <MainView title="Courses">
+                        <MainView title="Courses" action={<CourseForm />}>
                             <Courses courses={courses} />
                         </MainView>
                     </Route>

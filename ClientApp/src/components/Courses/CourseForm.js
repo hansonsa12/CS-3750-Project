@@ -1,23 +1,29 @@
-import React, { useContext } from "react";
 import {
     Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    Divider,
+    Grid,
+    IconButton,
     MenuItem,
+    Tooltip,
     Typography
 } from "@material-ui/core";
-import { Form as FForm } from "react-final-form";
-import { Checkboxes, makeValidate } from "mui-rff";
-import { Grid } from "@material-ui/core";
-import _ from "lodash";
+import { Add } from '@material-ui/icons';
+import axios from 'axios';
 import dayjs from "dayjs";
+import _ from "lodash";
+import { Checkboxes, makeValidate } from "mui-rff";
+import React, { useContext } from "react";
+import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from '../../context/AuthProvider';
-import axios from 'axios';
-import { TextEntryItem, TimeEntryItem } from '../StyledComponents';
+import {
+    SectionHeaderItem,
+    TextEntryItem,
+    TimeEntryItem
+} from '../FormComponents';
 
 export default function CourseForm(props) {
     const [open, setOpen] = React.useState(false);
@@ -30,7 +36,6 @@ export default function CourseForm(props) {
 
     const handleClose = () => {
         setOpen(false);
-        window.location.reload();
     };
 
     const onSubmit = (values) => {
@@ -42,13 +47,12 @@ export default function CourseForm(props) {
             instructorId: user.userId
         }
         formattedValues = _.omitBy(formattedValues, _.isUndefined); // get rid of undefined values
-        console.log(formattedValues);
 
         axios
             .post("api/courses", formattedValues, authHeader)
             .then(res => {
                 alert("Course Added Successfully!");
-                handleClose();
+                // TODO create and call updateCourses so app refreshes
             })
             .catch(err => {
                 alert(err.message);
@@ -56,12 +60,6 @@ export default function CourseForm(props) {
             });
     };
 
-    const SectionHeader = (fieldProps) => (
-        <Grid item xs={12}>
-            <Typography style={fieldProps.style}>{fieldProps.title}</Typography>
-            <Divider />
-        </Grid>
-    );
 
     const validationSchema = Yup.object().shape({
         courseName: Yup.string().required("Course name is required"),
@@ -73,9 +71,11 @@ export default function CourseForm(props) {
 
     return (
         <div>
-            <Button color="primary" onClick={handleClickOpen}>
-                Add A Course
-            </Button>
+            <Tooltip title="Add Course" placement="right">
+                <IconButton onClick={handleClickOpen}>
+                    <Add />
+                </IconButton>
+            </Tooltip>
             <FForm
                 onSubmit={onSubmit}
                 initialValues={{
@@ -93,7 +93,7 @@ export default function CourseForm(props) {
                             <DialogTitle id="form-dialog-title">Add Course</DialogTitle>
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
-                                    <SectionHeader title="Course Information" />
+                                    <SectionHeaderItem top title="Course Information" />
                                     <TextEntryItem name="courseName" sm={6} required={true} />
                                     <TextEntryItem name="courseNumber" sm={6} required={true} />
                                     <TextEntryItem name="description" rows={6} multiline />
@@ -105,7 +105,7 @@ export default function CourseForm(props) {
                                             </MenuItem>
                                         ))}
                                     </TextEntryItem>
-                                    <SectionHeader style={{ marginTop: 10 }} title="Meeting Location/Time" />
+                                    <SectionHeaderItem title="Meeting Location/Time" />
                                     <TextEntryItem name="buildingName" sm={8} />
                                     <TextEntryItem name="roomNumber" sm={4} />
                                     <Grid item container xs={12} alignItems="center" justify="center">
