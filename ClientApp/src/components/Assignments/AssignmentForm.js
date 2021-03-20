@@ -5,15 +5,12 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Divider,
-    Typography
 } from "@material-ui/core";
 import { Form as FForm } from "react-final-form";
-import { TextField, showErrorOnBlur} from "mui-rff";
-
 import { Grid } from "@material-ui/core";
 import _ from "lodash";
 import { AuthContext } from '../../context/AuthProvider';
+import { SectionHeaderItem, TextEntryItem, TimeEntryItem } from "../FormComponents";
 
 
 export default function AssignmentForm(props) {
@@ -36,27 +33,6 @@ export default function AssignmentForm(props) {
         authHeader
     } = useContext(AuthContext);
 
-    const TextEntry = (fieldProps) => (
-        <Grid item xs={12} {..._.pick(fieldProps, ["sm"])}>
-            <TextField
-                size="small"
-                label={_.startCase(fieldProps.name)}
-                variant="outlined"
-                showError={showErrorOnBlur}
-                {..._.omit(fieldProps, ["sm"])}
-            />
-        </Grid>
-    );
-
-    const SectionHeader = (fieldProps) => (
-        <Grid item xs={12}>
-            <Typography style={fieldProps.style}>{fieldProps.title}</Typography>
-            <Divider />
-        </Grid>
-    );
-
-
-
 
     return (
         <div>
@@ -71,13 +47,13 @@ export default function AssignmentForm(props) {
                         >
                         <DialogTitle id="form-dialog-title">Assignment Form</DialogTitle>
                         <DialogContent>
-                        <Grid container>
-                        <SectionHeader title="Profile Information" />
-                        <TextEntry name="title"></TextEntry>
-                        <TextEntry name="description"></TextEntry>
-                        <TextEntry name="points"></TextEntry>
-                        <TextEntry name="dueDate"></TextEntry>
-                        <TextEntry name="type"></TextEntry>
+                        <Grid container spacing={2} justify="space-between">
+                        <SectionHeaderItem title="Assignment Information" />
+                        <TextEntryItem name="title" required={true}></TextEntryItem>
+                        <TextEntryItem name="description" rows={6} multiline></TextEntryItem>
+                        <TextEntryItem name="points" sm={6} required={true}></TextEntryItem>
+                        <TimeEntryItem name="dueDate" sm={6} required={true}></TimeEntryItem>
+                        <TextEntryItem name="type" sm={6} required={true}></TextEntryItem>
                         </Grid>
                         </DialogContent>
                         <DialogActions>
