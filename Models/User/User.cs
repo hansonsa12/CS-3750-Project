@@ -20,6 +20,7 @@
             this.PhoneNumber = newInfo.PhoneNumber;
             this.Address = newInfo.Address;
             this.ProfileLinks = newInfo.ProfileLinks;
+            this.Bio = newInfo.Bio;
         }
     }
 
@@ -74,6 +75,7 @@
             this.Address = user.Address;
             this.ProfilePicName = user.ProfilePicName;
             this.ProfileLinks = user.ProfileLinks;
+            this.Bio = user.Bio;
         }
     }
 

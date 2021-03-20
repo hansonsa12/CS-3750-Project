@@ -62,10 +62,10 @@ export default function ProfileForm() {
                             <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
-                                    <SectionHeaderItem top title="Profile Information" />
-                                    <TextEntryItem name="phoneNumber"/>
+                                    <TextEntryItem name="bio" rows={6} multiline />
+                                    <TextEntryItem name="phoneNumber" sm={6} />
                                     <SectionHeaderItem title="Profile Links" />
-                                    {/* TODO Add link field array */}
+                                    {/* TODO Ky Add link field array */}
                                     {/* <TextEntryItem name="link1" sm={6}/>
                                     <TextEntryItem name="link2" sm={6} />
                                     <TextEntryItem name="link3" sm={6} />

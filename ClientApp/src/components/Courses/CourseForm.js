@@ -52,7 +52,7 @@ export default function CourseForm(props) {
             .post("api/courses", formattedValues, authHeader)
             .then(res => {
                 alert("Course Added Successfully!");
-                // TODO create and call updateCourses so app refreshes
+                // TODO Ky create and call updateCourses so app refreshes
             })
             .catch(err => {
                 alert(err.message);
