@@ -1,0 +1,19 @@
+PUT https://localhost:5001/api/courses
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE2MzAyNjk3LCJleHAiOjE2MTYzMTM0OTcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.FeNqmjDwRdmsVY1gyHcfLcv4Liq3Wrypj7Mt0GbjW6A
+
+{
+  "courseId": "6",
+  "courseName": "Advanced Database Programming",
+  "courseNumber": "CS 3550",
+  "instructorId": "1",
+  "department": "Computer Science",
+  "creditHours": "4",
+  "description": "Learn how to do some advanced things with databases!",
+  "buildingName": "Computer Science Building",
+  "roomNumber": "CA 141",
+  "meetingDays": "MWF",
+  "startTime": "08:00 AM",
+  "endTime": "11:30 AM",
+  "maxCapacity": "30"
+}

@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,7 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
 import { getFormattedTime } from '../../helpers/constants';
-import DeleteConfirmationDialog from './DeleteConfirmationDialog'
+import CourseForm from './CourseForm';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog';
  
 export default function CourseTable ({
     courses = []
@@ -44,7 +44,7 @@ export default function CourseTable ({
                             <TableCell align="right">{meetingDays}</TableCell>
                             <TableCell align="right">{getFormattedTime(startTime, endTime)}</TableCell>
                             <TableCell align="right">
-                                <Button variant="contained" color="primary">Edit</Button>
+                                <CourseForm course={course} />
                                 <DeleteConfirmationDialog courseName={courseName}/>
                             </TableCell>
                         </TableRow>)

@@ -13,6 +13,7 @@ import {
 import { Add } from '@material-ui/icons';
 import axios from 'axios';
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import _ from "lodash";
 import { Checkboxes, makeValidate } from "mui-rff";
 import React, { useContext } from "react";
@@ -25,7 +26,10 @@ import {
     TimeEntryItem
 } from '../FormComponents';
 
-export default function CourseForm(props) {
+export default function CourseForm({
+    course,
+    action = course ? "Edit" : "Add"
+}) {
     const [open, setOpen] = React.useState(false);
 
     const { user, authHeader } = useContext(AuthContext);
@@ -38,6 +42,17 @@ export default function CourseForm(props) {
         setOpen(false);
     };
 
+    const openButton = (
+        <Tooltip title={`${action} Course`} placement="right">
+            { course ? <Button onClick={handleClickOpen}
+                variant="contained" color="primary"> Edit</Button>
+                : (<IconButton onClick={handleClickOpen}>
+                    <Add />
+                </IconButton>)
+            }
+        </Tooltip>
+    );
+
     const onSubmit = (values) => {
         let formattedValues = {
             ...values,
@@ -48,16 +63,19 @@ export default function CourseForm(props) {
         }
         formattedValues = _.omitBy(formattedValues, _.isUndefined); // get rid of undefined values
 
-        axios
-            .post("api/courses", formattedValues, authHeader)
-            .then(res => {
-                alert("Course Added Successfully!");
-                // TODO Ky create and call updateCourses so app refreshes
-            })
-            .catch(err => {
-                alert(err.message);
-                console.error(err.message);
-            });
+        axios.request({
+            url: 'api/courses',
+            method: course ? 'PUT' : 'POST',
+            ...authHeader,
+            data: formattedValues
+        }).then(res => {
+            alert("Course Updated Successfully!");
+            window.location.reload();
+            // TODO Ky create and call updateCourses so app re-renders without reload
+        }).catch((err, res) => {
+            alert(`${err.message}:\n${err.response.data.error}`);
+        });
+
     };
 
 
@@ -69,18 +87,24 @@ export default function CourseForm(props) {
 
     const validate = makeValidate(validationSchema);
 
+    dayjs.extend(customParseFormat);
+    let initialValues = {
+        ...course,
+        meetingDays: course?.meetingDays?.split(''),
+        startTime: dayjs(course?.startTime, "hh:mm A").format(),
+        endTime: dayjs(course?.endTime, "hh:mm A").format()
+    };
+
+    if (!initialValues.creditHours) {
+        initialValues.creditHours = 0;
+    }
+
     return (
         <div>
-            <Tooltip title="Add Course" placement="right">
-                <IconButton onClick={handleClickOpen}>
-                    <Add />
-                </IconButton>
-            </Tooltip>
+            {openButton}
             <FForm
                 onSubmit={onSubmit}
-                initialValues={{
-                    creditHours: 0
-                }}
+                initialValues={initialValues}
                 validate={validate}
             >
                 {({ handleSubmit }) => (
@@ -90,12 +114,12 @@ export default function CourseForm(props) {
                             onClose={handleClose}
                             aria-labelledby="form-dialog-title"
                         >
-                            <DialogTitle id="form-dialog-title">Add Course</DialogTitle>
+                            <DialogTitle id="form-dialog-title">{action} Course</DialogTitle>
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
                                     <SectionHeaderItem top title="Course Information" />
-                                    <TextEntryItem name="courseName" sm={6} required={true} />
-                                    <TextEntryItem name="courseNumber" sm={6} required={true} />
+                                    <TextEntryItem name="courseName" sm={8} required={true} />
+                                    <TextEntryItem name="courseNumber" sm={4} required={true} />
                                     <TextEntryItem name="description" rows={6} multiline />
                                     <TextEntryItem name="department" sm={9} required={true} />
                                     <TextEntryItem name="creditHours" select sm={3}>
