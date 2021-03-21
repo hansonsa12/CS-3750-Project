@@ -52,5 +52,20 @@ namespace final_project.Models.Course
         // Student Registrations
         public ICollection<Student> Registrations { get; set; }
         public List<Assignment> Assignment { get; set; }
+
+        public void UpdateInfo(Course updatedInfo){
+
+            this.CourseName = updatedInfo.CourseName;
+            this.CourseNumber = updatedInfo.CourseNumber;
+            this.Department = updatedInfo.Department;
+            this.CreditHours = updatedInfo.CreditHours;
+            this.Description = updatedInfo.Description;
+            this.BuildingName = updatedInfo.BuildingName;
+            this.RoomNumber = updatedInfo.RoomNumber;
+            this.MeetingDays = updatedInfo.MeetingDays;
+            this.StartTime = updatedInfo.StartTime;
+            this.EndTime = updatedInfo.EndTime;
+            this.MaxCapacity = updatedInfo.MaxCapacity;
+        }
     }
 }

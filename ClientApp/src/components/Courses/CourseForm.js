@@ -63,30 +63,19 @@ export default function CourseForm({
         }
         formattedValues = _.omitBy(formattedValues, _.isUndefined); // get rid of undefined values
 
-        if (course && course.id) {
-            axios
-                .put(`api/courses/${course.courseId}`, formattedValues, authHeader)
-                .then(res => {
-                    alert("Course Updated Successfully!");
-                    // TODO Ky create and call updateCourses so app refreshes
-                })
-                .catch(err => {
-                    alert(err.message);
-                    console.error(err.message);
-                });
+        axios.request({
+            url: 'api/courses',
+            method: course ? 'PUT' : 'POST',
+            ...authHeader,
+            data: formattedValues
+        }).then(res => {
+            alert("Course Updated Successfully!");
+            window.location.reload();
+            // TODO Ky create and call updateCourses so app re-renders without reload
+        }).catch((err, res) => {
+            alert(`${err.message}:\n${err.response.data.error}`);
+        });
 
-        } else {
-            axios
-                .post("api/courses", formattedValues, authHeader)
-                .then(res => {
-                    alert("Course Added Successfully!");
-                    // TODO Ky create and call updateCourses so app refreshes
-                })
-                .catch(err => {
-                    alert(err.message);
-                    console.error(err.message);
-                });
-        }
     };
 
 
@@ -129,8 +118,8 @@ export default function CourseForm({
                             <DialogContent>
                                 <Grid container spacing={2} justify="space-between">
                                     <SectionHeaderItem top title="Course Information" />
-                                    <TextEntryItem name="courseName" sm={6} required={true} />
-                                    <TextEntryItem name="courseNumber" sm={6} required={true} />
+                                    <TextEntryItem name="courseName" sm={8} required={true} />
+                                    <TextEntryItem name="courseNumber" sm={4} required={true} />
                                     <TextEntryItem name="description" rows={6} multiline />
                                     <TextEntryItem name="department" sm={9} required={true} />
                                     <TextEntryItem name="creditHours" select sm={3}>
