@@ -121,7 +121,13 @@ export default function CourseForm({
                                     <TextEntryItem name="courseName" sm={8} required={true} />
                                     <TextEntryItem name="courseNumber" sm={4} required={true} />
                                     <TextEntryItem name="description" rows={6} multiline />
-                                    <TextEntryItem name="department" sm={9} required={true} />
+                                    <TextEntryItem name="department" select sm={4} required={true}>
+                                        {["n/a", "CS", "PHYS", "MATH", "ENGL", "COMM"].map((option, index) =>(
+                                            <MenuItem key={`departmentOption-${index}`} value={index}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </TextEntryItem>
                                     <TextEntryItem name="creditHours" select sm={3}>
                                         {["n/a", "1", "2", "3", "4", "5"].map((option, index) => (
                                             <MenuItem key={`creditHoursOption-${index}`} value={index}>
