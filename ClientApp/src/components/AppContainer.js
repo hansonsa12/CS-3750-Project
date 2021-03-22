@@ -12,6 +12,7 @@ import ProfileForm from './Profile/ProfileForm';
 import Profile from './Profile/ProfileStatic';
 import Registrations from './Registrations';
 import SideNavigation from "./SideNavigation";
+import Tuition from "./Tuition";
 
 const styles = theme => ({
     root: {
@@ -47,7 +48,7 @@ class AppContainer extends Component {
 
     render() {
         const { classes } = this.props;
-        const { courses, registrations } = this.state;
+        const { courses, registrations, tuitions } = this.state;
         const { isInstructor, user } = this.context;
 
         return (
@@ -82,6 +83,12 @@ class AppContainer extends Component {
                     <Route exact path="/registrations">
                         <MainView title="Registrations">
                             <Registrations registrations={registrations} />
+                        </MainView>
+                    </Route>
+
+                    <Route exact path="/tuition">
+                        <MainView title="Tuition">
+                            <Tuition tuitions={tuitions} />
                         </MainView>
                     </Route>
 

@@ -1,6 +1,6 @@
 ﻿import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
 import {
-    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks
+    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks, MonetizationOn
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useContext } from "react";
@@ -94,6 +94,11 @@ export default function SideNavigation() {
                         for: "student",
                         text: "Registrations", icon: <LibraryBooks />,
                         onClick: () => history.push("/registrations")
+                    },
+                    {
+                        for: "student",
+                        text: "Tuition", icon: <MonetizationOn />,
+                        onClick: () => history.push("/tuition")
                     },
                     {
                         text: "Logout", icon: <ExitToAppRounded />,
