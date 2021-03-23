@@ -14,3 +14,5 @@ export const getFileUrl = (userId, fileName) => {
 };
 
 export const MAX_PROFILE_LINKS = 5;
+
+export const DEPARTMENTS = ["Computer Science", "Physics", "Math", "English", "Communications"];
