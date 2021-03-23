@@ -20,6 +20,7 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from '../../context/AuthProvider';
+import { DEPARTMENTS } from '../../helpers/constants';
 import {
     SectionHeaderItem,
     TextEntryItem,
@@ -121,7 +122,13 @@ export default function CourseForm({
                                     <TextEntryItem name="courseName" sm={8} required={true} />
                                     <TextEntryItem name="courseNumber" sm={4} required={true} />
                                     <TextEntryItem name="description" rows={6} multiline />
-                                    <TextEntryItem name="department" sm={9} required={true} />
+                                    <TextEntryItem name="department" select sm={9} required={true}>
+                                        {DEPARTMENTS.map((option, index) =>(
+                                            <MenuItem key={`departmentOption-${index}`} value={index}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </TextEntryItem>
                                     <TextEntryItem name="creditHours" select sm={3}>
                                         {["n/a", "1", "2", "3", "4", "5"].map((option, index) => (
                                             <MenuItem key={`creditHoursOption-${index}`} value={index}>
