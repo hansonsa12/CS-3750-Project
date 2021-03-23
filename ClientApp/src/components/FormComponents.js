@@ -2,8 +2,10 @@ import {
     Divider, Grid,
     Typography
 } from '@material-ui/core';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import {
+    KeyboardDateTimePicker,
     KeyboardTimePicker,
     showErrorOnBlur, TextField
 } from "mui-rff";
@@ -34,6 +36,25 @@ export const TimeEntryItem = (props) => {
                 size="small"
                 mask="__:__ _M"
                 placeholder="08:00 AM"
+                {...fieldPropsFrom(props)}
+            />
+        </Grid>
+    );
+};
+
+export const DateTimeEntryItem = (props) => {
+    const { name } = props;
+    return (
+        <Grid item xs={12} {...gridPropsFrom(props)}>
+            <KeyboardDateTimePicker
+                label={getLabelFromName(name)}
+                variant="inline"
+                ampm={true}
+                inputVariant="outlined"
+                size="small"
+                format="MM/dd/yyyy hh:mm a"
+                mask="__/__/____ __:__ _M"
+                placeholder={dayjs().format("MM/DD/YYYY hh:mm A")}
                 {...fieldPropsFrom(props)}
             />
         </Grid>

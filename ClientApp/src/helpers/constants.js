@@ -14,3 +14,10 @@ export const getFileUrl = (userId, fileName) => {
 };
 
 export const MAX_PROFILE_LINKS = 5;
+
+export const AssignmentType = {
+    FILE_UPLOAD: "File Upload",
+    TEXT_ENTRY: "Text Entry"
+};
+
+export const ASSIGNMENT_TYPES = [...Object.values(AssignmentType)];
