@@ -44,6 +44,24 @@ namespace final_project.Controllers
             return Ok(courses);
         }
 
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCourse([FromBody] Course updatedInfo)
+        {
+            try{
+                Course course = await _context.Courses.FindAsync(updatedInfo.CourseId);
+                if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
+                    return Unauthorized( new { error = "You do not have permission to do that." });
+                }
+                course.UpdateInfo(updatedInfo);
+                await _context.SaveChangesAsync();
+                return Ok(course);
+
+            } catch (Exception e) {
+                return StatusCode(500, new { error = e });
+            }
+        }
+
         // [HttpGet("{id}")]
         // public async Task<ActionResult<Course>> GetCourseById(int id)
         // {
@@ -53,14 +71,6 @@ namespace final_project.Controllers
         //     return null;
         // }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutCourse(int id, Course course)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
-
-        //     return NoContent();
-        // }
 
         // [HttpDelete("{id}")]
         // public async Task<ActionResult<Course>> DeleteCourseById(int id)

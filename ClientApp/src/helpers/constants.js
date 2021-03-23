@@ -21,3 +21,4 @@ export const AssignmentType = {
 };
 
 export const ASSIGNMENT_TYPES = [...Object.values(AssignmentType)];
+export const DEPARTMENTS = ["Computer Science", "Physics", "Math", "English", "Communications"];
