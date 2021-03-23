@@ -12,6 +12,7 @@ import ProfileForm from './Profile/ProfileForm';
 import Profile from './Profile/ProfileStatic';
 import Registrations from './Registrations';
 import SideNavigation from "./SideNavigation";
+import Tuition from "./Tuition";
 
 const styles = theme => ({
     root: {
@@ -47,8 +48,8 @@ class AppContainer extends Component {
 
     render() {
         const { classes } = this.props;
-        const { courses, registrations } = this.state;
-        const { isInstructor, user } = this.context;
+        const { courses, registrations, tuitions } = this.state;
+        const { isInstructor, isStudent, user } = this.context;
 
         return (
             <div className={classes.root}>
@@ -73,17 +74,23 @@ class AppContainer extends Component {
                         </MainView>
                     </Route>
 
-                    <Route exact path="/courses">
+                    {isInstructor && <Route exact path="/courses">
                         <MainView title="Courses" action={<CourseForm />}>
                             <Courses courses={courses} />
                         </MainView>
-                    </Route>
+                    </Route>}
 
-                    <Route exact path="/registrations">
+                    {isStudent && <Route exact path="/registrations">
                         <MainView title="Registrations">
                             <Registrations registrations={registrations} />
                         </MainView>
-                    </Route>
+                    </Route>}
+
+                    {isStudent && <Route exact path="/tuition">
+                        <MainView title="Tuition">
+                            <Tuition tuitions={tuitions} />
+                        </MainView>
+                    </Route>}
 
                     <Redirect to="/dashboard" />
                 </Switch>

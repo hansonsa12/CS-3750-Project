@@ -1,11 +1,12 @@
 ﻿import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
 import {
-    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks
+    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks, MonetizationOn
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import { AccountType } from '../helpers/constants';
 import { ProfilePic } from './Profile/ProfilePic';
 
 const useStyles = makeStyles((theme) => {
@@ -86,14 +87,19 @@ export default function SideNavigation() {
                         onClick: () => history.push("/calendar")
                     },
                     {
-                        for: "instructor",
+                        for: AccountType.INSTRUCTOR,
                         text: "Courses", icon: <LibraryBooks />,
                         onClick: () => history.push("/courses")
                     },
                     {
-                        for: "student",
+                        for: AccountType.STUDENT,
                         text: "Registrations", icon: <LibraryBooks />,
                         onClick: () => history.push("/registrations")
+                    },
+                    {
+                        for: AccountType.STUDENT,
+                        text: "Tuition", icon: <MonetizationOn />,
+                        onClick: () => history.push("/tuition")
                     },
                     {
                         text: "Logout", icon: <ExitToAppRounded />,
