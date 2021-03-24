@@ -12,7 +12,7 @@ import ProfileForm from './Profile/ProfileForm';
 import Profile from './Profile/ProfileStatic';
 import Registrations from './Registrations';
 import SideNavigation from "./SideNavigation";
-import Tuition from "./Tuition";
+import Tuition from "./Tuition/Tuition";
 
 const styles = theme => ({
     root: {

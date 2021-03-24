@@ -4,10 +4,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import CreditCardForm from './CreditCardForm';
 
-export default function Tuition ({
-    courses = []
-}) {
+export default function Tuition () {
+
     return (
         <div>
              <TableContainer component={Paper}>
@@ -18,6 +18,9 @@ export default function Tuition ({
                     </TableRow>
                 </TableHead>
              </TableContainer>
+             <CreditCardForm />
+
+             
         </div>
     )
 }
