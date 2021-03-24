@@ -92,8 +92,8 @@ export default function CourseForm({
     let initialValues = {
         ...course,
         meetingDays: course?.meetingDays?.split(''),
-        startTime: dayjs(course?.startTime, "hh:mm A").format(),
-        endTime: dayjs(course?.endTime, "hh:mm A").format()
+        startTime: course?.startTime ? dayjs(course.startTime, "hh:mm A").format() : undefined,
+        endTime: course?.startTime ? dayjs(course?.endTime, "hh:mm A").format() : undefined
     };
 
     if (!initialValues.creditHours) {
@@ -124,7 +124,7 @@ export default function CourseForm({
                                     <TextEntryItem name="description" rows={6} multiline />
                                     <TextEntryItem name="department" select sm={9} required={true}>
                                         {DEPARTMENTS.map((option, index) =>(
-                                            <MenuItem key={`departmentOption-${index}`} value={index}>
+                                            <MenuItem key={`departmentOption-${index}`} value={option}>
                                                 {option}
                                             </MenuItem>
                                         ))}
