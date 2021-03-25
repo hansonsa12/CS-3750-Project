@@ -102,7 +102,7 @@ export default function SideNavigation() {
                         onClick: () => history.push("/tuition")
                     },
                     {
-                        text: "Logout", icon: <ExitToAppRounded />,
+                        text: "Logout", icon: <ExitToAppRounded style={{ transform: "scaleX(-1)" }} />,
                         onClick: logout
                     }
                 ].map((item, index) => {
