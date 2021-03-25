@@ -81,9 +81,9 @@ class AppContainer extends Component {
                         </MainView>
                     </Route>}
 
-                    <Route exact path="/courses/:id/details">
+                    {isInstructor && <Route exact path="/courses/:id/details">
                         <CourseDetails />
-                    </Route>
+                    </Route>}
 
                     {isStudent && <Route exact path="/registrations">
                         <MainView title="Registrations">
