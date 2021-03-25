@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import AuthProvider from './context/AuthProvider';
+import DataProvider from './context/DataProvider';
 import registerServiceWorker from "./registerServiceWorker";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
@@ -15,7 +16,9 @@ ReactDOM.render(
     <BrowserRouter basename={baseUrl}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <AuthProvider>
-                <App />
+                <DataProvider>
+                    <App />
+                </DataProvider>
             </AuthProvider>
         </MuiPickersUtilsProvider>
     </BrowserRouter>,

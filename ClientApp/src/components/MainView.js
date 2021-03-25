@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme) => {
 export default function MainView(props) {
     const classes = useStyles();
 
-    const {title, action, children} = props;
+    const {title, action, children, actionTooltip} = props;
 
     return (
         <main className={classes.content}>
-            <TopBar title={title} action={action} />
+            <TopBar title={title} action={action} actionTooltip={actionTooltip} />
             <Divider className={classes.divider} />
             {children}
         </main>

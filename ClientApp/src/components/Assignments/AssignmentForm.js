@@ -3,8 +3,9 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Grid, MenuItem
+    DialogTitle, Grid, IconButton, MenuItem
 } from "@material-ui/core";
+import { Add } from '@material-ui/icons';
 import { makeValidate } from 'mui-rff';
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
@@ -45,7 +46,9 @@ export default function AssignmentForm({
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Add Assignment</Button>
+            <IconButton onClick={handleClickOpen}>
+                <Add />
+            </IconButton>
             <FForm onSubmit={onSubmit}
                 initialValues={{
                     assignmentType: AssignmentType.FILE_UPLOAD,

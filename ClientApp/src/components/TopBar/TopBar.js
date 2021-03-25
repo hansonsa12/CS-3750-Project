@@ -1,10 +1,11 @@
-﻿import { Box, Typography } from "@material-ui/core";
+﻿import { Box, Tooltip, Typography } from "@material-ui/core";
 import React from "react";
 import NotificationBadge from "./Notifications/NotificationBadge";
 
 export default function TopBar({
     title = "",
-    action = []
+    action,
+    actionTooltip
 }) {
     return (
         <Box display="flex">
@@ -13,7 +14,11 @@ export default function TopBar({
                     {title}
                 </Typography>
             </Box>
-            <Box>{action}</Box>
+            {action && (
+                <Tooltip title={actionTooltip} placement="right">
+                    <Box>{action}</Box>
+                </Tooltip>
+            )}
             <Box flexGrow={1} />
             <Box>
                 <NotificationBadge />

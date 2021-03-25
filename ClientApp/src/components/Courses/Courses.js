@@ -1,14 +1,14 @@
-import { Button, ButtonGroup, Grid } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Button, ButtonGroup } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
+import { DataContext } from '../../context/DataProvider';
 import { getFormattedTime } from '../../helpers/constants';
 import TableComponent from '../TableComponent';
 import CourseForm from './CourseForm';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
-export default function Courses({
-    courses = []
-}) {
+export default function Courses() {
+    const { courses } = useContext(DataContext);
     const history = useHistory();
 
     const [columns] = useState([

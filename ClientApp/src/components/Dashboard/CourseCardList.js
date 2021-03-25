@@ -1,10 +1,10 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import { DataContext } from '../../context/DataProvider';
 import CourseCard from './CourseCard';
 
-export default function CourseCardList({
-    courses = []
-}) {
+export default function CourseCardList() {
+    const { courses } = useContext(DataContext);
     return (
         courses.length > 0 ? (
             <Grid container spacing={2}>

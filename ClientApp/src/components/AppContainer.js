@@ -49,7 +49,6 @@ class AppContainer extends Component {
 
     render() {
         const { classes } = this.props;
-        const { courses, registrations, tuitions } = this.state;
         const { isInstructor, isStudent, user } = this.context;
 
         return (
@@ -66,7 +65,7 @@ class AppContainer extends Component {
                     </Route>
                     <Route exact path="/dashboard">
                         <MainView title="Dashboard">
-                            <Dashboard courses={isInstructor ? courses : registrations} />
+                            <Dashboard />
                         </MainView>
                     </Route>
                     <Route exact path="/calendar">
@@ -77,7 +76,7 @@ class AppContainer extends Component {
 
                     {isInstructor && <Route exact path="/courses">
                         <MainView title="Courses" action={<CourseForm />}>
-                            <Courses courses={courses} />
+                            <Courses />
                         </MainView>
                     </Route>}
 
@@ -87,13 +86,13 @@ class AppContainer extends Component {
 
                     {isStudent && <Route exact path="/registrations">
                         <MainView title="Registrations">
-                            <Registrations registrations={registrations} />
+                            <Registrations />
                         </MainView>
                     </Route>}
 
                     {isStudent && <Route exact path="/tuition">
                         <MainView title="Tuition">
-                            <Tuition tuitions={tuitions} />
+                            <Tuition />
                         </MainView>
                     </Route>}
 
