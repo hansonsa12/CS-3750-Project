@@ -13,7 +13,9 @@ import { AuthContext } from '../../context/AuthProvider';
 import { AssignmentType, ASSIGNMENT_TYPES } from '../../helpers/constants';
 import { DateTimeEntryItem, SectionHeaderItem, TextEntryItem } from "../FormComponents";
 
-export default function AssignmentForm(props) {
+export default function AssignmentForm({
+    courseId
+}) {
 
     const [open, setOpen] = React.useState(false);
 
@@ -47,7 +49,8 @@ export default function AssignmentForm(props) {
             <FForm onSubmit={onSubmit}
                 initialValues={{
                     assignmentType: AssignmentType.FILE_UPLOAD,
-                    maxPoints: 0
+                    maxPoints: 0,
+                    courseId
                 }}
                 validate={validate}
             >

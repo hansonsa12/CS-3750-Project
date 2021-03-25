@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import Calendar from "./Calendar";
+import CourseDetails from './Courses/CourseDetails';
 import CourseForm from './Courses/CourseForm';
 import Courses from './Courses/Courses';
 import Dashboard from './Dashboard/Dashboard';
@@ -78,6 +79,10 @@ class AppContainer extends Component {
                         <MainView title="Courses" action={<CourseForm />}>
                             <Courses courses={courses} />
                         </MainView>
+                    </Route>}
+
+                    {isInstructor && <Route exact path="/courses/:id/details">
+                        <CourseDetails />
                     </Route>}
 
                     {isStudent && <Route exact path="/registrations">

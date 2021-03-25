@@ -11,7 +11,6 @@ export default function Dashboard({
         <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
                 <CourseCardList courses={courses} />
-                <AssignmentForm /> {/* Only here for testing */}
             </Grid>
             <Grid item xs={12} sm={4}>
                 <TodoList />
