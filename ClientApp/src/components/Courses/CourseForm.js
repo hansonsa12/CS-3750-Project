@@ -44,9 +44,9 @@ export default function CourseForm({
     };
 
     const openButton = (
-        <Tooltip title={`${action} Course`} placement="right">
+        <Tooltip title={`${action} Course`} placement={course ? "top" : "right"}>
             { course ? <Button onClick={handleClickOpen}
-                variant="contained" color="primary"> Edit</Button>
+                variant="contained" color="primary">Edit</Button>
                 : (<IconButton onClick={handleClickOpen}>
                     <Add />
                 </IconButton>)
