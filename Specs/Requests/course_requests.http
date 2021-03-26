@@ -17,3 +17,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwibmJmI
   "endTime": "11:30 AM",
   "maxCapacity": "30"
 }
+
+###
+
+DELETE https://localhost:5001/api/courses/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE2Nzk4OTk1LCJleHAiOjE2MTY4MDk3OTUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.MPceemQydnOkBolithhzwb6t8UWjGSLIb7X5mt-2NG4

@@ -8,11 +8,10 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 
-export default function DeleteConfirmationDialog({
- courseId,courseName
-}) {
+export default function DeleteConfirmationDialog({ courseId, courseName }) {
   const [open, setOpen] = React.useState(false);
- const { authHeader } = useContext(AuthContext);
+  const { authHeader } = useContext(AuthContext);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -22,17 +21,19 @@ export default function DeleteConfirmationDialog({
   };
 
   const handleDelete = () => {
-    
-    axios.delete(`api/courses/${courseId}`, authHeader)
-      .then((res) => {
+    axios
+      .delete(`api/courses/${courseId}`, authHeader)
+      .then(res => {
         alert("Course successfully deleted!");
         handleClose();
         window.location.reload();
-      }).catch((err) => {
-        alert(`${err.message}:\n${err.response.data.error || err.response.data}`);
+      })
+      .catch(err => {
+        alert(
+          `${err.message}:\n${err.response.data.error || err.response.data}`
+        );
       });
   };
-  
 
   return (
     <>
@@ -43,7 +44,7 @@ export default function DeleteConfirmationDialog({
         <DialogTitle>{"Delete course"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete {courseName} ?
+            Are you sure you want to delete <strong>{courseName}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

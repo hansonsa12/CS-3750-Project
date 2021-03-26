@@ -68,21 +68,15 @@ namespace final_project.Controllers
         {
             try{
                 Course course = await _context.Courses.FindAsync(id);
-                if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
-                    return Unauthorized( new { error = "You do not have permission to do that." });
-                }
-                if(course==null)
-                {
+                if(course == null) {
                     return NotFound();
+                } else if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
+                    return Unauthorized( new { error = "You do not have permission to do that." });
+                } else{
+                    // delete course
+                    _context.Courses.Remove(course);
+                    await _context.SaveChangesAsync();
                 }
-                else{
-                    // delete model
-                var course1 = await _context.Courses.FindAsync(id);
-                _context.Courses.Remove(course);
-                await _context.SaveChangesAsync();
-                }
-                
-
                 return Ok(course);
 
             } catch (Exception e) {
