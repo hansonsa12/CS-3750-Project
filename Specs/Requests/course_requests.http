@@ -1,9 +1,9 @@
 PUT https://localhost:5001/api/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE2MzAyNjk3LCJleHAiOjE2MTYzMTM0OTcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.FeNqmjDwRdmsVY1gyHcfLcv4Liq3Wrypj7Mt0GbjW6A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwibmJmIjoxNjE2NzkzMzc0LCJleHAiOjE2MTY4MDQxNzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMS8ifQ.s_fZFQL7NJYjczUOjuUrKTDok8QsRo4thwD3Hu9xdV8
 
 {
-  "courseId": "6",
+  "courseId": "1",
   "courseName": "Advanced Database Programming",
   "courseNumber": "CS 3550",
   "instructorId": "1",

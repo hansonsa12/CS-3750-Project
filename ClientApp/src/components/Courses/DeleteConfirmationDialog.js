@@ -4,11 +4,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import React from "react";
+import axios from "axios";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
-export default function DeleteConfirmationDialog(props) {
+export default function DeleteConfirmationDialog({
+ courseId,courseName
+}) {
   const [open, setOpen] = React.useState(false);
-
+ const { authHeader } = useContext(AuthContext);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -16,6 +20,19 @@ export default function DeleteConfirmationDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleDelete = () => {
+    
+    axios.delete(`api/courses/${courseId}`, authHeader)
+      .then((res) => {
+        alert("Course successfully deleted!");
+        handleClose();
+        window.location.reload();
+      }).catch((err) => {
+        alert(`${err.message}:\n${err.response.data.error || err.response.data}`);
+      });
+  };
+  
 
   return (
     <>
@@ -26,14 +43,14 @@ export default function DeleteConfirmationDialog(props) {
         <DialogTitle>{"Delete course"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete {props.courseName} ?
+            Are you sure you want to delete {courseName} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleDelete} color="primary" autoFocus>
             Delete
           </Button>
         </DialogActions>

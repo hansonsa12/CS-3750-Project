@@ -62,6 +62,34 @@ namespace final_project.Controllers
             }
         }
 
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourseById(int id)
+        {
+            try{
+                Course course = await _context.Courses.FindAsync(id);
+                if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
+                    return Unauthorized( new { error = "You do not have permission to do that." });
+                }
+                if(course==null)
+                {
+                    return NotFound();
+                }
+                else{
+                    // delete model
+                var course1 = await _context.Courses.FindAsync(id);
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+                }
+                
+
+                return Ok(course);
+
+            } catch (Exception e) {
+                return StatusCode(500, new { error = e });
+            }
+        }
+
         // [HttpGet("{id}")]
         // public async Task<ActionResult<Course>> GetCourseById(int id)
         // {
@@ -72,13 +100,5 @@ namespace final_project.Controllers
         // }
 
 
-        // [HttpDelete("{id}")]
-        // public async Task<ActionResult<Course>> DeleteCourseById(int id)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
-
-        //     return null;
-        // }
     }
 }
