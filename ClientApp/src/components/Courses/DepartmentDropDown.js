@@ -1,9 +1,9 @@
-import React from 'react'
+import {
+    MenuItem
+} from "@material-ui/core";
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import {
-    MenuItem,
-} from "@material-ui/core";
+import React from 'react';
 import { DEPARTMENTS } from '../../helpers/constants';
 
 export default function DepartmentDropDown() {

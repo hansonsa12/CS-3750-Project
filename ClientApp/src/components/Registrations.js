@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import { getFormattedTime } from '../helpers/constants';
-import DepartmentDropDown from './Courses/DepartmentDropDown'
+import DepartmentDropDown from './Courses/DepartmentDropDown';
 import TableComponent from './TableComponent';
 
 export default function Registrations() {

@@ -2,16 +2,11 @@
 import React from "react";
 import NotificationBadge from "./Notifications/NotificationBadge";
 
-export default function TopBar({
-    title = "",
-    action = []
-}) {
+export default function TopBar({ title = "", action, actionTooltip }) {
     return (
         <Box display="flex">
             <Box>
-                <Typography variant="h4">
-                    {title}
-                </Typography>
+                <Typography variant="h4">{title}</Typography>
             </Box>
             <Box>{action}</Box>
             <Box flexGrow={1} />
@@ -19,5 +14,5 @@ export default function TopBar({
                 <NotificationBadge />
             </Box>
         </Box>
-    )
+    );
 }

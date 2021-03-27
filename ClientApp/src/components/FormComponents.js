@@ -1,35 +1,35 @@
-import {
-    Divider, Grid,
-    Typography
-} from '@material-ui/core';
-import dayjs from 'dayjs';
-import _ from 'lodash';
+import { Divider, Grid, Tooltip, Typography } from "@material-ui/core";
+import dayjs from "dayjs";
+import _ from "lodash";
 import {
     KeyboardDateTimePicker,
     KeyboardTimePicker,
-    showErrorOnBlur, TextField
+    showErrorOnBlur,
+    TextField,
 } from "mui-rff";
-import React from 'react';
+import React from "react";
 
-export const TextEntryItem = (props) => {
-    const { name, label } = props;
+export const TextEntryItem = props => {
+    const { name } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
-            <TextField size="small"
-                label={label || getLabelFromName(name)}
-                variant="outlined" showError={showErrorOnBlur}
+            <TextField
+                size="small"
+                label={getLabelFromName(name)}
+                variant="outlined"
+                showError={showErrorOnBlur}
                 {...fieldPropsFrom(props)}
             />
         </Grid>
-    )
+    );
 };
 
-export const TimeEntryItem = (props) => {
-    const { name, label } = props;
+export const TimeEntryItem = props => {
+    const { name } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
             <KeyboardTimePicker
-                label={label || getLabelFromName(name)}
+                label={getLabelFromName(name)}
                 variant="inline"
                 ampm={true}
                 inputVariant="outlined"
@@ -42,12 +42,12 @@ export const TimeEntryItem = (props) => {
     );
 };
 
-export const DateTimeEntryItem = (props) => {
-    const { name, label } = props;
+export const DateTimeEntryItem = props => {
+    const { name } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
             <KeyboardDateTimePicker
-                label={label || getLabelFromName(name)}
+                label={getLabelFromName(name)}
                 variant="inline"
                 ampm={true}
                 inputVariant="outlined"
@@ -61,35 +61,55 @@ export const DateTimeEntryItem = (props) => {
     );
 };
 
-export const SectionHeaderItem = (props) => {
-    const { 
+export const SectionHeaderItem = props => {
+    const {
         top,
-        style = top ? {} : { marginTop: 10 }, 
+        style = top ? {} : { marginTop: 10 },
         title,
-        action
+        action,
+        actionTooltip,
     } = props;
 
     return (
-        <Grid item container justify="space-between" alignItems="flex-end"
-            xs={12} {...gridPropsFrom(props)}
+        <Grid
+            item
+            container
+            justify="space-between"
+            alignItems="flex-end"
+            xs={12}
+            {...gridPropsFrom(props)}
         >
-            <Grid item><Typography style={style}>{title}</Typography></Grid>
-            <Grid item>{action}</Grid>
-            <Grid item xs={12}><Divider /></Grid>
+            <Grid item>
+                <Typography style={style}>{title}</Typography>
+            </Grid>
+            <Grid item>
+                {actionTooltip && (
+                    <Tooltip
+                        key={actionTooltip}
+                        title={actionTooltip}
+                        placement="left"
+                    >
+                        {action}
+                    </Tooltip>
+                )}
+            </Grid>
+            <Grid item xs={12}>
+                <Divider />
+            </Grid>
         </Grid>
     );
 };
 
-const gridPropNames = ['xs', 'sm', 'm'];
+const gridPropNames = ["xs", "sm", "m"];
 
-const gridPropsFrom = (props) => {
+const gridPropsFrom = props => {
     return _.pick(props, gridPropNames);
 };
 
-const fieldPropsFrom = (props) => {
+const fieldPropsFrom = props => {
     return _.omit(props, gridPropNames);
 };
 
-const getLabelFromName = (name) => {
-    return _.chain(name).split('.').last().startCase().value();
+const getLabelFromName = name => {
+    return _.chain(name).split(".").last().startCase().value();
 };
