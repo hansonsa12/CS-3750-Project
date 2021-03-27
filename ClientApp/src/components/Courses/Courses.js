@@ -23,7 +23,7 @@ export default function Courses() {
             accessor: (r) => (
                 <ButtonGroup>
                     <CourseForm course={r} />
-                    <DeleteConfirmationDialog courseName={r.columnName} />
+                    <DeleteConfirmationDialog courseName={r.courseName} courseId={r.courseId} />
                     <Button onClick={() => history.push(`courses/${r.courseId}/details`)}>
                         Details
                     </Button>
