@@ -12,11 +12,11 @@ import {
 import React from 'react';
 
 export const TextEntryItem = (props) => {
-    const { name } = props;
+    const { name, label } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
             <TextField size="small"
-                label={getLabelFromName(name)}
+                label={label || getLabelFromName(name)}
                 variant="outlined" showError={showErrorOnBlur}
                 {...fieldPropsFrom(props)}
             />
@@ -25,11 +25,11 @@ export const TextEntryItem = (props) => {
 };
 
 export const TimeEntryItem = (props) => {
-    const { name } = props;
+    const { name, label } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
             <KeyboardTimePicker
-                label={getLabelFromName(name)}
+                label={label || getLabelFromName(name)}
                 variant="inline"
                 ampm={true}
                 inputVariant="outlined"
@@ -43,11 +43,11 @@ export const TimeEntryItem = (props) => {
 };
 
 export const DateTimeEntryItem = (props) => {
-    const { name } = props;
+    const { name, label } = props;
     return (
         <Grid item xs={12} {...gridPropsFrom(props)}>
             <KeyboardDateTimePicker
-                label={getLabelFromName(name)}
+                label={label || getLabelFromName(name)}
                 variant="inline"
                 ampm={true}
                 inputVariant="outlined"
