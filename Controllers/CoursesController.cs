@@ -45,6 +45,7 @@ namespace final_project.Controllers
             var courses = await _context.Courses.Include(c => c.Instructor)
                 .Where(c => c.InstructorId == userId)
                 .ToListAsync();
+            // TODO Ky Filter out instructor info so it only returns FirstName and LastName
             // var courses = await (from course in _context.Set<Course>()
             //               join instructor in _context.Set<Instructor>()
             //                 on new { Id = course.InstructorId }

@@ -8,7 +8,7 @@ export default function TopBar({ title = "", action, actionTooltip }) {
             <Box>
                 <Typography variant="h4">{title}</Typography>
             </Box>
-            {action && <Box>{action}</Box>}
+            <Box>{action}</Box>
             <Box flexGrow={1} />
             <Box>
                 <NotificationBadge />

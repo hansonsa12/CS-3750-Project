@@ -74,7 +74,7 @@ export default function ProfileForm() {
                 {({
                     handleSubmit,
                     form: {
-                        mutators: { push, pop },
+                        mutators: { push },
                     },
                     values,
                 }) => (
