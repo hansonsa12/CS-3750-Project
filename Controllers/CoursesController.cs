@@ -7,9 +7,11 @@ namespace final_project.Controllers
     using final_project.Controllers.Helpers;
     using final_project.Data;
     using final_project.Models.Course;
+    using final_project.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json.Linq;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -40,7 +42,15 @@ namespace final_project.Controllers
         public async Task<IActionResult> GetCourses()
         {
             int userId = AuthHelpers.GetCurrentUserId(User);
-            var courses = await _context.Courses.Where(c => c.InstructorId == userId).ToListAsync();
+            var courses = await _context.Courses.Include(c => c.Instructor)
+                .Where(c => c.InstructorId == userId)
+                .ToListAsync();
+            // var courses = await (from course in _context.Set<Course>()
+            //               join instructor in _context.Set<Instructor>()
+            //                 on new { Id = course.InstructorId }
+            //                 equals new { Id = instructor.UserId }
+            //               select new { course, instructor = new { FirstName = instructor.FirstName,
+            //                  LastName = instructor.LastName}}).ToListAsync();
             return Ok(courses);
         }
 
