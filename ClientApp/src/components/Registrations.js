@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Button, ButtonGroup, Grid } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
 import { getFormattedTime } from '../helpers/constants';
 import DepartmentDropDown from './Courses/DepartmentDropDown'
@@ -6,13 +6,27 @@ import TableComponent from './TableComponent';
 
 export default function Registrations() {
     const [allCourses, setAllCourses] = useState([]);
+
+    function registerStudent(){
+        console.log("registering Student");
+        // TODO add route here
+        
+    }
+
     const [columns] = useState([
         { header: "Course Number", accessor: "courseNumber" },
         { header: "Title", accessor: "courseName" },
         { header: "Instructor", accessor: (r) => (`${r.instructor?.lastName}, ${r.instructor?.firstName}`) },
         { header: "Location", accessor: (r) => (`${r.buildingName}, ${r.roomNumber}`) },
         { header: "Time", accessor: (r) => (getFormattedTime(r.startTime, r.endTime)) },
-        { header: "Meeting Days", accessor: "meetingDays" }
+        { header: "Meeting Days", accessor: "meetingDays" },
+        { header: "Register", 
+        accessor: (r) => (
+            <ButtonGroup>
+                <Button onClick={registerStudent}>Register</Button>
+            </ButtonGroup>
+        )
+        }
     ]);
 
     useEffect(() => {
