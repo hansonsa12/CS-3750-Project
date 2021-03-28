@@ -1,16 +1,35 @@
 import { Button, ButtonGroup, Grid } from '@material-ui/core';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { getFormattedTime } from '../helpers/constants';
 import DepartmentDropDown from './Courses/DepartmentDropDown'
 import TableComponent from './TableComponent';
+import { AuthContext } from '../context/AuthProvider';
+import axios from 'axios';
 
 export default function Registrations() {
     const [allCourses, setAllCourses] = useState([]);
 
+    const { authHeader } = useContext(AuthContext);
+
     function registerStudent(){
         console.log("registering Student");
+
+        let formattedValues = {
+
+        }
+
         // TODO add route here
-        
+        axios.request({
+            url: 'api/courses',
+            method: 'POST',
+            ...authHeader,
+            data: formattedValues
+        }).then(res => {
+            alert("Registered Successfully!");
+            // TODO change button named to 'Drop'
+        }).catch((err, res) => {
+            alert(`${err.message}:\n${err.response.data.error}`);
+        });
     }
 
     const [columns] = useState([

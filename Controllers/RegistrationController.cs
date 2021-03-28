@@ -25,7 +25,8 @@ namespace final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterStudent(CourseStudent courseStudent){
             try{
-                //await _context.
+                //await _context.Courses.AddAsync(course);
+                
                 await _context.SaveChangesAsync();
                 return Ok(courseStudent);
             }
