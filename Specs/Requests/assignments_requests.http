@@ -1,0 +1,41 @@
+POST https://localhost:5001/api/assignments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE3MDUwMTA5LCJleHAiOjE2MTcwNjA5MDksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMS8ifQ.WXVzZXr9xuUJ6irxbLxbzsc5vkt7IAn7ARSYGVr0ecY
+
+{
+  
+  "courseId": "1",
+  "title": "Advanced programming",
+  "description": "Learn how to do some advanced things with databases!",
+  "maxPoints": "8",
+  "dueDate": "1986-02-09T15:53:00.000Z",
+  "assignmentType": "File Upload"
+  
+}
+
+### Delete Assignment
+
+DELETE https://localhost:5001/api/assignments/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE3MDUwMTA5LCJleHAiOjE2MTcwNjA5MDksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMS8ifQ.WXVzZXr9xuUJ6irxbLxbzsc5vkt7IAn7ARSYGVr0ecY
+
+### Get all assignments for a course
+GET https://localhost:5001/api/assignments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE3MDUwMTA5LCJleHAiOjE2MTcwNjA5MDksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMS8ifQ.WXVzZXr9xuUJ6irxbLxbzsc5vkt7IAn7ARSYGVr0ecY
+
+
+###
+PUT https://localhost:5001/api/assignments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmJmIjoxNjE3MDUwMTA5LCJleHAiOjE2MTcwNjA5MDksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMS8ifQ.WXVzZXr9xuUJ6irxbLxbzsc5vkt7IAn7ARSYGVr0ecY
+
+{
+  
+  "courseId": "1",
+  "assignmentId":"2",
+  "title": "  ed Database Programming assignment",
+  "description": "Learn how to do some advanced things with databases!",
+  "maxPoints": "50",
+  "dueDate": "1986-02-09T15:53:00.000Z",
+  "assignmentType": "Text Entry"
+  
+}

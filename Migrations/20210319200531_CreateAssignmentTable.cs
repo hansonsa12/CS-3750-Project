@@ -18,7 +18,7 @@ namespace final_project.Migrations
                     Description = table.Column<string>(type: "text", nullable: true),
                     MaxPoints = table.Column<int>(type: "int", nullable: true),
                     DueDate = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    AssignmentType = table.Column<string>(type: "varchar(10)", nullable: false)
+                    AssignmentType = table.Column<string>(type: "varchar(11)", nullable: false)
                 },
                 constraints: table =>
                 {

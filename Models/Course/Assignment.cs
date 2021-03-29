@@ -22,10 +22,20 @@ namespace final_project.Models.Course
         public DateTime? DueDate { get; set; }
 
         [Required]
-        [Column (TypeName = "varchar(10)")]
+        [Column (TypeName = "varchar(11)")]
         public string AssignmentType { get; set; }
 
+        
+        public void UpdateInfo(Assignment updatedInfo){
 
+            this.Title = updatedInfo.Title;
+            this.Description = updatedInfo.Description;
+            this.AssignmentType = updatedInfo.AssignmentType;
+            this.DueDate = updatedInfo.DueDate;
+            this.Description = updatedInfo.Description;
+            this.MaxPoints = updatedInfo.MaxPoints;
+          
+        }
 
     }
 }
