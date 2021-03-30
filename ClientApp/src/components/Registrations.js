@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Grid } from '@material-ui/core';
 import React, { useState, useEffect, useContext } from 'react'
 import { getFormattedTime } from '../helpers/constants';
-import DepartmentDropDown from './Courses/DepartmentDropDown'
+import DepartmentDropDown from './Courses/DepartmentDropDown';
 import TableComponent from './TableComponent';
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';

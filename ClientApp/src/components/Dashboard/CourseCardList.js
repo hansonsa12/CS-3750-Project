@@ -1,12 +1,12 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import { DataContext } from '../../context/DataProvider';
 import CourseCard from './CourseCard';
 
-export default function CourseCardList({
-    courses = []
-}) {
+export default function CourseCardList() {
+    const { courses } = useContext(DataContext);
     return (
-        courses.length > 0 ? (
+        courses && courses.length > 0 ? (
             <Grid container spacing={2}>
                 {courses.map((course) => (
                     <Grid key={`courseitem-${course.courseId}`} item xs={12}>

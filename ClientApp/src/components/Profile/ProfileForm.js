@@ -1,21 +1,23 @@
 import {
     Button,
     Dialog,
-    DialogActions, DialogContent, DialogTitle, Grid,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Grid,
     IconButton,
-    Tooltip
 } from "@material-ui/core";
-import { Add, Edit } from '@material-ui/icons';
-import axios from 'axios';
-import arrayMutators from 'final-form-arrays';
-import { makeValidate } from 'mui-rff';
+import { Add, Edit } from "@material-ui/icons";
+import axios from "axios";
+import arrayMutators from "final-form-arrays";
+import { makeValidate } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
-import { AuthContext } from '../../context/AuthProvider';
-import { MAX_PROFILE_LINKS } from '../../helpers/constants';
-import { SectionHeaderItem, TextEntryItem } from '../FormComponents';
-import { LinkForm } from './LinkForm';
+import { AuthContext } from "../../context/AuthProvider";
+import { MAX_PROFILE_LINKS } from "../../helpers/constants";
+import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
+import { LinkForm } from "./LinkForm";
 
 export default function ProfileForm() {
     const [open, setOpen] = React.useState(false);
@@ -41,66 +43,103 @@ export default function ProfileForm() {
                 alert(err.message);
                 console.error(err.message);
             });
-
-    }
+    };
 
     const validationSchema = Yup.object().shape({
-        profileLinks: Yup.array().of(Yup.object().shape({
-            link: Yup.string().required("Link cannot be blank")
-        }))
+        profileLinks: Yup.array().of(
+            Yup.object().shape({
+                link: Yup.string().required("Link cannot be blank"),
+            })
+        ),
     });
 
     const validate = makeValidate(validationSchema);
 
     return (
         <div>
-            <Tooltip title="Edit Profile" placement="right">
-                <IconButton onClick={handleClickOpen}>
-                    <Edit />
-                </IconButton>
-            </Tooltip>
+            {/* ToDo Ky Refactor forms into reusable form modal */}
+            <IconButton onClick={handleClickOpen}>
+                <Edit />
+            </IconButton>
             <FForm
                 onSubmit={onSubmit}
                 mutators={{
-                    ...arrayMutators
+                    ...arrayMutators,
                 }}
                 initialValues={{
                     ...user,
                 }}
                 validate={validate}
             >
-                {({ handleSubmit, form: { mutators: { push, pop } }, values }) => (
+                {({
+                    handleSubmit,
+                    form: {
+                        mutators: { push },
+                    },
+                    values,
+                }) => (
                     <form onSubmit={handleSubmit}>
                         <Dialog
                             open={open}
                             onClose={handleClose}
                             aria-labelledby="form-dialog-title"
                         >
-                            <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
+                            <DialogTitle id="form-dialog-title">
+                                Edit Profile
+                            </DialogTitle>
                             <DialogContent>
-                                <Grid container spacing={2} justify="space-between">
-                                    <TextEntryItem name="biography" rows={6} multiline />
+                                <Grid
+                                    container
+                                    spacing={2}
+                                    justify="space-between"
+                                >
+                                    <TextEntryItem
+                                        name="biography"
+                                        rows={6}
+                                        multiline
+                                    />
                                     <TextEntryItem name="phoneNumber" sm={6} />
-                                    <SectionHeaderItem title="Links" action={
-                                        <Tooltip title="Add Link" placement="left">
-                                            <IconButton size="small" 
-                                                onClick={() => { 
-                                                    push('profileLinks', undefined)
+                                    <SectionHeaderItem
+                                        title="Links"
+                                        action={
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => {
+                                                    push(
+                                                        "profileLinks",
+                                                        undefined
+                                                    );
                                                 }}
-                                                disabled={values.profileLinks.length >= MAX_PROFILE_LINKS}
+                                                disabled={
+                                                    values.profileLinks
+                                                        .length >=
+                                                    MAX_PROFILE_LINKS
+                                                }
                                             >
                                                 <Add fontSize="small" />
                                             </IconButton>
-                                        </Tooltip>
-                                    }/>
+                                        }
+                                        actionTooltip="Add Link"
+                                    />
                                     <LinkForm />
-                                    {/* TODO Ky Add link field array */}
                                     <SectionHeaderItem title="Address" />
-                                    <TextEntryItem name="address.addressOne" sm={6} />
-                                    <TextEntryItem name="address.addressTwo" sm={6} />
+                                    <TextEntryItem
+                                        name="address.addressOne"
+                                        sm={6}
+                                    />
+                                    <TextEntryItem
+                                        name="address.addressTwo"
+                                        sm={6}
+                                    />
                                     <TextEntryItem name="address.city" sm={6} />
-                                    <TextEntryItem name="address.state" sm={6} />
-                                    <TextEntryItem name="address.zipCode" sm={6} />
+                                    <TextEntryItem
+                                        name="address.state"
+                                        sm={6}
+                                    />
+                                    <TextEntryItem
+                                        name="address.zipCode"
+                                        sm={6}
+                                    />
                                 </Grid>
                             </DialogContent>
                             <DialogActions>
