@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Grid } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { getFormattedTime } from '../../helpers/constants';

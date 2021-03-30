@@ -9,6 +9,14 @@ export const getFormattedTime = (startTime, endTime) => {
     return _.chain([startTime, endTime]).compact().join(" - ").value();
 };
 
+export const getFormattedLocation = (building, room) => {
+    return _.chain([building, room]).compact().join(", ").value();
+};
+
+export const getFormattedInstructorName = ({ lastName, firstName }) => {
+    return _.chain([lastName, firstName]).compact().join(", ").value();
+};
+
 export const getFileUrl = (userId, fileName) => {
     return (userId && fileName) ? `/uploads/u${userId}/${fileName}` : null;
 };

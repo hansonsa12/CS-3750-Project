@@ -54,6 +54,7 @@ export default function TableComponent({
                                         case "function":
                                             cellValue = column.accessor(row);
                                             break;
+                                        default: break;
                                     }
                                     return (
                                         <StyledTableCell key={`cell-${rIndex}-${cIndex}-${cellValue}`}

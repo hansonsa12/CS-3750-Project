@@ -3,15 +3,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React, { useContext } from "react";
-import { DataContext } from "../../context/DataProvider";
+import React from "react";
 import CreditCardForm from "./CreditCardForm";
 
 export default function Tuition() {
-    const { registrations } = useContext(DataContext);
-
     return (
-        <div>
+        <>
             <TableContainer component={Paper}>
                 <TableHead>
                     <TableRow>
@@ -21,6 +18,6 @@ export default function Tuition() {
                 </TableHead>
             </TableContainer>
             <CreditCardForm />
-        </div>
+        </>
     );
 }

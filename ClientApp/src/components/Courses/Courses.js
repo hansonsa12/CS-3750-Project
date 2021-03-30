@@ -8,7 +8,7 @@ import CourseForm from "./CourseForm";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 
 export default function Courses() {
-    const { courses } = useContext(DataContext);
+    const { userCourses } = useContext(DataContext);
     const history = useHistory();
 
     const [columns] = useState([
@@ -53,7 +53,7 @@ export default function Courses() {
         <div>
             <TableComponent
                 columns={columns}
-                rows={courses}
+                rows={userCourses}
                 emptyMessage="No courses. Click the plus button to add some."
             />
         </div>
