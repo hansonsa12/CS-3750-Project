@@ -11,7 +11,7 @@ namespace final_project.Controllers
     using Microsoft.EntityFrameworkCore;
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/courses/{courseId}/[controller]")]
     public class AssignmentsController : ControllerBase
     {
         private readonly LMSContext _context;
@@ -24,22 +24,24 @@ namespace final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAssignement([FromBody] Assignment assignment)
         {
-            try{
+            try
+            {
                 await _context.Assignments.AddAsync(assignment);
                 await _context.SaveChangesAsync();
                 return Ok(assignment);
-            } catch (Exception e) {
-                return StatusCode(500, new { error = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e.Message });
             }
         }
 
         [Authorize]
-        [HttpGet("{id}")]//course id
+        [HttpGet]
         public async Task<IActionResult> GetAssignments(int courseId)
         {
-           Course course = await _context.Courses.FindAsync(courseId);
-            var assignments = await _context.Assignments.Where(a => a.CourseId == courseId).ToListAsync();
-            course.Assignment=assignments;
+            var assignments = await _context.Assignments.Where(a => a.CourseId == courseId)
+                .ToListAsync();
             return Ok(assignments);
         }
 
@@ -47,18 +49,21 @@ namespace final_project.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAssignment([FromBody] Assignment updatedInfo)
         {
-            try{
-              
+            try
+            {
                 Assignment assignment = await _context.Assignments.FindAsync(updatedInfo.AssignmentId);
-                  Course course=await _context.Courses.FindAsync(updatedInfo.CourseId);
-                if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
-                    return Unauthorized( new { error = "You do not have permission to update the assignment." });
+                Course course = await _context.Courses.FindAsync(updatedInfo.CourseId);
+                if (course.InstructorId != AuthHelpers.GetCurrentUserId(User))
+                {
+                    return Unauthorized(new { error = "You do not have permission to update this assignment." });
                 }
                 assignment.UpdateInfo(updatedInfo);
                 await _context.SaveChangesAsync();
                 return Ok(assignment);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, new { error = e });
             }
         }
@@ -71,7 +76,7 @@ namespace final_project.Controllers
         //         if(assignment == null) {
         //             return NotFound();
         //         }  
-                
+
         //         return Ok(assignment);
 
         //     } catch (Exception e) {
@@ -81,33 +86,34 @@ namespace final_project.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Course>> DeleteAssignmentById(int id)
+        public async Task<IActionResult> DeleteAssignmentById(int id)
         {
-        
-            try{
+            try
+            {
                 Assignment assignment = await _context.Assignments.FindAsync(id);
                 Course course = await _context.Courses.FindAsync(assignment.CourseId);
-               if(assignment==null)
+                if (assignment == null)
                 {
                     return NotFound();
                 }
-                else if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
-                    return Unauthorized( new { error = "You do not have permission to delete an assignment" });
+                else if (course.InstructorId != AuthHelpers.GetCurrentUserId(User))
+                {
+                    return Unauthorized(new { error = "You do not have permission to delete this assignment" });
                 }
-                else{
-                    // delete model
-                await _context.Assignments.FindAsync(id);
-                _context.Assignments.Remove(assignment);
-                await _context.SaveChangesAsync();
+                else
+                {
+                    // delete assignment
+                    _context.Assignments.Remove(assignment);
+                    await _context.SaveChangesAsync();
                 }
-                
 
                 return Ok(assignment);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, new { error = e });
-          
-        }
+            }
         }
     }
 }

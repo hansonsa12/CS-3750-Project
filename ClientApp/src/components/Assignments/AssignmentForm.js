@@ -34,9 +34,8 @@ export default function AssignmentForm({ courseId }) {
     };
 
     const onSubmit = values => {
-       // alert(JSON.stringify(values));
         axios.request({
-            url: 'api/assignments',
+            url: `api/courses/${courseId}/assignments`,
             method: 'POST',
             ...authHeader,
             data: values
