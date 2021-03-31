@@ -9,6 +9,7 @@ import {
     MenuItem,
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
+import axios from "axios";
 import { makeValidate } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
@@ -33,7 +34,18 @@ export default function AssignmentForm({ courseId }) {
     };
 
     const onSubmit = values => {
-        alert(JSON.stringify(values));
+        axios.request({
+            url: `api/courses/${courseId}/assignments`,
+            method: 'POST',
+            ...authHeader,
+            data: values
+        }).then(res => {
+            alert("Assignment Updated Successfully!");
+            window.location.reload();
+          
+        }).catch((err, res) => {
+            alert(`${err.message}:\n${err.response.data.error}`);
+        });
     };
 
     const { authHeader } = useContext(AuthContext);
