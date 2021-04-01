@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
+import { getFormattedInstructorName } from '../../../helpers/constants';
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import { SectionHeaderItem } from "../../FormComponents";
 import MainView from "../../MainView";
@@ -15,13 +16,13 @@ export default function CourseDetails() {
     const { isInstructor } = useContext(AuthContext);
     const { id } = useParams(); // get params from route url
 
-    const { courses } = useContext(DataContext);
+    const { userCourses } = useContext(DataContext);
 
     const [course, setCourse] = useState({});
 
     useEffect(() => {
-        setCourse(courses.find(c => c.courseId.toString() === id));
-    }, [courses, id]);
+        setCourse(userCourses.find(c => c.courseId.toString() === id));
+    }, [userCourses, id]);
 
     const actionProps = isInstructor
         ? {
@@ -46,7 +47,8 @@ export default function CourseDetails() {
                             " "
                         )}
                         specialFormatters={{
-                            instructor: i => `${i.lastName}, ${i.firstName}`,
+                            // TODO Ky: Add missing instructor info to student registrations
+                            instructor: i => getFormattedInstructorName(i || {}),
                         }}
                     />
                 </Grid>

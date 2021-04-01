@@ -6,20 +6,19 @@ import {
     DialogTitle,
     Grid,
     IconButton,
-    MenuItem,
+    MenuItem
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import axios from "axios";
 import { makeValidate } from "mui-rff";
-import React, { useContext } from "react";
+import React from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
-import { AuthContext } from "../../context/AuthProvider";
 import { AssignmentType, ASSIGNMENT_TYPES } from "../../helpers/constants";
 import {
     DateTimeEntryItem,
     SectionHeaderItem,
-    TextEntryItem,
+    TextEntryItem
 } from "../FormComponents";
 
 export default function AssignmentForm({ courseId }) {
@@ -47,8 +46,6 @@ export default function AssignmentForm({ courseId }) {
             alert(`${err.message}:\n${err.response.data.error}`);
         });
     };
-
-    const { authHeader } = useContext(AuthContext);
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Title is required"),

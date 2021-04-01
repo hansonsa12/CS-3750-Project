@@ -32,15 +32,19 @@ export const DataContext = createContext(initialState);
 
 // Provider component
 export default function DataProvider({ children }) {
-    const { isInstructor, authHeader } = useContext(AuthContext);
+    const { isInstructor, isStudent, authHeader } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(true);
 
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState();
+    const [registrations, setRegistrations] = useState([]);
+    const [allCourses, setAllCourses] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             setCourses(await getCourses());
+            setRegistrations(await getRegistrations());
+            setAllCourses(await getAllCourses());
             setLoading(false);
         }
         fetchData();
@@ -53,11 +57,27 @@ export default function DataProvider({ children }) {
         }
     };
 
+    const getRegistrations = async () => {
+        if (isStudent) {
+            const res = await axios.get("api/registrations", authHeader);
+            return res.data;
+        }
+    };
+
+    const getAllCourses = async () => {
+        if (isStudent) {
+            const res = await axios.get("api/courses/all", authHeader);
+            return res.data;
+        }
+    }
+
     return (
         !loading && (
             <DataContext.Provider
                 value={{
-                    courses,
+                    userCourses: isInstructor ? courses : registrations,
+                    setUserCourses: isInstructor ? setCourses : setRegistrations,
+                    allCourses,
                 }}
             >
                 {children}

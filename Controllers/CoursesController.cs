@@ -39,7 +39,7 @@ namespace final_project.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetCourses()
+        public async Task<IActionResult> GetInstructorCourses()
         {
             int userId = AuthHelpers.GetCurrentUserId(User);
             var courses = await _context.Courses.Include(c => c.Instructor)
@@ -52,6 +52,14 @@ namespace final_project.Controllers
             //                 equals new { Id = instructor.UserId }
             //               select new { course, instructor = new { FirstName = instructor.FirstName,
             //                  LastName = instructor.LastName}}).ToListAsync();
+            return Ok(courses);
+        }
+
+        [Authorize]
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllCourses(){
+            var courses = await _context.Courses.Include(c => c.Instructor)
+                .ToListAsync();
             return Ok(courses);
         }
 

@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid } from "@material-ui/core";
 import _ from "lodash";
-import React from "react";
+import React, { Fragment } from "react";
 
 export default function DetailsContainer({
     object = {},
@@ -15,7 +15,7 @@ export default function DetailsContainer({
                         .keys()
                         .difference(omitValues)
                         .map(key => (
-                            <>
+                            <Fragment key={`prop-${key}`}>
                                 <Grid
                                     key={`prop-label-${key}`}
                                     item
@@ -36,7 +36,7 @@ export default function DetailsContainer({
                                         ? specialFormatters[key](object[key])
                                         : object[key]}
                                 </Grid>
-                            </>
+                            </Fragment>
                         ))
                         .value()}
                 </Grid>

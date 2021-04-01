@@ -6,7 +6,7 @@ import {
     DialogTitle,
     Grid,
     MenuItem,
-    Typography,
+    Typography
 } from "@material-ui/core";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -21,7 +21,7 @@ import { DEPARTMENTS } from "../../helpers/constants";
 import {
     SectionHeaderItem,
     TextEntryItem,
-    TimeEntryItem,
+    TimeEntryItem
 } from "../FormComponents";
 
 export default function CourseForm({

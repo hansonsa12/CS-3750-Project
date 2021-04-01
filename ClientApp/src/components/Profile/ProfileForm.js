@@ -5,7 +5,7 @@ import {
     DialogContent,
     DialogTitle,
     Grid,
-    IconButton,
+    IconButton
 } from "@material-ui/core";
 import { Add, Edit } from "@material-ui/icons";
 import axios from "axios";
