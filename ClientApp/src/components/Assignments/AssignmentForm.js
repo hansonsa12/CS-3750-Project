@@ -6,20 +6,21 @@ import {
     DialogTitle,
     Grid,
     IconButton,
-    MenuItem
+    MenuItem,
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import axios from "axios";
 import { makeValidate } from "mui-rff";
-import React from "react";
+import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AssignmentType, ASSIGNMENT_TYPES } from "../../helpers/constants";
 import {
     DateTimeEntryItem,
     SectionHeaderItem,
-    TextEntryItem
+    TextEntryItem,
 } from "../FormComponents";
+import { AuthContext } from "../../context/AuthProvider";
 
 export default function AssignmentForm({ courseId }) {
     const [open, setOpen] = React.useState(false);
@@ -32,19 +33,23 @@ export default function AssignmentForm({ courseId }) {
         setOpen(false);
     };
 
+    const { authHeader } = useContext(AuthContext);
+
     const onSubmit = values => {
-        axios.request({
-            url: `api/courses/${courseId}/assignments`,
-            method: 'POST',
-            ...authHeader,
-            data: values
-        }).then(res => {
-            alert("Assignment Updated Successfully!");
-            window.location.reload();
-          
-        }).catch((err, res) => {
-            alert(`${err.message}:\n${err.response.data.error}`);
-        });
+        axios
+            .request({
+                url: `api/courses/${courseId}/assignments`,
+                method: "POST",
+                ...authHeader,
+                data: values,
+            })
+            .then(res => {
+                alert("Assignment Updated Successfully!");
+                window.location.reload();
+            })
+            .catch((err, res) => {
+                alert(`${err.message}:\n${err.response.data.error}`);
+            });
     };
 
     const validationSchema = Yup.object().shape({
