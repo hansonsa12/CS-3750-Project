@@ -12,7 +12,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import MainView from "./MainView";
 import ProfileForm from "./Profile/ProfileForm";
 import Profile from "./Profile/ProfileStatic";
-import Registrations from "./Registrations";
+import Registrations from "./Registrations/Registrations";
 import SideNavigation from "./SideNavigation";
 import Tuition from "./Tuition/Tuition";
 
