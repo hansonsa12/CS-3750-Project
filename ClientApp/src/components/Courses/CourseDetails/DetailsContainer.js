@@ -5,7 +5,7 @@ import React, { Fragment } from "react";
 export default function DetailsContainer({
     object = {},
     omitValues = [],
-    specialFormatters = {},
+    specialFormatters = {}
 }) {
     return (
         <Card>

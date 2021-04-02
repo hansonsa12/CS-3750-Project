@@ -1,15 +1,15 @@
 import { Grid, IconButton } from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
+import { Add, Edit } from "@material-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
-import { getFormattedInstructorName } from '../../../helpers/constants';
+import { getFormattedInstructorName } from "../../../helpers/constants";
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import { SectionHeaderItem } from "../../FormComponents";
 import MainView from "../../MainView";
-import TableComponent from "../../TableComponent";
 import CourseForm from "../CourseForm";
+import AssignmentsTable from "./AssignmentsTable";
 import DetailsContainer from "./DetailsContainer";
 
 export default function CourseDetails() {
@@ -33,7 +33,7 @@ export default function CourseDetails() {
                       </IconButton>
                   </CourseForm>
               ),
-              actionTooltip: "Edit Course",
+              actionTooltip: "Edit Course"
           }
         : {};
 
@@ -48,24 +48,26 @@ export default function CourseDetails() {
                         )}
                         specialFormatters={{
                             // TODO Ky: Add missing instructor info to student registrations
-                            instructor: i => getFormattedInstructorName(i || {}),
+                            instructor: i => getFormattedInstructorName(i || {})
                         }}
                     />
                 </Grid>
-                {isInstructor && (
-                    <>
-                        <SectionHeaderItem
-                            title="Assignments"
-                            action={
-                                <AssignmentForm courseId={course.courseId} />
-                            }
-                            actionTooltip="Add Assignment"
-                        />
-                        <Grid item xs={12}>
-                            <TableComponent course />
-                        </Grid>
-                    </>
-                )}
+                <SectionHeaderItem
+                    title="Assignments"
+                    action={
+                        isInstructor && (
+                            <AssignmentForm courseId={course.courseId}>
+                                <IconButton size="small">
+                                    <Add fontSize="small" />
+                                </IconButton>
+                            </AssignmentForm>
+                        )
+                    }
+                    actionTooltip="Add Assignment"
+                />
+                <Grid item xs={12}>
+                    <AssignmentsTable course={course} />
+                </Grid>
             </Grid>
         </MainView>
     );

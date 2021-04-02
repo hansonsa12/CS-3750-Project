@@ -1,15 +1,29 @@
-﻿import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
+﻿import {
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    makeStyles
+} from "@material-ui/core";
 import {
-    ChevronLeft, ChevronRight, DashboardRounded, EventRounded, ExitToAppRounded, LibraryBooks, MonetizationOn
+    ChevronLeft,
+    ChevronRight,
+    DashboardRounded,
+    EventRounded,
+    ExitToAppRounded,
+    LibraryBooks,
+    MonetizationOn
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from '../context/AuthProvider';
-import { AccountType } from '../helpers/constants';
-import { ProfilePic } from './Profile/ProfilePic';
+import { AuthContext } from "../context/AuthProvider";
+import { AccountType } from "../helpers/constants";
+import { ProfilePic } from "./Profile/ProfilePic";
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
     const openDrawerWidth = 180;
     const closedDrawerWidth = theme.spacing(7) + 1;
 
@@ -25,7 +39,7 @@ const useStyles = makeStyles((theme) => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen
             }),
-            overflowX: "hidden",
+            overflowX: "hidden"
         },
         drawerClose: {
             transition: theme.transitions.create("width", {
@@ -46,7 +60,9 @@ const useStyles = makeStyles((theme) => {
 
 export default function SideNavigation() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(JSON.parse(localStorage["navBarOpen"] ?? null) ?? true);
+    const [open, setOpen] = React.useState(
+        JSON.parse(localStorage["navBarOpen"] ?? null) ?? true
+    );
 
     const handleDrawerToggle = () => {
         localStorage["navBarOpen"] = !open;
@@ -79,30 +95,40 @@ export default function SideNavigation() {
                         onClick: () => history.push("/profile")
                     },
                     {
-                        text: "Dashboard", icon: <DashboardRounded />,
+                        text: "Dashboard",
+                        icon: <DashboardRounded />,
                         onClick: () => history.push("/dashboard")
                     },
                     {
-                        text: "Calendar", icon: <EventRounded />,
+                        text: "Calendar",
+                        icon: <EventRounded />,
                         onClick: () => history.push("/calendar")
                     },
                     {
                         for: AccountType.INSTRUCTOR,
-                        text: "Courses", icon: <LibraryBooks />,
+                        text: "Courses",
+                        icon: <LibraryBooks />,
                         onClick: () => history.push("/courses")
                     },
                     {
                         for: AccountType.STUDENT,
-                        text: "Registrations", icon: <LibraryBooks />,
+                        text: "Registrations",
+                        icon: <LibraryBooks />,
                         onClick: () => history.push("/registrations")
                     },
                     {
                         for: AccountType.STUDENT,
-                        text: "Tuition", icon: <MonetizationOn />,
+                        text: "Tuition",
+                        icon: <MonetizationOn />,
                         onClick: () => history.push("/tuition")
                     },
                     {
-                        text: "Logout", icon: <ExitToAppRounded style={{ transform: "scaleX(-1)" }} />,
+                        text: "Logout",
+                        icon: (
+                            <ExitToAppRounded
+                                style={{ transform: "scaleX(-1)" }}
+                            />
+                        ),
                         onClick: logout
                     }
                 ].map((item, index) => {
@@ -112,7 +138,7 @@ export default function SideNavigation() {
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />
                         </ListItem>
-                    )
+                    );
                 })}
             </List>
 

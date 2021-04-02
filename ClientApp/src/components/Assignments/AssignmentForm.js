@@ -7,22 +7,29 @@ import {
     Grid,
     IconButton,
     MenuItem,
+    Tooltip
 } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import axios from "axios";
 import { makeValidate } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
+import { AuthContext } from "../../context/AuthProvider";
 import { AssignmentType, ASSIGNMENT_TYPES } from "../../helpers/constants";
+import DeleteConfirmationDialog from "../Courses/DeleteConfirmationDialog";
 import {
     DateTimeEntryItem,
     SectionHeaderItem,
-    TextEntryItem,
+    TextEntryItem
 } from "../FormComponents";
-import { AuthContext } from "../../context/AuthProvider";
 
-export default function AssignmentForm({ courseId }) {
+export default function AssignmentForm({
+    courseId,
+    assignment,
+    action = assignment ? "Edit" : "Add",
+    children
+}) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -33,15 +40,15 @@ export default function AssignmentForm({ courseId }) {
         setOpen(false);
     };
 
-    const { authHeader } = useContext(AuthContext);
+    const { authHeader, isInstructor } = useContext(AuthContext);
 
     const onSubmit = values => {
         axios
             .request({
                 url: `api/courses/${courseId}/assignments`,
-                method: "POST",
+                method: assignment ? "PUT" : "POST",
                 ...authHeader,
-                data: values,
+                data: values
             })
             .then(res => {
                 alert("Assignment Updated Successfully!");
@@ -53,25 +60,24 @@ export default function AssignmentForm({ courseId }) {
     };
 
     const validationSchema = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
-        dueDate: Yup.string().required("Due Date is required"),
-        maxPoints: Yup.number().required("Max points is required"),
+        title: Yup.string().required("Title is required")
     });
 
     const validate = makeValidate(validationSchema);
 
     return (
         <div>
-            <IconButton size="small" onClick={handleClickOpen}>
-                <Add fontSize="small" />
-            </IconButton>
+            <div key="course-form-open-button" onClick={handleClickOpen}>
+                {children}
+            </div>
             <FForm
                 onSubmit={onSubmit}
-                initialValues={{
-                    assignmentType: AssignmentType.FILE_UPLOAD,
-                    maxPoints: 0,
-                    courseId,
-                }}
+                initialValues={
+                    assignment || {
+                        assignmentType: AssignmentType.FILE_UPLOAD,
+                        courseId
+                    }
+                }
                 validate={validate}
             >
                 {({ handleSubmit }) => (
@@ -82,7 +88,7 @@ export default function AssignmentForm({ courseId }) {
                             aria-labelledby="form-dialog-title"
                         >
                             <DialogTitle id="form-dialog-title">
-                                Assignment Form
+                                {action} Assignment
                             </DialogTitle>
                             <DialogContent>
                                 <Grid
@@ -93,6 +99,32 @@ export default function AssignmentForm({ courseId }) {
                                     <SectionHeaderItem
                                         top
                                         title="Assignment Information"
+                                        action={
+                                            isInstructor &&
+                                            assignment && (
+                                                <DeleteConfirmationDialog
+                                                    resourceId={
+                                                        assignment.assignmentId
+                                                    }
+                                                    resourceName={
+                                                        assignment.title
+                                                    }
+                                                    route={`courses/${assignment.courseId}/assignments`}
+                                                    onDelete={() =>
+                                                        window.location.reload()
+                                                    }
+                                                >
+                                                    <Tooltip
+                                                        title="Delete Assignment"
+                                                        placement="left"
+                                                    >
+                                                        <IconButton size="small">
+                                                            <Delete fontSize="small" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </DeleteConfirmationDialog>
+                                            )
+                                        }
                                     />
                                     <TextEntryItem
                                         name="title"
@@ -124,14 +156,9 @@ export default function AssignmentForm({ courseId }) {
                                     <TextEntryItem
                                         name="maxPoints"
                                         sm={6}
-                                        required={true}
                                         type="number"
                                     />
-                                    <DateTimeEntryItem
-                                        name="dueDate"
-                                        sm={6}
-                                        required={true}
-                                    />
+                                    <DateTimeEntryItem name="dueDate" sm={6} />
                                 </Grid>
                             </DialogContent>
                             <DialogActions>

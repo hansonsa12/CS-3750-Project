@@ -1,10 +1,11 @@
 // reference: https://www.youtube.com/watch?v=XuFDcZABiDQ
-import axios from 'axios';
-import React, { Component, createContext } from 'react';
-import { AccountType } from '../helpers/constants';
+import axios from "axios";
+import React, { Component, createContext } from "react";
+import { AccountType } from "../helpers/constants";
 
 const initialState = {
-    user: { // setting initial state like this makes for better autocompletion
+    user: {
+        // setting initial state like this makes for better autocompletion
         firstName: undefined,
         lastName: undefined,
         email: undefined,
@@ -23,14 +24,16 @@ const initialState = {
         },
         profilePicName: undefined,
         // fileUploads: [{}],
-        profileLinks: [{
-            profileLinkId: undefined,
-            link: undefined,
-            userId: undefined
-        }]
+        profileLinks: [
+            {
+                profileLinkId: undefined,
+                link: undefined,
+                userId: undefined
+            }
+        ]
     },
-    loading: true,
-}
+    loading: true
+};
 
 // Create context
 export const AuthContext = createContext(initialState);
@@ -46,19 +49,19 @@ class AuthProvider extends Component {
         this.setUser();
     }
 
-    setResponseToken = (res) => {
+    setResponseToken = res => {
         localStorage.setItem("authToken", res.data.authToken);
         window.location = "/";
-    }
+    };
 
     setUser = async () => {
-        try{
+        try {
             const user = await this.getCurrentUserInfo();
             this.setState({ user, loading: false });
-        } catch(err){
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     getCurrentUserInfo = async () => {
         try {
@@ -68,13 +71,12 @@ class AuthProvider extends Component {
             const res = await axios.get("api/users/current", authHeader);
 
             return res.data;
-
         } catch (err) {
             console.error(err);
             localStorage.removeItem("authToken");
             return null;
         }
-    }
+    };
 
     login = ({ email, password }) => {
         return axios
@@ -85,14 +87,14 @@ class AuthProvider extends Component {
             .catch(err => {
                 alert(`${err.message}:\n${err.response.data.error}`);
             });
-    }
+    };
 
     logout = () => {
         localStorage.removeItem("authToken");
         window.location = "/";
-    }
+    };
 
-    signup = (userInfo) => {
+    signup = userInfo => {
         axios
             .post("api/auth/signup", userInfo)
             .then(res => {
@@ -102,35 +104,40 @@ class AuthProvider extends Component {
                 alert(err.message);
                 console.error(err.message);
             });
-    }
+    };
 
     authHeader = () => {
         const authToken = localStorage.getItem("authToken");
         if (!authToken) return null;
         return { headers: { Authorization: `Bearer ${authToken}` } };
-    }
+    };
 
-    updateUser = (user) => {
+    updateUser = user => {
         this.setState({ user });
-    }
+    };
 
     render() {
         const { user, loading } = this.state;
         const { children } = this.props;
 
         return (
-        !loading && <AuthContext.Provider value={{
-            user,
-            login: this.login,
-            logout: this.logout,
-            signup: this.signup,
-            authHeader: this.authHeader(),
-            isStudent: user?.accountType === AccountType.STUDENT,
-            isInstructor: user?.accountType === AccountType.INSTRUCTOR,
-            updateUser: this.updateUser
-        }}>
-            {children}
-        </AuthContext.Provider>
+            !loading && (
+                <AuthContext.Provider
+                    value={{
+                        user,
+                        login: this.login,
+                        logout: this.logout,
+                        signup: this.signup,
+                        authHeader: this.authHeader(),
+                        isStudent: user?.accountType === AccountType.STUDENT,
+                        isInstructor:
+                            user?.accountType === AccountType.INSTRUCTOR,
+                        updateUser: this.updateUser
+                    }}
+                >
+                    {children}
+                </AuthContext.Provider>
+            )
         );
     }
 }

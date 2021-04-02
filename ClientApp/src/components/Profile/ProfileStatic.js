@@ -6,14 +6,7 @@ import ProfilePicUploader from "../FileUploading/ProfilePicUploader";
 
 export default function ProfileStatic(props) {
     const {
-        user: {
-            email,
-            birthDay,
-            biography,
-            phoneNumber,
-            address,
-            profileLinks,
-        },
+        user: { email, birthDay, biography, phoneNumber, address, profileLinks }
     } = useContext(AuthContext);
 
     const { addressOne, addressTwo, city, state, zipCode } = address
@@ -33,7 +26,9 @@ export default function ProfileStatic(props) {
                         <Typography
                             variant="body1"
                             style={{ marginBottom: 10 }}
-                        >{`Phone: ${phoneNumber ? phoneNumber : ''}`}</Typography>
+                        >{`Phone: ${
+                            phoneNumber ? phoneNumber : ""
+                        }`}</Typography>
                         <Typography variant="h6">Birthday</Typography>
                         <Typography variant="body1">
                             {dayjs(birthDay).format("MMM DD, YYYY")}
