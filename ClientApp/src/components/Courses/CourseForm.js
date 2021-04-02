@@ -17,12 +17,12 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { DEPARTMENTS } from "../../helpers/constants";
 import {
     SectionHeaderItem,
     TextEntryItem,
     TimeEntryItem
 } from "../FormComponents";
+import DepartmentDropDown from "./DepartmentDropDown";
 
 export default function CourseForm({
     course,
@@ -141,21 +141,10 @@ export default function CourseForm({
                                         rows={6}
                                         multiline
                                     />
-                                    <TextEntryItem
-                                        name="department"
-                                        select
+                                    <DepartmentDropDown
                                         sm={9}
                                         required={true}
-                                    >
-                                        {DEPARTMENTS.map((option, index) => (
-                                            <MenuItem
-                                                key={`departmentOption-${index}`}
-                                                value={option}
-                                            >
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </TextEntryItem>
+                                    />
                                     <TextEntryItem
                                         name="creditHours"
                                         select
