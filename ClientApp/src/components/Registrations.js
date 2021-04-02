@@ -1,7 +1,7 @@
 import { Button, Grid } from "@material-ui/core";
 import axios from "axios";
 import _ from "lodash";
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { DataContext } from "../context/DataProvider";
 import { getFormattedLocation, getFormattedTime } from "../helpers/constants";
@@ -43,23 +43,23 @@ export default function Registrations() {
             });
     }
 
-    const columns = useCallback(
+    const columns = useMemo(
         () => [
             { header: "Course Number", accessor: "courseNumber" },
             { header: "Title", accessor: "courseName" },
             {
                 header: "Instructor",
                 accessor: r =>
-                    `${r.instructor?.lastName}, ${r.instructor?.firstName}`,
+                    `${r.instructor?.lastName}, ${r.instructor?.firstName}`
             },
             {
                 header: "Location",
                 accessor: r =>
-                    getFormattedLocation(r.buildingName, r.roomNumber),
+                    getFormattedLocation(r.buildingName, r.roomNumber)
             },
             {
                 header: "Time",
-                accessor: r => getFormattedTime(r.startTime, r.endTime),
+                accessor: r => getFormattedTime(r.startTime, r.endTime)
             },
             { header: "Meeting Days", accessor: "meetingDays" },
             {
@@ -81,11 +81,11 @@ export default function Registrations() {
                         >
                             Register
                         </Button>
-                    ),
-            },
+                    )
+            }
         ],
         [registeredCourseIds]
-    )();
+    );
 
     return (
         <Grid container style={{ width: "100%" }}>

@@ -27,7 +27,7 @@ import {
 export default function CourseForm({
     course,
     action = course ? "Edit" : "Add",
-    children,
+    children
 }) {
     const [open, setOpen] = React.useState(false);
 
@@ -51,7 +51,7 @@ export default function CourseForm({
             endTime: values.endTime
                 ? dayjs(values.endTime).format("hh:mm A")
                 : undefined,
-            instructorId: user.userId,
+            instructorId: user.userId
         };
         formattedValues = _.omitBy(formattedValues, _.isUndefined); // get rid of undefined values
 
@@ -60,7 +60,7 @@ export default function CourseForm({
                 url: "api/courses",
                 method: course ? "PUT" : "POST",
                 ...authHeader,
-                data: formattedValues,
+                data: formattedValues
             })
             .then(res => {
                 alert("Course Updated Successfully!");
@@ -75,7 +75,7 @@ export default function CourseForm({
     const validationSchema = Yup.object().shape({
         courseName: Yup.string().required("Course name is required"),
         courseNumber: Yup.string().required("Course number is required"),
-        department: Yup.string().required("Department is required"),
+        department: Yup.string().required("Department is required")
     });
 
     const validate = makeValidate(validationSchema);
@@ -89,7 +89,7 @@ export default function CourseForm({
             : undefined,
         endTime: course?.startTime
             ? dayjs(course?.endTime, "hh:mm A").format()
-            : undefined,
+            : undefined
     };
 
     if (!initialValues.creditHours) {
@@ -188,11 +188,11 @@ export default function CourseForm({
                                             data={["M", "T", "W", "R", "F"].map(
                                                 day => ({
                                                     label: day,
-                                                    value: day,
+                                                    value: day
                                                 })
                                             )}
                                             formControlLabelProps={{
-                                                labelPlacement: "top",
+                                                labelPlacement: "top"
                                             }}
                                             formGroupProps={{ row: true }}
                                         />

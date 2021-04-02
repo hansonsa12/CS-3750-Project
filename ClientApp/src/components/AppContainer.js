@@ -18,8 +18,8 @@ import Tuition from "./Tuition/Tuition";
 
 const styles = theme => ({
     root: {
-        display: "flex",
-    },
+        display: "flex"
+    }
 });
 
 class AppContainer extends Component {
@@ -30,7 +30,7 @@ class AppContainer extends Component {
 
         this.state = {
             courses: undefined,
-            registrations: undefined,
+            registrations: undefined
         };
     }
 

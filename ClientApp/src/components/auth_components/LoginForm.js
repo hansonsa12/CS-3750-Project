@@ -1,19 +1,18 @@
 import {
     Button,
-    CssBaseline, Grid,
-    makeStyles, Paper,
+    CssBaseline,
+    Grid,
+    makeStyles,
+    Paper,
     Typography
 } from "@material-ui/core";
 import _ from "lodash";
-import {
-    makeValidate,
-    showErrorOnBlur, TextField
-} from "mui-rff";
+import { makeValidate, showErrorOnBlur, TextField } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { AuthContext } from '../../context/AuthProvider';
+import { AuthContext } from "../../context/AuthProvider";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -24,8 +23,8 @@ const useStyles = makeStyles(theme => ({
         padding: 20,
         maxWidth: "450px",
         height: "100vh",
-        marginRight: "auto",
-    },
+        marginRight: "auto"
+    }
 }));
 
 export default function SignUpForm(props) {
@@ -50,10 +49,7 @@ export default function SignUpForm(props) {
         />
     ));
 
-    const formFields = [
-        ...textFields,
-        ...passwordFields,
-    ];
+    const formFields = [...textFields, ...passwordFields];
 
     const { login } = useContext(AuthContext);
 
@@ -67,8 +63,7 @@ export default function SignUpForm(props) {
         email: Yup.string()
             .required("Email is required")
             .email("Please enter a valid email"),
-        password: Yup.string().required("Password is required"),
-
+        password: Yup.string().required("Password is required")
     });
 
     const validate = makeValidate(validationSchema);
@@ -81,10 +76,7 @@ export default function SignUpForm(props) {
                     <Grid item>
                         <Typography variant="h3">Login</Typography>
                     </Grid>
-                    <FForm
-                        onSubmit={onSubmit}
-                        validate={validate}
-                    >
+                    <FForm onSubmit={onSubmit} validate={validate}>
                         {({ handleSubmit }) => (
                             <form onSubmit={handleSubmit}>
                                 <Grid
@@ -100,7 +92,11 @@ export default function SignUpForm(props) {
                                         </Grid>
                                     ))}
                                     <Grid item xs={12}>
-                                        <Button type="submit" variant="contained" color="primary">
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                        >
                                             Login
                                         </Button>
                                     </Grid>

@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import NotificationList from "./NotificationList";
 
 class NotificationBadge extends Component {
-
     constructor(props) {
         super(props);
 
@@ -35,9 +34,8 @@ class NotificationBadge extends Component {
 
         return (
             <>
-                <IconButton onClick={(e) => this.onOpen(e)}>
-                    <Badge
-                        badgeContent={notifications.length} color="primary">
+                <IconButton onClick={e => this.onOpen(e)}>
+                    <Badge badgeContent={notifications.length} color="primary">
                         <Notifications />
                     </Badge>
                 </IconButton>

@@ -48,9 +48,9 @@ export default function ProfileForm() {
     const validationSchema = Yup.object().shape({
         profileLinks: Yup.array().of(
             Yup.object().shape({
-                link: Yup.string().required("Link cannot be blank"),
+                link: Yup.string().required("Link cannot be blank")
             })
-        ),
+        )
     });
 
     const validate = makeValidate(validationSchema);
@@ -64,19 +64,19 @@ export default function ProfileForm() {
             <FForm
                 onSubmit={onSubmit}
                 mutators={{
-                    ...arrayMutators,
+                    ...arrayMutators
                 }}
                 initialValues={{
-                    ...user,
+                    ...user
                 }}
                 validate={validate}
             >
                 {({
                     handleSubmit,
                     form: {
-                        mutators: { push },
+                        mutators: { push }
                     },
-                    values,
+                    values
                 }) => (
                     <form onSubmit={handleSubmit}>
                         <Dialog
