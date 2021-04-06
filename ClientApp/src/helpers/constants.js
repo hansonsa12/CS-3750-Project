@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import _ from 'lodash';
 
 export const AccountType = {
@@ -30,3 +31,7 @@ export const AssignmentType = {
 
 export const ASSIGNMENT_TYPES = [...Object.values(AssignmentType)];
 export const DEPARTMENTS = ["Computer Science", "Physics", "Math", "English", "Communications"];
+
+export const getFormattedDueDate = (dueDate) => {
+    return dueDate ? dayjs(dueDate).format("MM/DD/YYYY hh:mm A") : "n/a";
+};

@@ -3,12 +3,16 @@ import axios from "axios";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
+import { getFormattedDueDate } from "../../../helpers/constants";
 import AssignmentForm from "../../Assignments/AssignmentForm";
+import AssignmentSubmissionForm from "../../Assignments/AssignmentSubmissionForm";
 import TableComponent from "../../TableComponent";
 
 export default function AssignmentsTable({ course }) {
     const [assignments, setAssignments] = useState([]);
     const { authHeader, isInstructor } = useContext(AuthContext);
+
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,9 +35,11 @@ export default function AssignmentsTable({ course }) {
                     </Button>
                 </AssignmentForm>
             ) : (
-                <Button variant="contained" color="primary">
-                    Submit
-                </Button>
+                <AssignmentSubmissionForm assignment={a}>
+                    <Button variant="contained" color="primary">
+                        Submit
+                    </Button>
+                </AssignmentSubmissionForm>
             )
     }));
 
@@ -41,10 +47,7 @@ export default function AssignmentsTable({ course }) {
         { accessor: "title" },
         {
             header: "Due Date",
-            accessor: a =>
-                a.dueDate
-                    ? dayjs(a.dueDate).format("MM/DD/YYYY hh:mm A")
-                    : "n/a"
+            accessor: a => () => getFormattedDueDate(a.dueDate)
         },
         { header: "Type", accessor: "assignmentType" },
 
