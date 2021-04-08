@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid } from "@material-ui/core";
 import _ from "lodash";
-import React, { Fragment } from "react";
+import React from "react";
 
 export default function DetailsContainer({
     object = {},
@@ -10,33 +10,38 @@ export default function DetailsContainer({
     return (
         <Card>
             <CardContent>
-                <Grid container spacing={2}>
+                <Grid
+                    container
+                    direction="column"
+                    alignItems="flex-start"
+                    justify="flex-start"
+                    spacing={2}
+                >
                     {_.chain(object)
                         .keys()
                         .difference(omitValues)
                         .map(key => (
-                            <Fragment key={`prop-${key}`}>
+                            <Grid
+                                item
+                                container
+                                spacing={2}
+                                style={{ maxWidth: 800 }}
+                            >
                                 <Grid
-                                    key={`prop-label-${key}`}
                                     item
-                                    xs={2}
-                                    justify="flex-end"
-                                    container
-                                    style={{ maxWidth: 200 }}
+                                    xs={4}
+                                    sm={3}
+                                    style={{ textAlign: "right" }}
                                 >
                                     <strong>{_.startCase(key)}</strong>
                                 </Grid>
-                                <Grid
-                                    key={`prop-value-${object[key]}`}
-                                    item
-                                    xs={10}
-                                >
+                                <Grid item xs={8} sm={9}>
                                     {typeof specialFormatters[key] ===
                                     "function"
                                         ? specialFormatters[key](object[key])
                                         : object[key]}
                                 </Grid>
-                            </Fragment>
+                            </Grid>
                         ))
                         .value()}
                 </Grid>

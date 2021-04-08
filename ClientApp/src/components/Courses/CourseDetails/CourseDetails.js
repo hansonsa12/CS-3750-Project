@@ -6,11 +6,11 @@ import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
 import { getFormattedInstructorName } from "../../../helpers/constants";
 import AssignmentForm from "../../Assignments/AssignmentForm";
+import DetailsContainer from "../../DetailsContainer";
 import { SectionHeaderItem } from "../../FormComponents";
 import MainView from "../../MainView";
 import CourseForm from "../CourseForm";
 import AssignmentsTable from "./AssignmentsTable";
-import DetailsContainer from "./DetailsContainer";
 
 export default function CourseDetails() {
     const { isInstructor } = useContext(AuthContext);
