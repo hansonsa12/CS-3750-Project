@@ -1,8 +1,9 @@
-import _ from 'lodash';
+import dayjs from "dayjs";
+import _ from "lodash";
 
 export const AccountType = {
-    INSTRUCTOR: 'instructor',
-    STUDENT: 'student'
+    INSTRUCTOR: "instructor",
+    STUDENT: "student"
 };
 
 export const getFormattedTime = (startTime, endTime) => {
@@ -18,7 +19,7 @@ export const getFormattedInstructorName = ({ lastName, firstName }) => {
 };
 
 export const getFileUrl = (userId, fileName) => {
-    return (userId && fileName) ? `/uploads/u${userId}/${fileName}` : null;
+    return userId && fileName ? `/uploads/u${userId}/${fileName}` : null;
 };
 
 export const MAX_PROFILE_LINKS = 5;
@@ -29,4 +30,14 @@ export const AssignmentType = {
 };
 
 export const ASSIGNMENT_TYPES = [...Object.values(AssignmentType)];
-export const DEPARTMENTS = ["Computer Science", "Physics", "Math", "English", "Communications"];
+export const DEPARTMENTS = [
+    "Computer Science",
+    "Physics",
+    "Math",
+    "English",
+    "Communications"
+];
+
+export const getFormattedDueDate = dueDate => {
+    return dueDate ? dayjs(dueDate).format("MM/DD/YYYY hh:mm A") : "n/a";
+};

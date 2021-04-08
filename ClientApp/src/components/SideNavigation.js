@@ -20,7 +20,7 @@ import clsx from "clsx";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
-import { AccountType } from "../helpers/constants";
+import { AccountType } from "../helpers/helpers";
 import { ProfilePic } from "./Profile/ProfilePic";
 
 const useStyles = makeStyles(theme => {
