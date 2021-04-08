@@ -12,7 +12,7 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { AssignmentType, getFormattedDueDate } from "../../helpers/helpers";
+import { AssignmentType, getFormattedDateTime } from "../../helpers/helpers";
 import DetailsContainer from "../DetailsContainer";
 import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
 
@@ -30,16 +30,15 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
     };
 
     const onSubmit = values => {
-        const { courseId, assignmentId } = assignment;
         axios
             .request({
-                url: `api/courses/${courseId}/assignments/${assignmentId}/submissions`,
+                url: `api/assignments/${values.assignmentId}/submissions`,
                 method: "POST",
                 ...authHeader,
                 data: values
             })
             .then(res => {
-                alert("Assignment Updated Successfully!");
+                alert("Assignment successfully submitted!");
                 window.location.reload();
             })
             .catch((err, res) => {
@@ -90,7 +89,7 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
                                             object={assignment}
                                             specialFormatters={{
                                                 dueDate: d =>
-                                                    getFormattedDueDate(d)
+                                                    getFormattedDateTime(d)
                                             }}
                                             omitProperties={[
                                                 "assignmentId",

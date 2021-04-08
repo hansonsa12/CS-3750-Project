@@ -1,16 +1,14 @@
 POST https://localhost:5001/api/courses/1/assignments
 Content-Type: application/json
-Authorization: Bearer <replace with authToken> 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE3NDE1NjQ5LCJleHAiOjE2MTc0MjY0NDksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.Im6VvrBumSPmlXNEm-mNjffLoEQdnxDbUlOMCtT5_u8 
 
 {
-  
   "courseId": "6",
   "title": "Advanced programming",
   "description": "Learn how to do some advanced things with databases!",
   "maxPoints": "8",
   "dueDate": "1986-02-09T15:53:00.000Z",
   "assignmentType": "File Upload"
-  
 }
 
 ### Delete Assignment

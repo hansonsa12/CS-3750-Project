@@ -22,7 +22,7 @@ namespace final_project.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> PostAssignement([FromBody] Assignment assignment)
+        public async Task<IActionResult> PostAssignment([FromBody] Assignment assignment)
         {
             try
             {
@@ -67,22 +67,29 @@ namespace final_project.Controllers
                 return StatusCode(500, new { error = e });
             }
         }
-        // [Authorize]
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Assignment>> GetAssignmentById(int id)
-        // {
-        //    try{
-        //         Assignment assignment = await _context.Assignments.FindAsync(id);
-        //         if(assignment == null) {
-        //             return NotFound();
-        //         }  
 
-        //         return Ok(assignment);
+        [Authorize]
+        [HttpGet("~/api/assignments/{id}")]
+        public async Task<ActionResult<Assignment>> GetAssignmentById(int courseId, int id)
+        {
+            try
+            {
+                Assignment assignment = await _context.Assignments
+                    .Include(a => a.AssignmentSubmissions).Where(a => a.AssignmentId == id)
+                    .FirstOrDefaultAsync();
+                if (assignment == null)
+                {
+                    return NotFound();
+                }
 
-        //     } catch (Exception e) {
-        //         return StatusCode(500, new { error = e });
-        //     }
-        // }
+                return Ok(assignment);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e });
+            }
+        }
 
         [Authorize]
         [HttpDelete("{id}")]

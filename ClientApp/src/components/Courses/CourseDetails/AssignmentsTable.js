@@ -1,8 +1,9 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
-import { getFormattedDueDate } from "../../../helpers/helpers";
+import { getFormattedDateTime } from "../../../helpers/helpers";
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import AssignmentSubmissionForm from "../../Assignments/AssignmentSubmissionForm";
 import TableComponent from "../../TableComponent";
@@ -41,10 +42,17 @@ export default function AssignmentsTable({ course }) {
     }));
 
     const columns = useMemo(() => [
-        { accessor: "title" },
+        {
+            header: "Title",
+            accessor: a => (
+                <Link to={`assignments/${a.assignmentId}/details`}>
+                    {a.title}
+                </Link>
+            )
+        },
         {
             header: "Due Date",
-            accessor: a => getFormattedDueDate(a.dueDate)
+            accessor: a => getFormattedDateTime(a.dueDate)
         },
         { header: "Type", accessor: "assignmentType" },
 
