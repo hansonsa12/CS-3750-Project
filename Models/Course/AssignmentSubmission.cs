@@ -23,7 +23,6 @@ namespace final_project.Models.Course
 
         public DateTime SubmittedAt { get; set; }
 
-        [Required]
         public int? ReceivedScore { get; set; }
     }
 }

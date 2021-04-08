@@ -79,7 +79,6 @@ namespace final_project.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ReceivedScore")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")

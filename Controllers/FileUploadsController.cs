@@ -22,37 +22,51 @@ namespace final_project.Controllers
         }
 
         [Authorize]
-        [HttpPost("profilepic")]
-        public async Task<IActionResult> PostFileUpload(IFormFile file)
+        [HttpPost("{type}")]
+        public async Task<IActionResult> PostFileUpload(string type, IFormFile file)
         {
             /* https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-5.0#upload-small-files-with-buffered-model-binding-to-physical-storage */
-            try {
+            try
+            {
                 User user = await AuthHelpers.GetCurrentUser(_context, User);
                 var filePath = AuthHelpers.GetUploadBasePath(user.UserId);
 
-                /* delete existing profile pic */
-                try {
-                    System.IO.File.Delete(Path.Combine(filePath, user.ProfilePicName));
-                } catch (Exception del) {
-                    Console.Error.WriteLine(del);
+                if (type == "profilepic")
+                {
+                    /* delete existing profile pic */
+                    try
+                    {
+                        System.IO.File.Delete(Path.Combine(filePath, user.ProfilePicName));
+                    }
+                    catch (Exception del)
+                    {
+                        Console.Error.WriteLine(del);
+                    }
+
                 }
 
-                /* add new profile pic */
+                /* add new file */
                 Directory.CreateDirectory(filePath);
                 string extension = Path.GetExtension(file.FileName);
                 string fileName = Path.GetRandomFileName() + extension;
                 filePath = Path.Combine(filePath, fileName);
 
-                using (var stream = System.IO.File.Create(filePath)) {
+                using (var stream = System.IO.File.Create(filePath))
+                {
                     await file.CopyToAsync(stream);
                 }
 
-                user.ProfilePicName = fileName;
-                await _context.SaveChangesAsync();
+                if (type == "profilepic")
+                {
+                    user.ProfilePicName = fileName;
+                    await _context.SaveChangesAsync();
+                }
 
                 return Ok(new { filePath = $"/{filePath.Replace("\\", "/")}", fileName });
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.Error.WriteLine(e);
                 return StatusCode(500, new { error = e });
             }

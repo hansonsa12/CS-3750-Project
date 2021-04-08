@@ -17,7 +17,7 @@ namespace final_project.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     Submission = table.Column<string>(type: "text", nullable: false),
                     SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReceivedScore = table.Column<int>(type: "int", nullable: false)
+                    ReceivedScore = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

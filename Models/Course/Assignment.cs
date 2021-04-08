@@ -5,6 +5,12 @@ namespace final_project.Models.Course
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    public static class AssignmentTypes
+    {
+        public static string FileUpload = "File Upload";
+        public static string TextEntry = "Text Entry";
+    }
+
     public class Assignment
     {
         public int AssignmentId { get; set; }

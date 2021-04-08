@@ -1,0 +1,13 @@
+POST https://localhost:5001/api/assignments/14/submissions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE3ODQ4Njk4LCJleHAiOjE2MTc4NTk0OTgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.v7rnF6VFU3p9drYfmOEZWsY_4jEeSUHPaEe6At1Mb4U
+
+{
+  "assignmentId": 14,
+  "studentId": 1,
+  "submission": "file.pdf"
+}
+
+###
+GET https://localhost:5001/api/assignments/14/submissions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE3ODQ4Njk4LCJleHAiOjE2MTc4NTk0OTgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.v7rnF6VFU3p9drYfmOEZWsY_4jEeSUHPaEe6At1Mb4U
