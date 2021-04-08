@@ -1,7 +1,7 @@
 // reference: https://www.youtube.com/watch?v=XuFDcZABiDQ
 import axios from "axios";
 import React, { Component, createContext } from "react";
-import { AccountType } from "../helpers/constants";
+import { AccountType } from "../helpers/helpers";
 
 const initialState = {
     user: {

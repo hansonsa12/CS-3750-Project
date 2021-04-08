@@ -2,7 +2,7 @@ import { Button, ButtonGroup } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider";
-import { getFormattedTime } from "../../helpers/constants";
+import { getFormattedTime } from "../../helpers/helpers";
 import TableComponent from "../TableComponent";
 import CourseForm from "./CourseForm";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";

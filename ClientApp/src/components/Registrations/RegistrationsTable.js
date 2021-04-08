@@ -4,10 +4,7 @@ import _ from "lodash";
 import React, { useContext, useMemo } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import { DataContext } from "../../context/DataProvider";
-import {
-    getFormattedLocation,
-    getFormattedTime
-} from "../../helpers/constants";
+import { getFormattedLocation, getFormattedTime } from "../../helpers/helpers";
 import TableComponent from "../TableComponent";
 
 export default function RegistrationsTable({ rows }) {

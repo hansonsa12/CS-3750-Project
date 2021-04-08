@@ -4,11 +4,11 @@ import React from "react";
 
 export default function DetailsContainer({
     object = {},
-    omitValues = [],
+    omitProperties = [],
     specialFormatters = {}
 }) {
     return (
-        <Card>
+        <Card style={{ width: "100%" }}>
             <CardContent>
                 <Grid
                     container
@@ -19,7 +19,7 @@ export default function DetailsContainer({
                 >
                     {_.chain(object)
                         .keys()
-                        .difference(omitValues)
+                        .difference(omitProperties)
                         .map(key => (
                             <Grid
                                 item
@@ -27,19 +27,14 @@ export default function DetailsContainer({
                                 spacing={2}
                                 style={{ maxWidth: 800 }}
                             >
-                                <Grid
-                                    item
-                                    xs={4}
-                                    sm={3}
-                                    style={{ textAlign: "right" }}
-                                >
+                                <Grid item>
                                     <strong>{_.startCase(key)}</strong>
                                 </Grid>
-                                <Grid item xs={8} sm={9}>
+                                <Grid item>
                                     {typeof specialFormatters[key] ===
                                     "function"
                                         ? specialFormatters[key](object[key])
-                                        : object[key]}
+                                        : object[key] || "n/a"}
                                 </Grid>
                             </Grid>
                         ))

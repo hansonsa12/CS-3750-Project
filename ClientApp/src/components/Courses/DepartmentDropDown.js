@@ -1,6 +1,6 @@
 import { MenuItem } from "@material-ui/core";
 import React from "react";
-import { DEPARTMENTS } from "../../helpers/constants";
+import { DEPARTMENTS } from "../../helpers/helpers";
 import { TextEntryItem } from "../FormComponents";
 
 export default function DepartmentDropDown({ enableAnyOption, ...rest }) {

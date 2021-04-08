@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { getFormattedTime } from "../../helpers/constants";
+import { getFormattedTime } from "../../helpers/helpers";
 
 export default function CourseCard({
     courseId,
