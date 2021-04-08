@@ -44,6 +44,7 @@ export default function Registrations() {
                         <form onSubmit={handleSubmit}>
                             <Grid container style={{ width: 500 }} spacing={1}>
                                 <DepartmentDropDown xs={4} enableAnyOption />
+                                {/* TODO Ky: Maybe change so search button does not need to be clicked */}
                                 <TextEntryItem xs={6} name="titleKeyWords" />
                                 <Grid item xs={2}>
                                     <Button

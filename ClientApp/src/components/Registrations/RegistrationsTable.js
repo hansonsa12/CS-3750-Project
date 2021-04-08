@@ -46,6 +46,7 @@ export default function RegistrationsTable({ rows }) {
         () => [
             { header: "Course Number", accessor: "courseNumber" },
             { accessor: "courseName" },
+            { accessor: "department" },
             {
                 header: "Instructor",
                 accessor: r =>
