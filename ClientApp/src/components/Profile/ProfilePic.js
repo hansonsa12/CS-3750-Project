@@ -1,7 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-import { getFileUrl } from "../../helpers/constants";
+import { getFileUrl } from "../../helpers/helpers";
 
 export const ProfilePic = props => {
     const {

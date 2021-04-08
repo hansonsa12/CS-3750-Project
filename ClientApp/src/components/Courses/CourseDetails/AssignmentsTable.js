@@ -1,9 +1,8 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
-import dayjs from "dayjs";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
-import { getFormattedDueDate } from "../../../helpers/constants";
+import { getFormattedDueDate } from "../../../helpers/helpers";
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import AssignmentSubmissionForm from "../../Assignments/AssignmentSubmissionForm";
 import TableComponent from "../../TableComponent";
@@ -11,8 +10,6 @@ import TableComponent from "../../TableComponent";
 export default function AssignmentsTable({ course }) {
     const [assignments, setAssignments] = useState([]);
     const { authHeader, isInstructor } = useContext(AuthContext);
-
-    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +44,7 @@ export default function AssignmentsTable({ course }) {
         { accessor: "title" },
         {
             header: "Due Date",
-            accessor: a => () => getFormattedDueDate(a.dueDate)
+            accessor: a => getFormattedDueDate(a.dueDate)
         },
         { header: "Type", accessor: "assignmentType" },
 

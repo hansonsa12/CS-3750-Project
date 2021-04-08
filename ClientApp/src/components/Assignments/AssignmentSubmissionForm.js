@@ -4,33 +4,19 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Grid,
-    IconButton,
-    MenuItem,
-    Tooltip
+    Grid
 } from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
 import axios from "axios";
 import { makeValidate } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { AssignmentType, ASSIGNMENT_TYPES, getFormattedDueDate } from "../../helpers/constants";
-import DetailsContainer from "../Courses/CourseDetails/DetailsContainer";
-import DeleteConfirmationDialog from "../Courses/DeleteConfirmationDialog";
-import {
-    DateTimeEntryItem,
-    SectionHeaderItem,
-    TextEntryItem
-} from "../FormComponents";
+import { AssignmentType, getFormattedDueDate } from "../../helpers/helpers";
+import DetailsContainer from "../DetailsContainer";
+import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
 
-export default function AssignmentSubmissionForm({
-    courseId,
-    assignment,
-    children
-}) {
-
+export default function AssignmentSubmissionForm({ assignment, children }) {
     const { user, authHeader } = useContext(AuthContext);
 
     const [open, setOpen] = React.useState(false);
@@ -44,24 +30,25 @@ export default function AssignmentSubmissionForm({
     };
 
     const onSubmit = values => {
-        // axios
-        //     .request({
-        //         url: `api/courses/${courseId}/assignments`,
-        //         method: assignment ? "PUT" : "POST",
-        //         ...authHeader,
-        //         data: values
-        //     })
-        //     .then(res => {
-        //         alert("Assignment Updated Successfully!");
-        //         window.location.reload();
-        //     })
-        //     .catch((err, res) => {
-        //         alert(`${err.message}:\n${err.response.data.error}`);
-        //     });
+        const { courseId, assignmentId } = assignment;
+        axios
+            .request({
+                url: `api/courses/${courseId}/assignments/${assignmentId}/submissions`,
+                method: "POST",
+                ...authHeader,
+                data: values
+            })
+            .then(res => {
+                alert("Assignment Updated Successfully!");
+                window.location.reload();
+            })
+            .catch((err, res) => {
+                alert(`${err.message}:\n${err.response.data.error}`);
+            });
     };
 
     const validationSchema = Yup.object().shape({
-        title: Yup.string().required("Title is required")
+        submission: Yup.string().required("Submission is required")
     });
 
     const validate = makeValidate(validationSchema);
@@ -72,10 +59,10 @@ export default function AssignmentSubmissionForm({
             </div>
             <FForm
                 onSubmit={onSubmit}
-                 initialValues={{
-                     assignmentId: assignment.Id, studentId: user.id
-                    }}
-                 
+                initialValues={{
+                    assignmentId: assignment.assignmentId,
+                    studentId: user.userId
+                }}
                 validate={validate}
             >
                 {({ handleSubmit }) => (
@@ -98,16 +85,32 @@ export default function AssignmentSubmissionForm({
                                         top
                                         title="Assignment Information"
                                     />
+                                    <Grid item xs={12}>
+                                        <DetailsContainer
+                                            object={assignment}
+                                            specialFormatters={{
+                                                dueDate: d =>
+                                                    getFormattedDueDate(d)
+                                            }}
+                                            omitProperties={[
+                                                "assignmentId",
+                                                "courseId"
+                                            ]}
+                                        />
+                                    </Grid>
+                                    <SectionHeaderItem title="Submission" />
+                                    {assignment.assignmentType ===
+                                    AssignmentType.TEXT_ENTRY ? (
+                                        <TextEntryItem
+                                            name="submission"
+                                            label="Submission Text"
+                                            rows={6}
+                                            multiline
+                                        />
+                                    ) : (
+                                        <TextEntryItem name="submission" />
+                                    )}
                                 </Grid>
-                            <DetailsContainer object={assignment}
-                                   specialFormatters={{
-                                        dueDate: d => getFormattedDueDate(d)
-                                   }} 
-                            />
-
-                            {assignment.assignmentType === AssignmentType.TEXT_ENTRY ? 
-                            <TextEntryItem name="submission" rows={6} multiline /> : <div><TextEntryItem /></div> }   
-
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose} color="primary">

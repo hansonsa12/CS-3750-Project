@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../../context/AuthProvider";
 import { DataContext } from "../../../context/DataProvider";
-import { getFormattedInstructorName } from "../../../helpers/constants";
+import { getFormattedInstructorName } from "../../../helpers/helpers";
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import DetailsContainer from "../../DetailsContainer";
 import { SectionHeaderItem } from "../../FormComponents";
@@ -43,7 +43,7 @@ export default function CourseDetails() {
                 <Grid item xs={12}>
                     <DetailsContainer
                         object={course}
-                        omitValues={"instructorId registrations assignment".split(
+                        omitProperties={"instructorId registrations assignment".split(
                             " "
                         )}
                         specialFormatters={{

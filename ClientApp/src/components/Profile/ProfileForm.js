@@ -15,7 +15,7 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { MAX_PROFILE_LINKS } from "../../helpers/constants";
+import { MAX_PROFILE_LINKS } from "../../helpers/helpers";
 import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
 import { LinkForm } from "./LinkForm";
 

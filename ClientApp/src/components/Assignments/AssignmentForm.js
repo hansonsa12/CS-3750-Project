@@ -16,7 +16,7 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { AssignmentType, ASSIGNMENT_TYPES } from "../../helpers/constants";
+import { AssignmentType, ASSIGNMENT_TYPES } from "../../helpers/helpers";
 import DeleteConfirmationDialog from "../Courses/DeleteConfirmationDialog";
 import {
     DateTimeEntryItem,
