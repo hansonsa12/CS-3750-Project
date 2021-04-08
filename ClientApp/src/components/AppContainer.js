@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+import AssignmentDetails from "./Assignments/AssignmentDetails";
 import Calendar from "./Calendar";
 import CourseDetails from "./Courses/CourseDetails/CourseDetails";
 import CourseForm from "./Courses/CourseForm";
@@ -114,6 +115,13 @@ class AppContainer extends Component {
                             </MainView>
                         </Route>
                     )}
+
+                    <Route
+                        exact
+                        path="/courses/:courseId/assignments/:assignmentId/details"
+                    >
+                        <AssignmentDetails />
+                    </Route>
 
                     <Redirect to="/dashboard" />
                 </Switch>

@@ -38,6 +38,6 @@ export const DEPARTMENTS = [
     "Communications"
 ];
 
-export const getFormattedDueDate = dueDate => {
+export const getFormattedDateTime = dueDate => {
     return dueDate ? dayjs(dueDate).format("MM/DD/YYYY hh:mm A") : "n/a";
 };

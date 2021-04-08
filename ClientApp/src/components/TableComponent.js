@@ -36,7 +36,7 @@ export default function TableComponent({
                         {columns.map(column => (
                             <StyledTableCell
                                 key={`th-${column.header}`}
-                                align="left"
+                                align={column.alignValues || "left"}
                             >
                                 {column.header ||
                                     (typeof column.accessor === "string" &&
@@ -64,7 +64,7 @@ export default function TableComponent({
                                     return (
                                         <StyledTableCell
                                             key={`cell-${rIndex}-${cIndex}-${cellValue}`}
-                                            align="left"
+                                            align={column.alignValues || "left"}
                                         >
                                             {cellValue}
                                         </StyledTableCell>
