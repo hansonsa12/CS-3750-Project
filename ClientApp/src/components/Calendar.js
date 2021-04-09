@@ -7,7 +7,7 @@ import { DataContext } from '../context/DataProvider';
 function getCalEvents(course)
 {
     const dayNums = {m: 1, t:2, w:3, r:4, f:5};
-    const daysOfWeek = course.meetingDays.toLowerCase().split('').map(d => dayNums[d]);
+    const daysOfWeek = course.meetingDays != '' ? course.meetingDays.toLowerCase().split('').map(d => dayNums[d]) : [7];
     var callEvents = [];
 
     const name = course.courseName;
@@ -20,7 +20,7 @@ function getCalEvents(course)
         title: name + ' ' + building + ' Room: ' + room,
         startTime: start,
         endTime : end,
-        daysOfWeek: daysOfWeek != null ? daysOfWeek : null
+        daysOfWeek: daysOfWeek
     })
     return callEvents;
 }
