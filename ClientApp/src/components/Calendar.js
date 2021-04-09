@@ -4,22 +4,24 @@ import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
 
 
-function getCalEvents(course, ucLen)
+function getCalEvents(course)
 {
     const dayNums = {m: 1, t:2, w:3, r:4, f:5};
     const daysOfWeek = course.meetingDays.toLowerCase().split('').map(d => dayNums[d]);
-    console.log('Days: '+ daysOfWeek)
     var callEvents = [];
-    for(var i = 0; i < ucLen; i++)
-    {
-        console.log("in loop")
-        callEvents.push({
-            title: course.courseName,
-            startTime: course.startTime,
-            endTime: course.endTime,
-            daysOfWeek: daysOfWeek
-        })
-    }
+
+    const name = course.courseName;
+    const building = course.buildingName != null ? course.buildingName : 'BUILDING_DEFAULT';
+    const room = course.roomNumber != null ? course.roomNumber : 'ROOMNUMBER_DEFAULT';
+    const start = course.startTime != null ? course.startTime : '00:00';
+    const end = course.endTime != null ? course.endTime : '00:00';
+
+    callEvents.push({
+        title: name + ' ' + building + ' Room: ' + room,
+        startTime: start,
+        endTime : end,
+        daysOfWeek: daysOfWeek != null ? daysOfWeek : null
+    })
     return callEvents;
 }
 
@@ -27,10 +29,11 @@ export default function Calendar(){
     const { userCourses } = useContext(DataContext);
 
     var callEvents=[];
+    var tempArray=[];
     userCourses.map(course => (
-        callEvents = getCalEvents(course, userCourses.length)
+        callEvents = tempArray.concat(getCalEvents(course)),
+        tempArray = callEvents
     ))
-    console.log(callEvents)
 
     return (
         
