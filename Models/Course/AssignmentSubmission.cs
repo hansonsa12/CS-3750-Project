@@ -17,6 +17,9 @@ namespace final_project.Models.Course
         public int StudentId { get; set; }
         public Student Student { get; set; }
 
+        [Column(TypeName = "varchar(60)")]
+        public string FileName { get; set; }
+
         [Required]
         [Column(TypeName = "text")]
         public string Submission { get; set; }
@@ -24,5 +27,10 @@ namespace final_project.Models.Course
         public DateTime SubmittedAt { get; set; }
 
         public int? ReceivedScore { get; set; }
+
+        public DateTime? GradedAt { get; set; }
+
+        [Column(TypeName = "text")]
+        public string InstructorFeedback { get; set; }
     }
 }

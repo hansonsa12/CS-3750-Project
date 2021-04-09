@@ -13,7 +13,8 @@
     using Microsoft.EntityFrameworkCore;
     using System.IO;
 
-    public struct HashResult {
+    public struct HashResult
+    {
         public HashResult(string hashedPassword, string salt)
         {
             this.Password = hashedPassword;
@@ -82,19 +83,22 @@
                     return tokenJson;
                 });
         }
-        public static async Task<User> GetCurrentUser(LMSContext context, ClaimsPrincipal principal) {
+        public static async Task<User> GetCurrentUser(LMSContext context, ClaimsPrincipal principal)
+        {
             int userId = GetCurrentUserId(principal);
             User foundUser = await context.Users.Include(u => u.Address)
                 .Include(u => u.ProfileLinks).FirstOrDefaultAsync(u => u.UserId == userId);
             return foundUser;
-        }        
+        }
 
-        public static int GetCurrentUserId(ClaimsPrincipal principle) {
+        public static int GetCurrentUserId(ClaimsPrincipal principle)
+        {
             return Int32.Parse(principle.FindFirstValue(ClaimTypes.NameIdentifier));
-        }        
+        }
 
-        public static string GetUploadBasePath(int userId) {
-            return Path.Combine("uploads", $"u{userId.ToString()}");
+        public static string GetUploadBasePath(int userId, string type)
+        {
+            return Path.Combine("uploads", $"u{userId.ToString()}", $"{type}s");
         }
     }
 }

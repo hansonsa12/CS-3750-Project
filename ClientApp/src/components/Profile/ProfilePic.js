@@ -10,7 +10,7 @@ export const ProfilePic = props => {
     return (
         <Avatar
             alt={`${firstName} ${lastName} profile pic. This person looks Sharp!`}
-            src={getFileUrl(userId, profilePicName)}
+            src={getFileUrl(userId, "profilepic", profilePicName)}
             {...props}
         />
     );
