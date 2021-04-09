@@ -7,6 +7,9 @@
     "settings": {
         "todo-tree.tree.showBadges": false,
         "todo-tree.tree.disableCompactFolders": true,
-        "todo-tree.tree.showCountsInTree": true
+        "todo-tree.tree.showCountsInTree": true,
+        "prettier.tabWidth": 4,
+        "javascript.preferences.quoteStyle": "double",
+        "typescript.preferences.quoteStyle": "double"
     }
 }
