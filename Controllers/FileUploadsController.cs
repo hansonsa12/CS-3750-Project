@@ -29,7 +29,7 @@ namespace final_project.Controllers
             try
             {
                 User user = await AuthHelpers.GetCurrentUser(_context, User);
-                var filePath = AuthHelpers.GetUploadBasePath(user.UserId);
+                var filePath = AuthHelpers.GetUploadBasePath(user.UserId, type);
 
                 if (type == "profilepic")
                 {

@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { useMemo } from "react";
-import { getFormattedDateTime } from "../../helpers/helpers";
+import { getFileUrl, getFormattedDateTime } from "../../helpers/helpers";
 import TableComponent from "../TableComponent";
 
 export default function AssignmentSubmissionsTable({ rows }) {
@@ -8,7 +8,20 @@ export default function AssignmentSubmissionsTable({ rows }) {
         {
             accessor: "studentId"
         },
-        { accessor: "submission" },
+        {
+            header: "Submission",
+            accessor: s =>
+                s.fileName ? (
+                    <a
+                        href={getFileUrl(s.studentId, "submission", s.fileName)}
+                        target="_blank"
+                    >
+                        {s.submission}
+                    </a>
+                ) : (
+                    s.submission
+                )
+        },
         {
             header: "Submitted At",
             accessor: s => getFormattedDateTime(s.submittedAt)
@@ -17,6 +30,10 @@ export default function AssignmentSubmissionsTable({ rows }) {
             header: "Score",
             accessor: s => s.receivedScore || "-",
             alignValues: "center"
+        },
+        {
+            header: "Graded At",
+            accessor: s => getFormattedDateTime(s.gradedAt)
         },
         {
             header: "Action",

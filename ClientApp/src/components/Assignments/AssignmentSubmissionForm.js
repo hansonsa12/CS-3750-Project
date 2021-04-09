@@ -8,18 +8,20 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { makeValidate } from "mui-rff";
-import React, { useContext } from "react";
-import { Form as FForm } from "react-final-form";
+import React, { useCallback, useContext, useState } from "react";
+import { Field, Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
 import { AssignmentType, getFormattedDateTime } from "../../helpers/helpers";
 import DetailsContainer from "../DetailsContainer";
+import FileUploader from "../FileUploading/FileUploader";
 import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
 
 export default function AssignmentSubmissionForm({ assignment, children }) {
     const { user, authHeader } = useContext(AuthContext);
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -29,21 +31,40 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
         setOpen(false);
     };
 
-    const onSubmit = values => {
-        axios
-            .request({
-                url: `api/assignments/${values.assignmentId}/submissions`,
-                method: "POST",
-                ...authHeader,
-                data: values
-            })
-            .then(res => {
-                alert("Assignment successfully submitted!");
-                window.location.reload();
-            })
-            .catch((err, res) => {
-                alert(`${err.message}:\n${err.response.data.error}`);
-            });
+    const onDrop = useCallback(acceptedFiles => {
+        // Do something with the files
+        setSelectedFile(acceptedFiles[0]);
+    }, []);
+
+    const onSubmit = async values => {
+        try {
+            if (selectedFile) {
+                const formData = new FormData();
+                formData.append("file", selectedFile, selectedFile.name);
+
+                const {
+                    data: { fileName }
+                } = await axios.post(
+                    "api/fileuploads/submission",
+                    formData,
+                    authHeader
+                );
+
+                values.submission = selectedFile.name;
+                values.fileName = fileName;
+            }
+
+            const res = await axios.post(
+                `api/assignments/${values.assignmentId}/submissions`,
+                values,
+                authHeader
+            );
+
+            alert("Assignment successfully submitted!");
+            handleClose();
+        } catch (err) {
+            alert(`${err.message}:\n${err.response.data.error}`);
+        }
     };
 
     const validationSchema = Yup.object().shape({
@@ -60,7 +81,8 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
                 onSubmit={onSubmit}
                 initialValues={{
                     assignmentId: assignment.assignmentId,
-                    studentId: user.userId
+                    studentId: user.userId,
+                    submission: selectedFile
                 }}
                 validate={validate}
             >
@@ -107,7 +129,10 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
                                             multiline
                                         />
                                     ) : (
-                                        <TextEntryItem name="submission" />
+                                        <FileUploader
+                                            onDrop={onDrop}
+                                            selectedFile={selectedFile}
+                                        />
                                     )}
                                 </Grid>
                             </DialogContent>

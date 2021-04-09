@@ -18,8 +18,10 @@ export const getFormattedInstructorName = ({ lastName, firstName }) => {
     return _.chain([lastName, firstName]).compact().join(", ").value();
 };
 
-export const getFileUrl = (userId, fileName) => {
-    return userId && fileName ? `/uploads/u${userId}/${fileName}` : null;
+export const getFileUrl = (userId, type, fileName) => {
+    return userId && fileName
+        ? `/uploads/u${userId}/${type}s/${fileName}`
+        : null;
 };
 
 export const MAX_PROFILE_LINKS = 5;
