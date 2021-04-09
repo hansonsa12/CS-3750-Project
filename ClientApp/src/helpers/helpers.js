@@ -31,6 +31,8 @@ export const AssignmentType = {
     TEXT_ENTRY: "Text Entry"
 };
 
+export const COST_PER_CREDIT = 100;
+
 export const ASSIGNMENT_TYPES = [...Object.values(AssignmentType)];
 export const DEPARTMENTS = [
     "Computer Science",
@@ -43,3 +45,9 @@ export const DEPARTMENTS = [
 export const getFormattedDateTime = dueDate => {
     return dueDate ? dayjs(dueDate).format("MM/DD/YYYY hh:mm A") : "n/a";
 };
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+    /* https://stackoverflow.com/questions/149055/how-to-format-numbers-as-currency-string */
+    style: "currency",
+    currency: "USD"
+});
