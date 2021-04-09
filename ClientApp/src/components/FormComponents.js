@@ -1,4 +1,4 @@
-import { Divider, Grid, Tooltip, Typography } from "@material-ui/core";
+import { Divider, Grid, Typography } from "@material-ui/core";
 import dayjs from "dayjs";
 import _ from "lodash";
 import {
@@ -62,13 +62,7 @@ export const DateTimeEntryItem = props => {
 };
 
 export const SectionHeaderItem = props => {
-    const {
-        top,
-        style = top ? {} : { marginTop: 10 },
-        title,
-        action,
-        actionTooltip,
-    } = props;
+    const { top, style = top ? {} : { marginTop: 10 }, title, action } = props;
 
     return (
         <Grid
@@ -82,17 +76,7 @@ export const SectionHeaderItem = props => {
             <Grid item>
                 <Typography style={style}>{title}</Typography>
             </Grid>
-            <Grid item>
-                {actionTooltip && (
-                    <Tooltip
-                        key={actionTooltip}
-                        title={actionTooltip}
-                        placement="left"
-                    >
-                        {action}
-                    </Tooltip>
-                )}
-            </Grid>
+            <Grid item>{action}</Grid>
             <Grid item xs={12}>
                 <Divider />
             </Grid>

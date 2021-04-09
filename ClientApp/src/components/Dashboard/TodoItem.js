@@ -5,15 +5,13 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemText
-} from '@material-ui/core';
-import { Assignment, Close } from '@material-ui/icons';
-import React from 'react';
+} from "@material-ui/core";
+import { Assignment, Close } from "@material-ui/icons";
+import React from "react";
 
-export default function TodoItem({
-    assignment
-}) {
+export default function TodoItem({ assignment }) {
     return (
-        <ListItem >
+        <ListItem>
             <ListItemAvatar>
                 <Avatar>
                     <Assignment />
@@ -31,5 +29,5 @@ export default function TodoItem({
                 <Close />
             </IconButton>
         </ListItem>
-    )
+    );
 }

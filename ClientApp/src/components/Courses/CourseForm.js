@@ -17,17 +17,17 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import { DEPARTMENTS } from "../../helpers/constants";
 import {
     SectionHeaderItem,
     TextEntryItem,
     TimeEntryItem
 } from "../FormComponents";
+import DepartmentDropDown from "./DepartmentDropDown";
 
 export default function CourseForm({
     course,
     action = course ? "Edit" : "Add",
-    children,
+    children
 }) {
     const [open, setOpen] = React.useState(false);
 
@@ -51,7 +51,7 @@ export default function CourseForm({
             endTime: values.endTime
                 ? dayjs(values.endTime).format("hh:mm A")
                 : undefined,
-            instructorId: user.userId,
+            instructorId: user.userId
         };
         formattedValues = _.omitBy(formattedValues, _.isUndefined); // get rid of undefined values
 
@@ -60,7 +60,7 @@ export default function CourseForm({
                 url: "api/courses",
                 method: course ? "PUT" : "POST",
                 ...authHeader,
-                data: formattedValues,
+                data: formattedValues
             })
             .then(res => {
                 alert("Course Updated Successfully!");
@@ -75,7 +75,7 @@ export default function CourseForm({
     const validationSchema = Yup.object().shape({
         courseName: Yup.string().required("Course name is required"),
         courseNumber: Yup.string().required("Course number is required"),
-        department: Yup.string().required("Department is required"),
+        department: Yup.string().required("Department is required")
     });
 
     const validate = makeValidate(validationSchema);
@@ -89,7 +89,7 @@ export default function CourseForm({
             : undefined,
         endTime: course?.startTime
             ? dayjs(course?.endTime, "hh:mm A").format()
-            : undefined,
+            : undefined
     };
 
     if (!initialValues.creditHours) {
@@ -141,21 +141,10 @@ export default function CourseForm({
                                         rows={6}
                                         multiline
                                     />
-                                    <TextEntryItem
-                                        name="department"
-                                        select
+                                    <DepartmentDropDown
                                         sm={9}
                                         required={true}
-                                    >
-                                        {DEPARTMENTS.map((option, index) => (
-                                            <MenuItem
-                                                key={`departmentOption-${index}`}
-                                                value={option}
-                                            >
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </TextEntryItem>
+                                    />
                                     <TextEntryItem
                                         name="creditHours"
                                         select
@@ -188,11 +177,11 @@ export default function CourseForm({
                                             data={["M", "T", "W", "R", "F"].map(
                                                 day => ({
                                                     label: day,
-                                                    value: day,
+                                                    value: day
                                                 })
                                             )}
                                             formControlLabelProps={{
-                                                labelPlacement: "top",
+                                                labelPlacement: "top"
                                             }}
                                             formGroupProps={{ row: true }}
                                         />

@@ -1,8 +1,10 @@
 import {
     Button,
     CssBaseline,
-    Divider, Grid,
-    makeStyles, Paper,
+    Divider,
+    Grid,
+    makeStyles,
+    Paper,
     Typography
 } from "@material-ui/core";
 import dayjs from "dayjs";
@@ -11,14 +13,14 @@ import {
     KeyboardDatePicker,
     makeValidate,
     Radios,
-    showErrorOnBlur, TextField
+    showErrorOnBlur,
+    TextField
 } from "mui-rff";
 import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { AuthContext } from '../../context/AuthProvider';
-
+import { AuthContext } from "../../context/AuthProvider";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -29,8 +31,8 @@ const useStyles = makeStyles(theme => ({
         padding: 20,
         maxWidth: "450px",
         height: "100vh",
-        marginRight: "auto",
-    },
+        marginRight: "auto"
+    }
 }));
 
 export default function SignUpForm(props) {
@@ -79,10 +81,10 @@ export default function SignUpForm(props) {
             name="accountType"
             data={[
                 { label: "Student", value: "student" },
-                { label: "Instructor", value: "instructor" },
+                { label: "Instructor", value: "instructor" }
             ]}
             radioGroupProps={{ row: true }}
-        />,
+        />
     ];
 
     const { signup } = useContext(AuthContext);
@@ -94,7 +96,7 @@ export default function SignUpForm(props) {
     const classes = useStyles();
 
     const initialValues = {
-        accountType: "student",
+        accountType: "student"
     };
 
     const validationSchema = Yup.object().shape({
@@ -105,14 +107,18 @@ export default function SignUpForm(props) {
             .email("Please enter a valid email"),
         birthDay: Yup.mixed()
             .required("Birth date is required. ")
-            .test("birthDay", "Must be at least 16 years old to register", value => {
-                return dayjs().diff(dayjs(value), "year") >= 16;
-            }),
+            .test(
+                "birthDay",
+                "Must be at least 16 years old to register",
+                value => {
+                    return dayjs().diff(dayjs(value), "year") >= 16;
+                }
+            ),
         password: Yup.string().required("Password is required"),
         confirmPassword: Yup.string().oneOf(
             [Yup.ref("password")],
             "Passwords must match"
-        ),
+        )
     });
 
     const validate = makeValidate(validationSchema);
@@ -145,7 +151,11 @@ export default function SignUpForm(props) {
                                         </Grid>
                                     ))}
                                     <Grid item xs={12}>
-                                        <Button type="submit" variant="contained" color="primary">
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                        >
                                             Submit
                                         </Button>
                                     </Grid>

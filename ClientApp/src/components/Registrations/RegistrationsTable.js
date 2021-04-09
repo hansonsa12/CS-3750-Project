@@ -1,23 +1,22 @@
-import { Button, Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import axios from "axios";
 import _ from "lodash";
-import React, { useCallback, useContext } from "react";
-import { AuthContext } from "../context/AuthProvider";
-import { DataContext } from "../context/DataProvider";
-import { getFormattedLocation, getFormattedTime } from "../helpers/constants";
-import DepartmentDropDown from "./Courses/DepartmentDropDown";
-import TableComponent from "./TableComponent";
+import React, { useContext, useMemo } from "react";
+import { AuthContext } from "../../context/AuthProvider";
+import { DataContext } from "../../context/DataProvider";
+import { getFormattedLocation, getFormattedTime } from "../../helpers/helpers";
+import TableComponent from "../TableComponent";
 
-export default function Registrations() {
+export default function RegistrationsTable({ rows }) {
     const { authHeader } = useContext(AuthContext);
-    const { userCourses, allCourses, setUserCourses } = useContext(DataContext);
+    const { userCourses, setUserCourses } = useContext(DataContext);
 
-    const registeredCourseIds = useCallback(() => {
+    const registeredCourseIds = useMemo(() => {
         // get array of registered course ids on initial component
         // load and if registrations array changes
         // https://reactjs.org/docs/hooks-reference.html#usecallback
         return _.map(userCourses, "courseId");
-    }, [userCourses])();
+    }, [userCourses]);
 
     function registerForCourse(courseId) {
         axios
@@ -43,27 +42,28 @@ export default function Registrations() {
             });
     }
 
-    const columns = useCallback(
+    const columns = useMemo(
         () => [
             { header: "Course Number", accessor: "courseNumber" },
-            { header: "Title", accessor: "courseName" },
+            { accessor: "courseName" },
+            { accessor: "department" },
             {
                 header: "Instructor",
                 accessor: r =>
-                    `${r.instructor?.lastName}, ${r.instructor?.firstName}`,
+                    `${r.instructor?.lastName}, ${r.instructor?.firstName}`
             },
             {
                 header: "Location",
                 accessor: r =>
-                    getFormattedLocation(r.buildingName, r.roomNumber),
+                    getFormattedLocation(r.buildingName, r.roomNumber)
             },
             {
                 header: "Time",
-                accessor: r => getFormattedTime(r.startTime, r.endTime),
+                accessor: r => getFormattedTime(r.startTime, r.endTime)
             },
             { header: "Meeting Days", accessor: "meetingDays" },
             {
-                header: "Register",
+                header: "Action",
                 accessor: r =>
                     registeredCourseIds.includes(r.courseId) ? (
                         <Button
@@ -81,20 +81,16 @@ export default function Registrations() {
                         >
                             Register
                         </Button>
-                    ),
-            },
+                    )
+            }
         ],
         [registeredCourseIds]
-    )();
-
+    );
     return (
-        <Grid container style={{ width: "100%" }}>
-            <Grid item xs={12}>
-                <DepartmentDropDown />
-            </Grid>
-            <Grid item xs={12}>
-                <TableComponent rows={allCourses} columns={columns} />
-            </Grid>
-        </Grid>
+        <TableComponent
+            rows={rows}
+            columns={columns}
+            emptyMessage="No courses matching specified criteria."
+        />
     );
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+import AssignmentDetails from "./Assignments/AssignmentDetails";
 import Calendar from "./Calendar";
 import CourseDetails from "./Courses/CourseDetails/CourseDetails";
 import CourseForm from "./Courses/CourseForm";
@@ -12,14 +13,14 @@ import Dashboard from "./Dashboard/Dashboard";
 import MainView from "./MainView";
 import ProfileForm from "./Profile/ProfileForm";
 import Profile from "./Profile/ProfileStatic";
-import Registrations from "./Registrations";
+import Registrations from "./Registrations/Registrations";
 import SideNavigation from "./SideNavigation";
 import Tuition from "./Tuition/Tuition";
 
 const styles = theme => ({
     root: {
-        display: "flex",
-    },
+        display: "flex"
+    }
 });
 
 class AppContainer extends Component {
@@ -30,7 +31,7 @@ class AppContainer extends Component {
 
         this.state = {
             courses: undefined,
-            registrations: undefined,
+            registrations: undefined
         };
     }
 
@@ -114,6 +115,13 @@ class AppContainer extends Component {
                             </MainView>
                         </Route>
                     )}
+
+                    <Route
+                        exact
+                        path="/courses/:courseId/assignments/:assignmentId/details"
+                    >
+                        <AssignmentDetails />
+                    </Route>
 
                     <Redirect to="/dashboard" />
                 </Switch>

@@ -1,52 +1,51 @@
 import { Button, ButtonGroup } from "@material-ui/core";
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider";
-import { getFormattedTime } from "../../helpers/constants";
+import { getFormattedTime } from "../../helpers/helpers";
 import TableComponent from "../TableComponent";
 import CourseForm from "./CourseForm";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 
 export default function Courses() {
     const { userCourses } = useContext(DataContext);
-    const history = useHistory();
 
     const [columns] = useState([
+        { accessor: "courseNumber" },
+        {
+            header: "Course Name",
+            accessor: c => (
+                <Link to={`courses/${c.courseId}/details`}>{c.courseName}</Link>
+            )
+        },
         ...[
-            "courseNumber",
-            "courseName",
             "department",
             "buildingName",
             "roomNumber",
-            "meetingDays",
+            "meetingDays"
         ].map(attr => ({ accessor: attr })),
         {
             header: "Time",
-            accessor: r => getFormattedTime(r.startTime, r.endTime),
+            accessor: c => getFormattedTime(c.startTime, c.endTime)
         },
         {
             header: "Actions",
-            accessor: r => (
+            accessor: c => (
                 <ButtonGroup>
-                    <CourseForm course={r}>
+                    <CourseForm course={c}>
                         <Button variant="contained" color="primary">
                             Edit
                         </Button>
                     </CourseForm>
                     <DeleteConfirmationDialog
-                        courseName={r.courseName}
-                        courseId={r.courseId}
+                        resourceName={c.courseName}
+                        resourceId={c.courseId}
+                        route="courses"
+                        onDelete={() => window.location.reload()}
                     />
-                    <Button
-                        onClick={() =>
-                            history.push(`courses/${r.courseId}/details`)
-                        }
-                    >
-                        Details
-                    </Button>
                 </ButtonGroup>
-            ),
-        },
+            )
+        }
     ]);
 
     return (

@@ -4,9 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import AppContainer from "./components/AppContainer";
 import LoginForm from "./components/auth_components/LoginForm";
 import SignUpForm from "./components/auth_components/SignUpForm";
-import { AuthContext } from './context/AuthProvider';
+import { AuthContext } from "./context/AuthProvider";
 import background from "./images/textbook.png";
-
 
 const styles = theme => ({
     root: {
@@ -16,8 +15,8 @@ const styles = theme => ({
         /* Center and scale the image nicely */
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-    },
+        backgroundSize: "cover"
+    }
 });
 
 class App extends Component {
@@ -34,9 +33,12 @@ class App extends Component {
                 </Route>
 
                 <Route path="/">
-                    {user ? <AppContainer /> : <LoginForm className={classes.root} />}
+                    {user ? (
+                        <AppContainer />
+                    ) : (
+                        <LoginForm className={classes.root} />
+                    )}
                 </Route>
-
             </Switch>
         );
     }

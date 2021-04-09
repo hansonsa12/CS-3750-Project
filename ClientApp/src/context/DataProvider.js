@@ -12,7 +12,7 @@ const initialState = {
             instructorId: undefined,
             instructor: {
                 firstName: undefined,
-                lastName: undefined,
+                lastName: undefined
             },
             department: undefined,
             creditHours: undefined,
@@ -22,9 +22,9 @@ const initialState = {
             meetingDays: undefined,
             startTime: undefined,
             endTime: undefined,
-            maxCapacity: undefined,
-        },
-    ],
+            maxCapacity: undefined
+        }
+    ]
 };
 
 // Create context
@@ -69,15 +69,17 @@ export default function DataProvider({ children }) {
             const res = await axios.get("api/courses/all", authHeader);
             return res.data;
         }
-    }
+    };
 
     return (
         !loading && (
             <DataContext.Provider
                 value={{
                     userCourses: isInstructor ? courses : registrations,
-                    setUserCourses: isInstructor ? setCourses : setRegistrations,
-                    allCourses,
+                    setUserCourses: isInstructor
+                        ? setCourses
+                        : setRegistrations,
+                    allCourses
                 }}
             >
                 {children}

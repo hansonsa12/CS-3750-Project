@@ -6,6 +6,8 @@ namespace final_project.Models.User
     public class Student : User
     {
         public ICollection<Course> Registrations { get; set; }
+
+        public List<AssignmentSubmission> AssignmentSubmissions { get; set; }
     }
 
 }
