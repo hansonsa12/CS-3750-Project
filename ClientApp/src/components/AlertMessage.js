@@ -14,7 +14,7 @@ export default function AlertMessage({ message, onClose = () => {} }) {
         <Snackbar
             open={open}
             onClose={handleClose}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            anchorOrigin={{ vertical: "middle", horizontal: "center" }}
         >
             <Alert onClose={handleClose} severity="success">
                 {message}

@@ -91,7 +91,12 @@ export default function CreditCardForm(props) {
             handleClose();
 
             setAlertMessage(
-                <Grid container justify="center" spacing={2}>
+                <Grid
+                    container
+                    spacing={2}
+                    direction="column"
+                    alignItems="center"
+                >
                     <Grid item>
                         <Typography variant="h6">Success!</Typography>
                     </Grid>
