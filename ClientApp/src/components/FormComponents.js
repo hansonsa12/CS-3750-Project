@@ -2,6 +2,7 @@ import { Divider, Grid, Typography } from "@material-ui/core";
 import dayjs from "dayjs";
 import _ from "lodash";
 import {
+    KeyboardDatePicker,
     KeyboardDateTimePicker,
     KeyboardTimePicker,
     showErrorOnBlur,
@@ -36,6 +37,7 @@ export const TimeEntryItem = props => {
                 size="small"
                 mask="__:__ _M"
                 placeholder="08:00 AM"
+                showError={showErrorOnBlur}
                 {...fieldPropsFrom(props)}
             />
         </Grid>
@@ -55,6 +57,27 @@ export const DateTimeEntryItem = props => {
                 format="MM/dd/yyyy hh:mm a"
                 mask="__/__/____ __:__ _M"
                 placeholder={dayjs().format("MM/DD/YYYY hh:mm A")}
+                showError={showErrorOnBlur}
+                {...fieldPropsFrom(props)}
+            />
+        </Grid>
+    );
+};
+
+export const DateEntryItem = props => {
+    const { name } = props;
+    return (
+        <Grid item xs={12} {...gridPropsFrom(props)}>
+            <KeyboardDatePicker
+                label={getLabelFromName(name)}
+                disableToolbar={false}
+                variant="inline"
+                inputVariant="outlined"
+                size="small"
+                format="MM/dd/yyyy"
+                mask="__/__/____"
+                placeholder="mm/dd/yyyy"
+                showError={showErrorOnBlur}
                 {...fieldPropsFrom(props)}
             />
         </Grid>

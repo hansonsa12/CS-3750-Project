@@ -5,15 +5,19 @@ import {
     DialogContent,
     DialogTitle,
     Grid,
-    InputAdornment
+    InputAdornment,
+    Typography
 } from "@material-ui/core";
 import React from "react";
 import { Form as FForm } from "react-final-form";
 import {
-    DateTimeEntryItem,
+    DateEntryItem,
     SectionHeaderItem,
     TextEntryItem
 } from "../FormComponents";
+import * as Yup from "yup";
+import { testCreditCard } from "../../helpers/helpers";
+import { makeValidate } from "mui-rff";
 
 export default function CreditCardForm(props) {
     const [open, setOpen] = React.useState(false);
@@ -30,10 +34,20 @@ export default function CreditCardForm(props) {
         alert(JSON.stringify(values));
     };
 
+    const validationSchema = Yup.object().shape({
+        amount: Yup.number().required("Payment amount is required")
+    });
+
+    const validate = makeValidate(validationSchema);
+
     return (
         <div>
             <Button onClick={handleClickOpen}>Make A Payment</Button>
-            <FForm onSubmit={onSubmit}>
+            <FForm
+                onSubmit={onSubmit}
+                initialValues={testCreditCard}
+                validate={validate}
+            >
                 {({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                         <Dialog
@@ -42,44 +56,27 @@ export default function CreditCardForm(props) {
                             aria-labelledby="form-dialog-title"
                         >
                             <DialogTitle id="form-dialog-title">
-                                Credit Card Form
+                                Make A Payment
                             </DialogTitle>
                             <DialogContent>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justify="space-between"
-                                >
+                                <Grid container spacing={2} justify="center">
                                     <SectionHeaderItem
                                         top
                                         title="Credit Card Information"
                                     />
                                     <TextEntryItem
-                                        type="number"
-                                        name="amount"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    $
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        required={true}
-                                        sm={4}
-                                    />
-                                    <TextEntryItem
                                         name="cardNumber"
                                         required={true}
-                                        sm={8}
+                                        sm={6}
                                         inputProps={{ pattern: "[d| ]{16,22}" }}
                                     />
                                     <TextEntryItem
-                                        name="cardName"
+                                        name="nameOnCard"
                                         label="Name on Card"
                                         required={true}
-                                        sm={12}
+                                        sm={6}
                                     />
-                                    <DateTimeEntryItem
+                                    <DateEntryItem
                                         name="expDate"
                                         label="MM/YY"
                                         sm={6}
@@ -95,6 +92,26 @@ export default function CreditCardForm(props) {
                                         sm={6}
                                         required={true}
                                         type="number"
+                                    />
+                                    <SectionHeaderItem />
+                                    <Grid item>
+                                        <Typography variant="h6">
+                                            Payment:
+                                        </Typography>
+                                    </Grid>
+                                    <TextEntryItem
+                                        type="number"
+                                        name="amount"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    $
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                        required={true}
+                                        sm={4}
+                                        leftLabel="Payment"
                                     />
                                 </Grid>
                             </DialogContent>

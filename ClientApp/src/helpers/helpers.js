@@ -51,3 +51,13 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
 });
+
+export const testCreditCard = {
+    nameOnCard: "Test Card",
+    cardNumber: "4242424242424242",
+    expDate: "04/22",
+    cvc: "314"
+};
+
+export const stripePublicKey =
+    "pk_test_51IbtKZD8gKZEIEySSvvoF7Wn4ldzPK0fBfV91OchfcM9Oz8Fgk3HEJeSXdOdrsRrNBFo8z8yWqFwrUBxZx5TUMRs00mYyjCI2c";
