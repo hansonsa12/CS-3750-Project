@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import _ from "lodash";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 export const AccountType = {
     INSTRUCTOR: "instructor",
@@ -52,10 +53,11 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
     currency: "USD"
 });
 
+dayjs.extend(customParseFormat);
 export const testCreditCard = {
     nameOnCard: "Test Card",
     cardNumber: "4242424242424242",
-    expDate: "04/22",
+    expDate: dayjs("04/22", "MM/YY").format(),
     cvc: "314"
 };
 
