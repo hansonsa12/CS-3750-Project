@@ -1,9 +1,9 @@
 import { Grid, Typography } from "@material-ui/core";
 import React, { useContext, useMemo } from "react";
-import CreditCardForm from "./CreditCardForm";
-import TableComponent from "../TableComponent";
 import { DataContext } from "../../context/DataProvider";
 import { COST_PER_CREDIT, currencyFormatter } from "../../helpers/helpers";
+import TableComponent from "../TableComponent";
+import CreditCardForm from "./CreditCardForm";
 
 export default function Tuition() {
     const { userCourses } = useContext(DataContext);
