@@ -39,8 +39,8 @@ export default function AssignmentGradingForm({
     const onSubmit = values => {
         axios
             .request({
-                url: `api/courses/${courseId}/assignments`,
-                method: "POST",
+                url:`api/submissions`,
+                method: "PUT",
                 ...authHeader,
                 data: values
             })
@@ -54,7 +54,7 @@ export default function AssignmentGradingForm({
     };
 
     const validationSchema = Yup.object().shape({
-        Score: Yup.string().required("Score is required")
+        receivedScore: Yup.string().required("Score is required")
     });
 
     const validate = makeValidate(validationSchema);
@@ -92,12 +92,14 @@ export default function AssignmentGradingForm({
                                         title="Score Assignment"
                                     />
                                     <TextEntryItem
-                                        name="Score"
+                                        name="receivedScore"
+                                        label="Score"
                                         required={true}
                                         sm={3}
                                     />
                                     <TextEntryItem
-                                        name="Comments"
+                                        name="instructorFeedback"
+                                        label="Comments"
                                         rows={6}
                                         multiline
                                     />

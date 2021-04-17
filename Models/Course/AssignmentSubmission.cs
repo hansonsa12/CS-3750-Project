@@ -32,5 +32,13 @@ namespace final_project.Models.Course
 
         [Column(TypeName = "text")]
         public string InstructorFeedback { get; set; }
+
+
+        public void GradeSubmission(AssignmentSubmission assignmentSubmission)
+        {
+            this.ReceivedScore = assignmentSubmission.ReceivedScore;
+            this.GradedAt = DateTime.Now;
+            this.InstructorFeedback = assignmentSubmission.InstructorFeedback;
+        }
     }
 }
