@@ -22,14 +22,16 @@ export default function Tuition() {
         []
     );
 
-    const totalCost = useMemo(() =>
-        currencyFormatter.format(
-            userCourses.reduce(
-                (total, { creditHours }) =>
-                    total + creditHours * COST_PER_CREDIT,
-                0
-            )
-        )
+    const totalCost = useMemo(
+        () =>
+            currencyFormatter.format(
+                userCourses.reduce(
+                    (total, { creditHours }) =>
+                        total + creditHours * COST_PER_CREDIT,
+                    0
+                )
+            ),
+        [userCourses]
     );
 
     return (

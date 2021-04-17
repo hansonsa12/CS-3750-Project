@@ -23,7 +23,7 @@ export default function AssignmentsTable({ course }) {
             setAssignments(res.data);
         };
         fetchData();
-    }, [course]);
+    }, [course, authHeader]);
 
     const assignmentSubmissions = useMemo(
         () =>

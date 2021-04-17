@@ -1,6 +1,11 @@
 import { Grid } from "@material-ui/core";
 import axios from "axios";
+import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
+import {
+    CircularProgressbar,
+    CircularProgressbarWithChildren
+} from "react-circular-progressbar";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { getFileUrl, getFormattedDateTime } from "../../helpers/helpers";
@@ -15,7 +20,6 @@ export default function AssignmentDetails() {
     const { authHeader, isInstructor, isStudent } = useContext(AuthContext);
 
     const [assignment, setAssigment] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             const res = await axios.get(
@@ -26,6 +30,8 @@ export default function AssignmentDetails() {
         };
         fetchData();
     }, [assignmentId]);
+
+    const submission = _.get(assignment, "assignmentSubmissions[0]");
 
     return (
         <MainView title={assignment?.title}>
@@ -44,12 +50,12 @@ export default function AssignmentDetails() {
                         }}
                     />
                 </Grid>
-                {isStudent && assignment?.assignmentSubmissions?.length > 0 && (
+                {isStudent && submission && (
                     <>
                         <SectionHeaderItem title="Submission Details" />
                         <Grid item xs={12}>
                             <DetailsContainer
-                                object={assignment.assignmentSubmissions[0]}
+                                object={submission}
                                 omitProperties={[
                                     "student",
                                     "assignmentSubmissionId",
@@ -76,7 +82,29 @@ export default function AssignmentDetails() {
                                             s.submission
                                         )
                                 }}
-                            />
+                            >
+                                <div
+                                    style={{
+                                        width: 180,
+                                        margin: "auto"
+                                    }}
+                                >
+                                    {submission.receivedScore ? (
+                                        <CircularProgressbarWithChildren
+                                            value={
+                                                submission.receivedScore /
+                                                assignment.maxPoints
+                                            }
+                                        >
+                                            {`${submission.receivedScore}/${assignment.maxPoints}`}
+                                        </CircularProgressbarWithChildren>
+                                    ) : (
+                                        <CircularProgressbarWithChildren>
+                                            Not Yet Graded
+                                        </CircularProgressbarWithChildren>
+                                    )}
+                                </div>
+                            </DetailsContainer>
                         </Grid>
                     </>
                 )}
