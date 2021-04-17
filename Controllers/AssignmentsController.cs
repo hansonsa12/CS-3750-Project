@@ -6,6 +6,7 @@ namespace final_project.Controllers
     using final_project.Controllers.Helpers;
     using final_project.Data;
     using final_project.Models.Course;
+    using final_project.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -82,6 +83,11 @@ namespace final_project.Controllers
                     return NotFound();
                 }
 
+                if ((await AuthHelpers.GetCurrentUser(_context, User)) is Student s)
+                {
+                    assignment.AssignmentSubmissions = assignment.AssignmentSubmissions
+                        .Where(a => a.StudentId == s.UserId).ToList();
+                }
                 return Ok(assignment);
 
             }

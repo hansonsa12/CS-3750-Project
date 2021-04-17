@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
-import _ from "lodash";
 import React, { useContext, useMemo } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import { DataContext } from "../../context/DataProvider";
@@ -9,14 +8,7 @@ import TableComponent from "../TableComponent";
 
 export default function RegistrationsTable({ rows }) {
     const { authHeader } = useContext(AuthContext);
-    const { userCourses, setUserCourses } = useContext(DataContext);
-
-    const registeredCourseIds = useMemo(() => {
-        // get array of registered course ids on initial component
-        // load and if registrations array changes
-        // https://reactjs.org/docs/hooks-reference.html#usecallback
-        return _.map(userCourses, "courseId");
-    }, [userCourses]);
+    const { setUserCourses, registeredCourseIds } = useContext(DataContext);
 
     function registerForCourse(courseId) {
         axios

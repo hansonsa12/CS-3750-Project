@@ -48,7 +48,8 @@ export default function CourseDetails() {
                         )}
                         specialFormatters={{
                             // TODO Ky: Add missing instructor info to student registrations
-                            instructor: i => getFormattedInstructorName(i || {})
+                            instructor: c =>
+                                getFormattedInstructorName(c.instructor || {})
                         }}
                     />
                 </Grid>

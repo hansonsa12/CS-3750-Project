@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
+import { DataContext } from "../../../context/DataProvider";
 import { getFormattedDateTime } from "../../../helpers/helpers";
 import AssignmentForm from "../../Assignments/AssignmentForm";
 import AssignmentSubmissionForm from "../../Assignments/AssignmentSubmissionForm";
@@ -11,6 +12,7 @@ import TableComponent from "../../TableComponent";
 export default function AssignmentsTable({ course }) {
     const [assignments, setAssignments] = useState([]);
     const { authHeader, isInstructor } = useContext(AuthContext);
+    const { submissions } = useContext(DataContext);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,6 +25,17 @@ export default function AssignmentsTable({ course }) {
         fetchData();
     }, [course]);
 
+    const assignmentSubmissions = useMemo(
+        () =>
+            assignments.map(a => ({
+                ...a,
+                submission: submissions?.find(
+                    s => s.assignmentId === a.assignmentId
+                )
+            })),
+        [assignments, submissions]
+    );
+
     const actions = useMemo(() => ({
         header: "Actions",
         accessor: a =>
@@ -32,6 +45,10 @@ export default function AssignmentsTable({ course }) {
                         Edit
                     </Button>
                 </AssignmentForm>
+            ) : a.submission ? (
+                <Button variant="contained" color="primary" disabled>
+                    Submitted
+                </Button>
             ) : (
                 <AssignmentSubmissionForm assignment={a}>
                     <Button variant="contained" color="primary">
@@ -59,5 +76,5 @@ export default function AssignmentsTable({ course }) {
         actions
     ]);
 
-    return <TableComponent columns={columns} rows={assignments} />;
+    return <TableComponent columns={columns} rows={assignmentSubmissions} />;
 }
