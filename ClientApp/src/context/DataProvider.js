@@ -1,6 +1,13 @@
 // reference: https://www.youtube.com/watch?v=XuFDcZABiDQ
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import _ from "lodash";
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
 import { AuthContext } from "./AuthProvider";
 
 const initialState = {
@@ -32,12 +39,9 @@ export const DataContext = createContext(initialState);
 
 // Provider component
 export default function DataProvider({ children }) {
-    const {
-        isInstructor,
-        isStudent,
-        authHeader,
-        user: { userId }
-    } = useContext(AuthContext);
+    const { isInstructor, isStudent, authHeader, user } = useContext(
+        AuthContext
+    );
 
     const [loading, setLoading] = useState(true);
 
@@ -51,11 +55,17 @@ export default function DataProvider({ children }) {
             setCourses(await getCourses());
             setRegistrations(await getRegistrations());
             setAllCourses(await getAllCourses());
-            setSubmissions(await getSubmissions());
             setLoading(false);
         }
         fetchData();
     }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            setSubmissions(await getSubmissions());
+        }
+        fetchData();
+    }, [user]);
 
     const getCourses = async () => {
         if (isInstructor) {
@@ -79,25 +89,51 @@ export default function DataProvider({ children }) {
     };
 
     const getSubmissions = async () => {
-        if (isStudent) {
+        if (user && isStudent) {
             const res = await axios.get(
-                `api/users/${userId}/submissions`,
+                `api/users/${user.userId}/submissions`,
                 authHeader
             );
             return res.data;
         }
     };
 
+    const userCourses = isInstructor ? courses : registrations;
+
+    const registeredCourseIds = useMemo(() => {
+        // get array of registered course ids on initial component
+        // load and if registrations array changes
+        // https://reactjs.org/docs/hooks-reference.html#usecallback
+        return _.map(userCourses, "courseId");
+    }, [userCourses]);
+
+    const assignments = useMemo(() => {
+        if (registeredCourseIds?.length && allCourses?.length) {
+            return _.chain(registeredCourseIds)
+                .map(id => allCourses.find(c => c.courseId === id))
+                .flatMap(c =>
+                    c.assignment.map(a => ({
+                        ...a,
+                        courseNumber: c.courseNumber
+                    }))
+                )
+                .value();
+        }
+    }, [registeredCourseIds, allCourses]);
+
     return (
         !loading && (
             <DataContext.Provider
                 value={{
-                    userCourses: isInstructor ? courses : registrations,
+                    userCourses,
                     setUserCourses: isInstructor
                         ? setCourses
                         : setRegistrations,
                     allCourses,
-                    submissions
+                    submissions,
+                    registeredCourseIds,
+                    assignments,
+                    setSubmissions
                 }}
             >
                 {children}

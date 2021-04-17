@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import _ from "lodash";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import _ from "lodash";
 
 export const AccountType = {
     INSTRUCTOR: "instructor",

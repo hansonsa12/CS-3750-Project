@@ -30,7 +30,8 @@ namespace final_project.Controllers
             if ((await AuthHelpers.GetCurrentUser(_context, User)) is Instructor i)
             {
                 var submissions = await _context.AssignmentSubmissions.Where(
-                    s => s.AssignmentId == assignmentId).ToListAsync();
+                    s => s.AssignmentId == assignmentId).Include(s => s.Student)
+                    .ToListAsync();
                 return Ok(submissions);
             }
             else
@@ -52,6 +53,7 @@ namespace final_project.Controllers
         //     return null;
         // }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> PostSubmission(int assignmentId,
             [FromBody] AssignmentSubmission submission)
@@ -69,6 +71,37 @@ namespace final_project.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserSubmission(int assignmentId,
+            int userId)
+        {
+            try
+            {
+                User currentUser = await AuthHelpers.GetCurrentUser(_context, User);
+                if (currentUser is Instructor i || (currentUser is Student s && s.UserId == userId))
+                {
+                    var submission = await _context.AssignmentSubmissions
+                        .Where(s => s.AssignmentId == assignmentId && s.StudentId == userId)
+                        .Include(s => s.Assignment)
+                        .FirstOrDefaultAsync();
+                    submission.Student.Password = null;
+                    submission.Student.Salt = null;
+                    submission.Assignment.AssignmentSubmissions = null;
+
+                    return Ok(submission);
+                }
+                else
+                {
+                    return Unauthorized("You do not have permission to view this submission");
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e.Message });
+            }
+
+        }
         // [HttpPut("{id}")]
         // public async Task<IActionResult> PutSubmission(int id, AssignmentSubmission model)
         // {

@@ -33,7 +33,7 @@ export default function DetailsContainer({
                                 <Grid item>
                                     {typeof specialFormatters[key] ===
                                     "function"
-                                        ? specialFormatters[key](object[key])
+                                        ? specialFormatters[key](object)
                                         : object[key] || "n/a"}
                                 </Grid>
                             </Grid>
