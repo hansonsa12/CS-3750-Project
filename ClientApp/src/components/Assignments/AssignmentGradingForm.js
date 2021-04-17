@@ -19,7 +19,9 @@ import {
 
 export default function AssignmentGradingForm({
     courseId,
+    assignmentSubmission,
     assignment,
+    score,
     children
 }) {
     const [open, setOpen] = React.useState(false);
@@ -52,14 +54,14 @@ export default function AssignmentGradingForm({
     };
 
     const validationSchema = Yup.object().shape({
-        title: Yup.string().required("Score is required")
+        Score: Yup.string().required("Score is required")
     });
 
     const validate = makeValidate(validationSchema);
 
     return (
         <div>
-            <div key="course-form-open-button" onClick={handleClickOpen}>
+            <div key="assignment-form-open-button" onClick={handleClickOpen}>
                 {children}
             </div>
             <FForm
