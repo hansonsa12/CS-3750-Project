@@ -1,16 +1,18 @@
 import {
     Avatar,
     IconButton,
-    Link,
     ListItem,
     ListItemAvatar,
     ListItemText,
+    Typography
 } from "@material-ui/core";
 import { Assignment, Close } from "@material-ui/icons";
 import React from "react";
+import { Link } from "react-router-dom";
+import { getFormattedDateTime } from "../../helpers/helpers";
 
 export default function TodoItem({ assignment, onDelete }) {
-    const { courseNumber, title, dueDate } = assignment;
+    const { courseNumber, courseId, assignmentId, title, dueDate } = assignment;
 
     return (
         <ListItem>
@@ -19,25 +21,20 @@ export default function TodoItem({ assignment, onDelete }) {
                     <Assignment />
                 </Avatar>
             </ListItemAvatar>
-            <div>
+            <ListItemText>
+                <Link to={`courses/${courseId}/details`}>{courseNumber}</Link>
+                <br />
                 <Link
-                    href={`/courses/${assignment.courseId}/details`}
-                    color="primary"
-                >
-                    {assignment?.courseNumber}
-                </Link>
-                <br></br>
-                <Link
-                    href={`/courses/${assignment?.courseId}/assignments/${assignment?.courseId}/details`}
-                    color="primary"
+                    to={`courses/${courseId}/assignments/${assignmentId}/details`}
                 >
                     {title}
                 </Link>
-
-                <ListItemText primary={dueDate} />
-            </div>
+                <Typography variant="body1">
+                    {getFormattedDateTime(dueDate)}
+                </Typography>
+            </ListItemText>
             <IconButton
-                onClick={() => onDelete(assignment.assignmentId)}
+                onClick={() => onDelete(assignmentId)}
                 edge="end"
                 aria-label="close"
             >
