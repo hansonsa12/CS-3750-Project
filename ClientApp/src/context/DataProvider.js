@@ -107,19 +107,33 @@ export default function DataProvider({ children }) {
         return _.map(userCourses, "courseId");
     }, [userCourses]);
 
-    const assignments = useMemo(() => {
+    const studentAssignments = useMemo(() => {
         if (registeredCourseIds?.length && allCourses?.length) {
             return _.chain(registeredCourseIds)
                 .map(id => allCourses.find(c => c.courseId === id))
                 .flatMap(c =>
-                    c.assignment.map(a => ({
+                    c.assignment?.map(a => ({
+                        ...a,
+                        courseNumber: c.courseNumber
+                    }))
+                )
+                .compact()
+                .value();
+        }
+    }, [registeredCourseIds, allCourses]);
+
+    const instructorAssignments = useMemo(() => {
+        if (userCourses?.length){
+            return _.chain(userCourses)
+                .flatMap(c =>
+                    c.assignment?.map(a => ({
                         ...a,
                         courseNumber: c.courseNumber
                     }))
                 )
                 .value();
         }
-    }, [registeredCourseIds, allCourses]);
+    }, [userCourses]);
 
     return (
         !loading && (
@@ -132,7 +146,7 @@ export default function DataProvider({ children }) {
                     allCourses,
                     submissions,
                     registeredCourseIds,
-                    assignments,
+                    assignments: isInstructor ? instructorAssignments : studentAssignments,
                     setSubmissions
                 }}
             >

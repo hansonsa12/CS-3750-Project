@@ -102,14 +102,25 @@ namespace final_project.Controllers
             }
 
         }
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutSubmission(int id, AssignmentSubmission model)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
 
-        //     return NoContent();
-        // }
+        [Authorize]
+        [HttpPut("~/api/submissions")]
+        public async Task<IActionResult> UpdateSubmission([FromBody] AssignmentSubmission updatedInfo)
+        {
+            try
+            {
+                AssignmentSubmission assignment = await _context.AssignmentSubmissions.FindAsync(updatedInfo.AssignmentSubmissionId);
+                assignment.GradeSubmission(updatedInfo);
+                await _context.SaveChangesAsync();
+                return Ok(assignment);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e });
+            }
+        }
+ 
 
         // [HttpDelete("{id}")]
         // public async Task<IActionResult> DeleteSubmissionById(int id)
