@@ -33,6 +33,9 @@ export default function AssignmentDetails() {
 
     const submission = _.get(assignment, "assignmentSubmissions[0]");
 
+    const percentageScore =
+        (submission?.receivedScore / assignment?.maxPoints) * 100;
+
     return (
         <MainView title={assignment?.title}>
             <Grid container spacing={2}>
@@ -82,7 +85,9 @@ export default function AssignmentDetails() {
                                             s.submission
                                         ),
                                     gradedAt: s =>
-                                        getFormattedDateTime(s.gradedAt)
+                                        getFormattedDateTime(s.gradedAt),
+                                    receivedScore: s =>
+                                        `${s.receivedScore}/${assignment.maxPoints} (${percentageScore}%)`
                                 }}
                             >
                                 <div
@@ -92,14 +97,10 @@ export default function AssignmentDetails() {
                                     }}
                                 >
                                     {submission.receivedScore ? (
-                                        <CircularProgressbarWithChildren
-                                            value={
-                                                submission.receivedScore /
-                                                assignment.maxPoints
-                                            }
-                                        >
-                                            {`${submission.receivedScore}/${assignment.maxPoints}`}
-                                        </CircularProgressbarWithChildren>
+                                        <CircularProgressbar
+                                            value={percentageScore}
+                                            text={`${percentageScore}%`}
+                                        />
                                     ) : (
                                         <CircularProgressbarWithChildren>
                                             Not Yet Graded
