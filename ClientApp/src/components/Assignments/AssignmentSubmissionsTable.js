@@ -2,9 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { useMemo } from "react";
 import { getFileUrl, getFormattedDateTime } from "../../helpers/helpers";
 import TableComponent from "../TableComponent";
-import AssignmentForm from "./AssignmentForm";
 import AssignmentGradingForm from "./AssignmentGradingForm";
-
 
 export default function AssignmentSubmissionsTable({ rows }) {
     const columns = useMemo(() => [
@@ -41,9 +39,9 @@ export default function AssignmentSubmissionsTable({ rows }) {
         {
             header: "Action",
             accessor: s => (
-                <AssignmentGradingForm assignment={s}>
+                <AssignmentGradingForm submission={s}>
                     <Button color="primary" variant="contained">
-                        Grade
+                        {s.receivedScore ? "Re-Grade" : "Grade"}
                     </Button>
                 </AssignmentGradingForm>
             )

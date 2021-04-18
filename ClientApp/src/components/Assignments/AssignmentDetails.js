@@ -74,7 +74,9 @@ export default function AssignmentDetails() {
                                             </a>
                                         ) : (
                                             s.submission
-                                        )
+                                        ),
+                                    gradedAt: s =>
+                                        getFormattedDateTime(s.gradedAt)
                                 }}
                             />
                         </Grid>

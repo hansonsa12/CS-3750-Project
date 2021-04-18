@@ -12,18 +12,9 @@ import React, { useContext } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
-import {
-    SectionHeaderItem,
-    TextEntryItem
-} from "../FormComponents";
+import { TextEntryItem } from "../FormComponents";
 
-export default function AssignmentGradingForm({
-    courseId,
-    assignmentSubmission,
-    assignment,
-    score,
-    children
-}) {
+export default function AssignmentGradingForm({ submission, children }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -39,7 +30,7 @@ export default function AssignmentGradingForm({
     const onSubmit = values => {
         axios
             .request({
-                url:`api/submissions`,
+                url: `api/submissions`,
                 method: "PUT",
                 ...authHeader,
                 data: values
@@ -66,9 +57,7 @@ export default function AssignmentGradingForm({
             </div>
             <FForm
                 onSubmit={onSubmit}
-                initialValues={
-                    assignment
-                }
+                initialValues={submission}
                 validate={validate}
             >
                 {({ handleSubmit }) => (
@@ -82,20 +71,13 @@ export default function AssignmentGradingForm({
                                 Score Assignment
                             </DialogTitle>
                             <DialogContent>
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    justify="space-between"
-                                >
-                                    <SectionHeaderItem
-                                        top
-                                        title="Score Assignment"
-                                    />
+                                <Grid container spacing={2} justify="flex-end">
                                     <TextEntryItem
                                         name="receivedScore"
                                         label="Score"
                                         required={true}
-                                        sm={3}
+                                        type="number"
+                                        xs={6}
                                     />
                                     <TextEntryItem
                                         name="instructorFeedback"
