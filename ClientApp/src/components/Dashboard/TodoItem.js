@@ -4,13 +4,14 @@ import {
     Link,
     ListItem,
     ListItemAvatar,
-    ListItemText
+    ListItemText,
 } from "@material-ui/core";
 import { Assignment, Close } from "@material-ui/icons";
 import React from "react";
 
-export default function TodoItem({ assignment }) {
+export default function TodoItem({ assignment, onDelete }) {
     const { courseNumber, title, dueDate } = assignment;
+
     return (
         <ListItem>
             <ListItemAvatar>
@@ -19,14 +20,27 @@ export default function TodoItem({ assignment }) {
                 </Avatar>
             </ListItemAvatar>
             <div>
-                <ListItemText primary={assignment?.courseNumber} />
-                <Link href="#Assignment" color="primary">
+                <Link
+                    href={`/courses/${assignment.courseId}/details`}
+                    color="primary"
+                >
+                    {assignment?.courseNumber}
+                </Link>
+                <br></br>
+                <Link
+                    href={`/courses/${assignment?.courseId}/assignments/${assignment?.courseId}/details`}
+                    color="primary"
+                >
                     {title}
                 </Link>
 
                 <ListItemText primary={dueDate} />
             </div>
-            <IconButton edge="end" aria-label="close">
+            <IconButton
+                onClick={() => onDelete(assignment.assignmentId)}
+                edge="end"
+                aria-label="close"
+            >
                 <Close />
             </IconButton>
         </ListItem>
