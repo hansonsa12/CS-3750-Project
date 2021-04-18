@@ -24,3 +24,6 @@ Content-Type: application/json
 GET https://localhost:5001/api/users/current
 Authorization: Bearer <replace with authToken> 
 
+### Assignments
+GET https://localhost:5001/api/users/2/submissions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmJmIjoxNjE4NjE5NzY3LCJleHAiOjE2MTg2MzA1NjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.A01nC37Cb4PHRe98EPHTS-7tI0d7rRTnabRB0IMsxlA

@@ -10,6 +10,11 @@ import { Assignment, Close } from "@material-ui/icons";
 import React from "react";
 
 export default function TodoItem({ assignment }) {
+    const { courseNumber, title, dueDate } = assignment
+
+    // TODO: make course number link to the course page
+    // TODO: make the assignment title link to the assignment page
+
     return (
         <ListItem>
             <ListItemAvatar>
@@ -18,12 +23,12 @@ export default function TodoItem({ assignment }) {
                 </Avatar>
             </ListItemAvatar>
             <div>
-                <ListItemText primary={assignment[0]} />
+                <ListItemText primary={courseNumber} /> 
                 <Link href="#Assignment" color="primary">
-                    {assignment[1]}
+                    {title}
                 </Link>
 
-                <ListItemText primary={assignment[2]} />
+                <ListItemText primary={dueDate} />
             </div>
             <IconButton edge="end" aria-label="close">
                 <Close />

@@ -9,9 +9,10 @@ import {
 import axios from "axios";
 import { makeValidate } from "mui-rff";
 import React, { useCallback, useContext, useState } from "react";
-import { Field, Form as FForm } from "react-final-form";
+import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthProvider";
+import { DataContext } from "../../context/DataProvider";
 import { AssignmentType, getFormattedDateTime } from "../../helpers/helpers";
 import DetailsContainer from "../DetailsContainer";
 import FileUploader from "../FileUploading/FileUploader";
@@ -19,6 +20,7 @@ import { SectionHeaderItem, TextEntryItem } from "../FormComponents";
 
 export default function AssignmentSubmissionForm({ assignment, children }) {
     const { user, authHeader } = useContext(AuthContext);
+    const { submissions, setSubmissions } = useContext(DataContext);
 
     const [open, setOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState();
@@ -61,6 +63,7 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
             );
 
             alert("Assignment successfully submitted!");
+            setSubmissions([...submissions, res.data]);
             handleClose();
         } catch (err) {
             alert(`${err.message}:\n${err.response.data.error}`);
@@ -110,8 +113,10 @@ export default function AssignmentSubmissionForm({ assignment, children }) {
                                         <DetailsContainer
                                             object={assignment}
                                             specialFormatters={{
-                                                dueDate: d =>
-                                                    getFormattedDateTime(d)
+                                                dueDate: a =>
+                                                    getFormattedDateTime(
+                                                        a.dueDate
+                                                    )
                                             }}
                                             omitProperties={[
                                                 "assignmentId",

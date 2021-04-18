@@ -28,11 +28,14 @@ namespace final_project.Controllers
         [HttpPost]
         public async Task<IActionResult> PostCourse([FromBody] Course course)
         {
-            try{
+            try
+            {
                 await _context.Courses.AddAsync(course);
                 await _context.SaveChangesAsync();
                 return Ok(course);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, new { error = e });
             }
         }
@@ -44,6 +47,7 @@ namespace final_project.Controllers
             int userId = AuthHelpers.GetCurrentUserId(User);
             var courses = await _context.Courses.Include(c => c.Instructor)
                 .Where(c => c.InstructorId == userId)
+                .Include(c => c.Assignment)
                 .ToListAsync();
             // TODO Ky Filter out instructor info so it only returns FirstName and LastName
             // var courses = await (from course in _context.Set<Course>()
@@ -57,8 +61,10 @@ namespace final_project.Controllers
 
         [Authorize]
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllCourses(){
+        public async Task<IActionResult> GetAllCourses()
+        {
             var courses = await _context.Courses.Include(c => c.Instructor)
+                .Include(c => c.Assignment)
                 .ToListAsync();
             return Ok(courses);
         }
@@ -67,16 +73,20 @@ namespace final_project.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateCourse([FromBody] Course updatedInfo)
         {
-            try{
+            try
+            {
                 Course course = await _context.Courses.FindAsync(updatedInfo.CourseId);
-                if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
-                    return Unauthorized( new { error = "You do not have permission to do that." });
+                if (course.InstructorId != AuthHelpers.GetCurrentUserId(User))
+                {
+                    return Unauthorized(new { error = "You do not have permission to do that." });
                 }
                 course.UpdateInfo(updatedInfo);
                 await _context.SaveChangesAsync();
                 return Ok(course);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, new { error = e });
             }
         }
@@ -85,20 +95,28 @@ namespace final_project.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourseById(int id)
         {
-            try{
+            try
+            {
                 Course course = await _context.Courses.FindAsync(id);
-                if(course == null) {
+                if (course == null)
+                {
                     return NotFound();
-                } else if(course.InstructorId != AuthHelpers.GetCurrentUserId(User)) {
-                    return Unauthorized( new { error = "You do not have permission to do that." });
-                } else{
+                }
+                else if (course.InstructorId != AuthHelpers.GetCurrentUserId(User))
+                {
+                    return Unauthorized(new { error = "You do not have permission to do that." });
+                }
+                else
+                {
                     // delete course
                     _context.Courses.Remove(course);
                     await _context.SaveChangesAsync();
                 }
                 return Ok(course);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, new { error = e });
             }
         }
