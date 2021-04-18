@@ -68,6 +68,18 @@ export default function AssignmentsTable({ course }) {
             )
         },
         {
+            header: "Score",
+            accessor: a => {
+                const score = a.submission?.receivedScore;
+                return score ? score : "-";
+            },
+            alignValues: "center"
+        },
+        {
+            accessor: "maxPoints",
+            alignValues: "center"
+        },
+        {
             header: "Due Date",
             accessor: a => getFormattedDateTime(a.dueDate)
         },

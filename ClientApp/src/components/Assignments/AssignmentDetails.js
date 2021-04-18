@@ -2,17 +2,15 @@ import { Grid } from "@material-ui/core";
 import axios from "axios";
 import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
-import {
-    CircularProgressbar,
-    CircularProgressbarWithChildren
-} from "react-circular-progressbar";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
-import { getFileUrl, getFormattedDateTime } from "../../helpers/helpers";
+import { getFormattedDateTime } from "../../helpers/helpers";
 import DetailsContainer from "../DetailsContainer";
 import { SectionHeaderItem } from "../FormComponents";
 import MainView from "../MainView";
+import AssignmentBarChart from "./AssignmentBarChart";
 import AssignmentSubmissionsTable from "./AssignmentSubmissionsTable";
+import SubmissionDetails from "./SubmissionDetails";
 
 export default function AssignmentDetails() {
     const { assignmentId } = useParams(); // get params from route url
@@ -31,10 +29,8 @@ export default function AssignmentDetails() {
         fetchData();
     }, [assignmentId]);
 
-    const submission = _.get(assignment, "assignmentSubmissions[0]");
-
-    const percentageScore =
-        (submission?.receivedScore / assignment?.maxPoints) * 100;
+    const submission =
+        isStudent && _.get(assignment, "assignmentSubmissions[0]");
 
     return (
         <MainView title={assignment?.title}>
@@ -51,65 +47,20 @@ export default function AssignmentDetails() {
                         specialFormatters={{
                             dueDate: a => getFormattedDateTime(a.dueDate)
                         }}
-                    />
+                    >
+                        {submission?.receivedScore && (
+                            <AssignmentBarChart
+                                assignment={assignment}
+                                receivedScore={submission?.receivedScore}
+                            />
+                        )}
+                    </DetailsContainer>
                 </Grid>
                 {isStudent && submission && (
-                    <>
-                        <SectionHeaderItem title="Submission Details" />
-                        <Grid item xs={12}>
-                            <DetailsContainer
-                                object={submission}
-                                omitProperties={[
-                                    "student",
-                                    "assignmentSubmissionId",
-                                    "assignmentId",
-                                    "studentId",
-                                    "fileName"
-                                ]}
-                                specialFormatters={{
-                                    submittedAt: s =>
-                                        getFormattedDateTime(s.submittedAt),
-                                    submission: s =>
-                                        s.fileName ? (
-                                            <a
-                                                href={getFileUrl(
-                                                    s.studentId,
-                                                    "submission",
-                                                    s.fileName
-                                                )}
-                                                target="_blank"
-                                            >
-                                                {s.submission}
-                                            </a>
-                                        ) : (
-                                            s.submission
-                                        ),
-                                    gradedAt: s =>
-                                        getFormattedDateTime(s.gradedAt),
-                                    receivedScore: s =>
-                                        `${s.receivedScore}/${assignment.maxPoints} (${percentageScore}%)`
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: 180,
-                                        margin: "auto"
-                                    }}
-                                >
-                                    {submission.receivedScore ? (
-                                        <CircularProgressbar
-                                            value={percentageScore}
-                                            text={`${percentageScore}%`}
-                                        />
-                                    ) : (
-                                        <CircularProgressbarWithChildren>
-                                            Not Yet Graded
-                                        </CircularProgressbarWithChildren>
-                                    )}
-                                </div>
-                            </DetailsContainer>
-                        </Grid>
-                    </>
+                    <SubmissionDetails
+                        submission={submission}
+                        assignment={assignment}
+                    />
                 )}
                 {isInstructor && (
                     <>
