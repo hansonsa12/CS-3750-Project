@@ -3,9 +3,10 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // must come after FullCalend
 import React, { useContext, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { DataContext } from "../context/DataProvider";
+import dayjs from "dayjs";
 
 export default function Calendar() {
-    const { userCourses } = useContext(DataContext);
+    const { userCourses, assignments } = useContext(DataContext);
 
     const history = useHistory(); // https://reactrouter.com/web/api/Hooks
 
@@ -13,20 +14,35 @@ export default function Calendar() {
 
     const events = useMemo(
         /* Optimization technique. Memoizes (caches) the array of events so that when this compoent 
-        rerenders, the map function is only called again if the userCourses changes. Otherwise it
-        just returns the cached array. https://reactjs.org/docs/hooks-reference.html#usememo */
-        () =>
-            userCourses.map(course => ({
-                title: `${course.courseNumber} ${course.courseName}`,
-                startTime: course.startTime,
-                endTime: course.endTime,
-                daysOfWeek: course.meetingDays
-                    ?.toLowerCase()
-                    .split("")
-                    .map(d => dayNums[d]),
-                url: `/courses/${course.courseId}/details`
-            })),
-        [userCourses]
+    rerenders, the map function is only called again if the userCourses changes. Otherwise it
+    just returns the cached array. https://reactjs.org/docs/hooks-reference.html#usememo */
+        () => {
+            const userEvents = userCourses
+                ? userCourses.map((course) => ({
+                      title: `${course.courseNumber} - ${course.courseName}`,
+                      startTime: course.startTime,
+                      endTime: course.endTime,
+                      daysOfWeek: course.meetingDays
+                          ?.toLowerCase()
+                          .split("")
+                          .map((d) => dayNums[d]),
+                      url: `/courses/${course.courseId}/details`,
+                  }))
+                : [];
+
+            const assignmentEvents = assignments
+                ? assignments.map((assignment) => ({
+                      // add properties that you need `
+                      title: `${assignment.courseNumber} ${assignment.title}`,
+                      date: dayjs(assignment.dueDate).format("YYYY-MM-DD"),
+                      allDay: true,
+                      url: `/courses/${assignment.courseId}/assignments/${assignment.assignmentId}/details`,
+                  }))
+                : [];
+
+            return [...userEvents, ...assignmentEvents];
+        },
+        [userCourses, assignments]
     );
 
     return (
@@ -34,7 +50,7 @@ export default function Calendar() {
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             events={events}
-            eventClick={info => {
+            eventClick={(info) => {
                 /* link event to its corresponding course page 
                 https://fullcalendar.io/docs/eventClick */
                 info.jsEvent.preventDefault();

@@ -7,6 +7,9 @@ import TodoItem from "./TodoItem";
 export default function TodoList() {
     const { assignments } = useContext(DataContext);
 
+    // sort assignments by due date, soonest due to furthest out
+    // only show top 5-6
+
     return (
         <div>
             <List subheader="To Do">

@@ -47,6 +47,7 @@ namespace final_project.Controllers
             int userId = AuthHelpers.GetCurrentUserId(User);
             var courses = await _context.Courses.Include(c => c.Instructor)
                 .Where(c => c.InstructorId == userId)
+                .Include(c => c.Assignment)
                 .ToListAsync();
             // TODO Ky Filter out instructor info so it only returns FirstName and LastName
             // var courses = await (from course in _context.Set<Course>()
