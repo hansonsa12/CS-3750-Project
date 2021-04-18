@@ -33,6 +33,9 @@ export default function TodoList() {
         setTodoList(tempArray);
     };
 
+    // sort assignments by due date, soonest due to furthest out
+    // only show top 5-6
+
     return (
         <div>
             <List subheader="To Do">

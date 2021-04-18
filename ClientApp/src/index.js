@@ -8,6 +8,7 @@ import App from "./App";
 import AuthProvider from "./context/AuthProvider";
 import DataProvider from "./context/DataProvider";
 import registerServiceWorker from "./registerServiceWorker";
+import "react-circular-progressbar/dist/styles.css";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const rootElement = document.getElementById("root");

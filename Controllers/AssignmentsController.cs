@@ -98,6 +98,44 @@ namespace final_project.Controllers
         }
 
         [Authorize]
+        [HttpGet("~/api/assignments/{id}/scores")]
+        public async Task<IActionResult> GetAssignmentScores(int id)
+        {
+            try
+            {
+                Assignment assignment = await _context.Assignments
+                    .Include(a => a.AssignmentSubmissions).Where(a => a.AssignmentId == id)
+                    .FirstOrDefaultAsync();
+                if (assignment == null)
+                {
+                    return NotFound();
+                }
+
+                var scores = assignment.AssignmentSubmissions.Select(a => a.ReceivedScore).ToList();
+
+                if ((await AuthHelpers.GetCurrentUser(_context, User)) is Student s)
+                {
+                    return Ok(new
+                    {
+                        high = scores.Max(),
+                        low = scores.Min(),
+                        average = scores.Average()
+                    });
+                }
+                else
+                {
+                    return Ok(scores);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e });
+            }
+        }
+
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAssignmentById(int id)
         {

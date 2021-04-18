@@ -23,7 +23,7 @@ export default function AssignmentsTable({ course }) {
             setAssignments(res.data);
         };
         fetchData();
-    }, [course]);
+    }, [course, authHeader]);
 
     const assignmentSubmissions = useMemo(
         () =>
@@ -66,6 +66,18 @@ export default function AssignmentsTable({ course }) {
                     {a.title}
                 </Link>
             )
+        },
+        {
+            header: "Score",
+            accessor: a => {
+                const score = a.submission?.receivedScore;
+                return score ? score : "-";
+            },
+            alignValues: "center"
+        },
+        {
+            accessor: "maxPoints",
+            alignValues: "center"
         },
         {
             header: "Due Date",

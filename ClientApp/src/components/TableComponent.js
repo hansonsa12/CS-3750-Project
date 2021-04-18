@@ -66,7 +66,7 @@ export default function TableComponent({
                                             key={`cell-${rIndex}-${cIndex}-${cellValue}`}
                                             align={column.alignValues || "left"}
                                         >
-                                            {cellValue}
+                                            {cellValue ? cellValue : "n/a"}
                                         </StyledTableCell>
                                     );
                                 })}
