@@ -10,7 +10,7 @@ import { SectionHeaderItem } from "../FormComponents";
 
 export default function SubmissionDetails({ submission, assignment }) {
     const percentageScore =
-        (submission?.receivedScore / assignment?.maxPoints) * 100;
+        Math.round((submission?.receivedScore / assignment?.maxPoints) * 100);
 
     return (
         <>
