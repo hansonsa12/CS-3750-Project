@@ -28,7 +28,7 @@ export default function InstructorAssignmentBarChart({ assignment, scores }) {
     const { high, average, low } = stats;
 
     const data = {
-        labels: ["High", "Average", "Low"],
+        labels: ["High", "Low", "Average"],
         datasets: [
             {
                 label: "Score",
