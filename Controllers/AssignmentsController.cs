@@ -112,6 +112,7 @@ namespace final_project.Controllers
                 }
 
                 var scores = assignment.AssignmentSubmissions.Select(a => a.ReceivedScore).ToList();
+                //var allScores
 
                 if ((await AuthHelpers.GetCurrentUser(_context, User)) is Student s)
                 {
@@ -122,8 +123,33 @@ namespace final_project.Controllers
                         average = scores.Average()
                     });
                 }
-                else
+
+                else if((await AuthHelpers.GetCurrentUser(_context, User)) is Instructor i)
                 {
+                return Ok(new
+                    {
+                        high = scores.Max(),
+                        low = scores.Min(),
+                        average = scores.Average()
+
+                    // return Ok(new{
+                    //     //array for each bucket
+                    //     //assignment.MaxScor
+                    //     //loop over score
+                    //     //scores.ForEach()
+                    //     high = scores.Max(),
+                    //     ninety =
+                    //     eighty =
+                    //     seventy =
+                    //     sixty =
+                    //     low = scores.Min()
+
+                    // });
+                    });
+
+                }
+
+                else {
                     return Ok(scores);
                 }
 
