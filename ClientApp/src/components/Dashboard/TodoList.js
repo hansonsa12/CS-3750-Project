@@ -14,15 +14,31 @@ export default function TodoList() {
     }, []);
 
     const getSortedAssignments = () => {
-        const sortedAssignments = assignments?.sort(function (a, b) {
+        // Get all assignments in chronological order
+        const sortedAssignments = assignments?.sort(function (a, b) {          
             return new Date(a.dueDate) - new Date(b.dueDate);
         });
 
-        if (sortedAssignments?.length > 6) {
-            return sortedAssignments.slice(0, 6);
-        }
+        // Get today's date and format it to fit with dueDate
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-'+ mm + '-' + dd;
 
-        return sortedAssignments;
+        var futureAssignments =[];
+        // Only keep items with a due date of today or later
+        for(var i = 0; i < sortedAssignments.length; i++){
+            if(sortedAssignments[i].dueDate >= today)
+            {
+                futureAssignments.push(sortedAssignments[i])
+            }
+        }
+        // Show only 6 assignments
+        if(futureAssignments?.length > 6){
+            return sortedAssignments.slice(0,6);
+        }
+        return futureAssignments;
     };
 
     const handleTodoItemDelete = (id) => {
