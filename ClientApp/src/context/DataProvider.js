@@ -131,6 +131,7 @@ export default function DataProvider({ children }) {
                         courseNumber: c.courseNumber
                     }))
                 )
+                .compact()
                 .value();
         }
     }, [userCourses]);

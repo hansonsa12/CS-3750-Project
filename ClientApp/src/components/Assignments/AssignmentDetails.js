@@ -10,6 +10,7 @@ import { SectionHeaderItem } from "../FormComponents";
 import MainView from "../MainView";
 import AssignmentBarChart from "./AssignmentBarChart";
 import AssignmentSubmissionsTable from "./AssignmentSubmissionsTable";
+import InstructorAssignmentBarChart from "./InstructorAssignmentBarChart";
 import SubmissionDetails from "./SubmissionDetails";
 
 export default function AssignmentDetails() {
@@ -68,6 +69,9 @@ export default function AssignmentDetails() {
                         <Grid item xs={12}>
                             <AssignmentSubmissionsTable
                                 rows={assignment.assignmentSubmissions}
+                            />
+                            <InstructorAssignmentBarChart 
+                                assignment={assignment}
                             />
                         </Grid>
                     </>
