@@ -9,6 +9,7 @@ import AssignmentForm from "../../Assignments/AssignmentForm";
 import DetailsContainer from "../../DetailsContainer";
 import { SectionHeaderItem } from "../../FormComponents";
 import MainView from "../../MainView";
+import CourseFinalGrade from "../CourseFinalGrade";
 import CourseForm from "../CourseForm";
 import AssignmentsTable from "./AssignmentsTable";
 
@@ -20,8 +21,12 @@ export default function CourseDetails() {
 
     const [course, setCourse] = useState({});
 
+    const { assignments } = useContext(DataContext);
+    const { submissions } = useContext(DataContext);
+    const [finalGrade, setFinalGrade] = useState();
+    const [courseAssignments, setCourseAssignments] = useState();
     useEffect(() => {
-        setCourse(userCourses.find(c => c.courseId.toString() === id));
+        setCourse(userCourses.find((c) => c.courseId.toString() === id));
     }, [userCourses, id]);
 
     const actionProps = isInstructor
@@ -33,7 +38,7 @@ export default function CourseDetails() {
                       </IconButton>
                   </CourseForm>
               ),
-              actionTooltip: "Edit Course"
+              actionTooltip: "Edit Course",
           }
         : {};
 
@@ -48,11 +53,16 @@ export default function CourseDetails() {
                         )}
                         specialFormatters={{
                             // TODO Ky: Add missing instructor info to student registrations
-                            instructor: c =>
-                                getFormattedInstructorName(c.instructor || {})
+                            instructor: (c) =>
+                                getFormattedInstructorName(c.instructor || {}),
                         }}
                     />
                 </Grid>
+
+                <Grid item xs={12}>
+                    <CourseFinalGrade course={course} />
+                </Grid>
+
                 <SectionHeaderItem
                     title="Assignments"
                     action={
