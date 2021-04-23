@@ -6,7 +6,7 @@
             "request": "launch",
             "type": "pwa-chrome",
             "url": "https://localhost:5001",
-            "webRoot": "${workspaceFolder}/ClientApp/src"
+            "webRoot": "${workspaceFolder}/final_project/ClientApp/src"
         },
         {
             // Use IntelliSense to find out which attributes exist for C# debugging
@@ -17,9 +17,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/bin/Debug/net5.0/final_project.dll",
+            "program": "${workspaceFolder}/final_project/bin/Debug/net5.0/final_project.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/final_project",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
@@ -30,7 +30,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/final_project/Views"
             }
         },
         {
@@ -43,7 +43,10 @@
     "compounds": [
         {
             "name": "Server/Client",
-            "configurations": [".NET Core Launch (web)", "Launch Chrome"]
+            "configurations": [
+                ".NET Core Launch (web)",
+                "Launch Chrome"
+            ]
         }
     ]
 }
