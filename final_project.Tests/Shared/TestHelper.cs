@@ -26,6 +26,7 @@ namespace final_project.Tests.Shared
         {
             try
             {
+                /* https://stackoverflow.com/questions/38557942/mocking-iprincipal-in-asp-net-core */
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
                 }));
