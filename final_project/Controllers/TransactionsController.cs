@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using final_project.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using final_project.Controllers.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace final_project.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class TransactionController : ControllerBase
+    [Route("api/[controller]")]
+    public class TransactionsController : ControllerBase
     {
         private readonly LMSContext _context;
 
-        public TransactionController(LMSContext context)
+        public TransactionsController(LMSContext context)
         {
             _context = context;
         }
@@ -45,8 +46,7 @@ namespace final_project.Controllers
             try
             {
                 int userId = AuthHelpers.GetCurrentUserId(base.User);
-                var transactions = _context.Transactions.Where(t => t.UserId == userId).ToList();
-
+                var transactions = await _context.Transactions.Where(t => t.UserId == userId).ToListAsync();
                 return Ok(transactions);
             }
             catch (Exception e)

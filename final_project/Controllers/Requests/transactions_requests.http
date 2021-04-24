@@ -1,4 +1,4 @@
-### Signup
+### Create Transaction
 POST https://localhost:5001/api/transactions
 Content-Type: application/json 
 Authorization: Bearer <replace with authToken> 
@@ -10,18 +10,14 @@ Authorization: Bearer <replace with authToken>
 
 }
 
-### Login
-POST https://localhost:5001/api/auth/login
-Content-Type: application/json 
-
-{
-  "email": "joe@lms.com",
-  "password": "password"
-}
+### Get Transactions
+GET https://localhost:5001/api/transactions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE5MzAyMjYxLCJleHAiOjE2MTkzMTMwNjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.xcn2pQYX4dbKoYdNonD2433tAd0c0ERbRAWjjL6wJeM
 
 ### Protected Route
 GET https://localhost:5001/api/users/current
-Authorization: Bearer <replace with authToken> 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE5MzAyMjYxLCJleHAiOjE2MTkzMTMwNjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.xcn2pQYX4dbKoYdNonD2433tAd0c0ERbRAWjjL6wJeM
+
 
 ### Assignments
 GET https://localhost:5001/api/users/2/submissions

@@ -26,7 +26,7 @@ namespace final_project.Models.User
 
         public DateTime CreatedAt { get; set; }
 
-        public static int PRICE_PER_CREDIT_IN_CENTS = 100_000;
+        public static int PRICE_PER_CREDIT_IN_CENTS = 10_000;
 
         public Transaction()
         {
@@ -42,6 +42,8 @@ namespace final_project.Models.User
         {
             base.CourseId = courseToChargeFor.CourseId;
             base.AmountInCents = courseToChargeFor.CreditHours * PRICE_PER_CREDIT_IN_CENTS;
+            base.Description = $@"{courseToChargeFor.CourseNumber} - {courseToChargeFor.CourseName} course fee 
+                ({courseToChargeFor.CreditHours} credits X ${PRICE_PER_CREDIT_IN_CENTS / 100}/credit)";
         }
     }
 
