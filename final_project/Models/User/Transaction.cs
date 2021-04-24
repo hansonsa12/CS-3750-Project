@@ -15,16 +15,35 @@ namespace final_project.Models.User
         public int? CourseId { get; set; }
 
         [Required]
-        public int Amount { get; set; }
+        public int AmountInCents { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(7)")]
         public string Type { get; set; }
 
+        [Column(TypeName = "varchar(100)")]
+        public string Description { get; set; }
+
         public DateTime CreatedAt { get; set; }
+
+        public static int PRICE_PER_CREDIT_IN_CENTS = 100_000;
+
+        public Transaction()
+        {
+            this.CreatedAt = DateTime.Now;
+        }
     }
 
-    public class Charge : Transaction { }
+    public class Charge : Transaction
+    {
+        public Charge() : base() { }
+        public Charge(Course courseToChargeFor)
+            : base()
+        {
+            base.CourseId = courseToChargeFor.CourseId;
+            base.AmountInCents = courseToChargeFor.CreditHours * PRICE_PER_CREDIT_IN_CENTS;
+        }
+    }
 
 
     public class Payment : Transaction { }
