@@ -25,17 +25,34 @@ namespace final_project.Tests
         {
             using (var context = Fixture.CreateContext())
             {
-                TestHelper testHelper = new TestHelper(context);
+                // Steps for test: (1) Setup, (2) Exercise, (3) Verify
+                // region tags just used for organization. not needed
+                #region Setup
                 var controller = new RegistrationsController(context);
+                TestHelper testHelper = new TestHelper(context, controller);
+                // Student doesn't matter here so I am just using a default
+                var student = testHelper.GetDefaultStudent();
 
-                var currentUser = testHelper.GetDefaultStudent(); // student doesn't matter so I am just using a default
-                controller.ControllerContext = testHelper.GetControllerContext(currentUser.UserId); // mocks the user being logged in
+                // Mocks the user being logged in. Must be a user added in the database.
+                testHelper.Login(student);
 
-                Assert.True(currentUser.Registrations.Count == 0, "Student registrations should be 0"); // should have no registrations initially
+                // Get initial registrations count
+                var initialRegistrationsCount = student.Registrations.Count;
 
-                var result = await controller.RegisterForCourse((testHelper.CreateACourse()).CourseId); // create and register for a new course
+                #endregion
 
-                Assert.True(currentUser.Registrations.Count == 1, "Student registrations should be 1"); // should now have one registered course
+                #region Exercise
+                // create and register for a new course
+                var result = await controller.RegisterForCourse((testHelper.CreateACourse()).CourseId);
+
+                #endregion
+
+                #region Verify
+                // should now have one registered course
+                Assert.True(student.Registrations.Count == initialRegistrationsCount + 1,
+                    "Student registrations increased by 1");
+
+                #endregion
             }
         }
     }

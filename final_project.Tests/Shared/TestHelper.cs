@@ -16,22 +16,33 @@ namespace final_project.Tests.Shared
         public readonly LMSContext _context;
         public readonly ControllerBase _controller;
 
-        public TestHelper(LMSContext context)
+        public TestHelper(LMSContext context, ControllerBase controller)
         {
             _context = context;
+            _controller = controller;
         }
 
-        public ControllerContext GetControllerContext(int currentUserId)
+        public bool Login(User user)
         {
-            var userId = 1;
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+            try
+            {
+                var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
                 }));
 
-            return new ControllerContext()
+                _controller.ControllerContext = new ControllerContext()
+                {
+                    HttpContext = new DefaultHttpContext() { User = userPrincipal }
+                };
+
+                return true; // login successful
+
+            }
+            catch (Exception ex)
             {
-                HttpContext = new DefaultHttpContext() { User = user }
-            };
+                Console.Error.WriteLine(ex.Message);
+                return false; // something went wrong
+            }
         }
 
         public Course CreateACourse()
