@@ -110,7 +110,6 @@ namespace final_project.Controllers
                 {
                     return NotFound();
                 }
-
                 var scores = assignment.AssignmentSubmissions.Select(a => a.ReceivedScore).ToList();
                 //var allScores
 
@@ -124,32 +123,33 @@ namespace final_project.Controllers
                     });
                 }
 
-                else if((await AuthHelpers.GetCurrentUser(_context, User)) is Instructor i)
+                else if ((await AuthHelpers.GetCurrentUser(_context, User)) is Instructor i)
                 {
-                return Ok(new
+                    return Ok(new
                     {
                         high = scores.Max(),
                         low = scores.Min(),
                         average = scores.Average()
 
-                    // return Ok(new{
-                    //     //array for each bucket
-                    //     //assignment.MaxScor
-                    //     //loop over score
-                    //     //scores.ForEach()
-                    //     high = scores.Max(),
-                    //     ninety =
-                    //     eighty =
-                    //     seventy =
-                    //     sixty =
-                    //     low = scores.Min()
+                        // return Ok(new{
+                        //     //array for each bucket
+                        //     //assignment.MaxScor
+                        //     //loop over score
+                        //     //scores.ForEach()
+                        //     high = scores.Max(),
+                        //     ninety =
+                        //     eighty =
+                        //     seventy =
+                        //     sixty =
+                        //     low = scores.Min()
 
-                    // });
+                        // });
                     });
 
                 }
 
-                else {
+                else
+                {
                     return Ok(scores);
                 }
 
