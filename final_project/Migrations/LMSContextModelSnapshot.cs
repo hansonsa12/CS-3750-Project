@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using final_project.Data;
 
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210403011511_CreateAssignmentSubmissionsTable")]
-    partial class CreateAssignmentSubmissionsTable
+    partial class LMSContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +77,15 @@ namespace final_project.Migrations
 
                     b.Property<int>("AssignmentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<DateTime?>("GradedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InstructorFeedback")
+                        .HasColumnType("text");
 
                     b.Property<int?>("ReceivedScore")
                         .HasColumnType("int");
@@ -289,7 +296,7 @@ namespace final_project.Migrations
                     b.HasOne("final_project.Models.User.Student", null)
                         .WithMany()
                         .HasForeignKey("RegistrationsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

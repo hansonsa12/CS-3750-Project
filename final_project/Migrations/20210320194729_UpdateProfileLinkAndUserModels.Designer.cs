@@ -10,8 +10,8 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210409200117_UpdateAssignmentSubmissionTable")]
-    partial class UpdateAssignmentSubmissionTable
+    [Migration("20210320194729_UpdateProfileLinkAndUserModels")]
+    partial class UpdateProfileLinkAndUserModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,7 +45,7 @@ namespace final_project.Migrations
 
                     b.Property<string>("AssignmentType")
                         .IsRequired()
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -68,47 +68,6 @@ namespace final_project.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Assignments");
-                });
-
-            modelBuilder.Entity("final_project.Models.Course.AssignmentSubmission", b =>
-                {
-                    b.Property<int>("AssignmentSubmissionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("varchar(60)");
-
-                    b.Property<DateTime?>("GradedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InstructorFeedback")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ReceivedScore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Submission")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AssignmentSubmissionId");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("AssignmentSubmissions");
                 });
 
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
@@ -298,7 +257,7 @@ namespace final_project.Migrations
                     b.HasOne("final_project.Models.User.Student", null)
                         .WithMany()
                         .HasForeignKey("RegistrationsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -309,25 +268,6 @@ namespace final_project.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("final_project.Models.Course.AssignmentSubmission", b =>
-                {
-                    b.HasOne("final_project.Models.Course.Assignment", "Assignment")
-                        .WithMany("AssignmentSubmissions")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("final_project.Models.User.Student", "Student")
-                        .WithMany("AssignmentSubmissions")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Assignment");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
@@ -359,11 +299,6 @@ namespace final_project.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("final_project.Models.Course.Assignment", b =>
-                {
-                    b.Navigation("AssignmentSubmissions");
-                });
-
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
                 {
                     b.Navigation("Assignment");
@@ -379,11 +314,6 @@ namespace final_project.Migrations
             modelBuilder.Entity("final_project.Models.User.Instructor", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("final_project.Models.User.Student", b =>
-                {
-                    b.Navigation("AssignmentSubmissions");
                 });
 #pragma warning restore 612, 618
         }

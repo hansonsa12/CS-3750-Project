@@ -10,8 +10,8 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210320194729_UpdateProfileLinkAndUserModels")]
-    partial class UpdateProfileLinkAndUserModels
+    [Migration("20210307153626_AddUserDiscriminator")]
+    partial class AddUserDiscriminator
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,40 +34,6 @@ namespace final_project.Migrations
                     b.HasIndex("RegistrationsUserId");
 
                     b.ToTable("CourseStudent");
-                });
-
-            modelBuilder.Entity("final_project.Models.Course.Assignment", b =>
-                {
-                    b.Property<int>("AssignmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AssignmentType")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("MaxPoints")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("varchar(60)");
-
-                    b.HasKey("AssignmentId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Assignments");
                 });
 
             modelBuilder.Entity("final_project.Models.Course.Course", b =>
@@ -156,6 +122,31 @@ namespace final_project.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("final_project.Models.User.FileUpload", b =>
+                {
+                    b.Property<int>("FileUploadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FileUploadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FileUploads");
+                });
+
             modelBuilder.Entity("final_project.Models.User.ProfileLink", b =>
                 {
                     b.Property<int>("ProfileLinkId")
@@ -164,11 +155,7 @@ namespace final_project.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Link")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("varchar(60)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -191,7 +178,7 @@ namespace final_project.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("Biography")
+                    b.Property<string>("Bio")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("BirthDay")
@@ -215,9 +202,6 @@ namespace final_project.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("varchar(15)");
-
-                    b.Property<string>("ProfilePicName")
-                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("Salt")
                         .HasColumnType("nvarchar(128)");
@@ -257,16 +241,7 @@ namespace final_project.Migrations
                     b.HasOne("final_project.Models.User.Student", null)
                         .WithMany()
                         .HasForeignKey("RegistrationsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("final_project.Models.Course.Assignment", b =>
-                {
-                    b.HasOne("final_project.Models.Course.Course", null)
-                        .WithMany("Assignment")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -290,6 +265,17 @@ namespace final_project.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("final_project.Models.User.FileUpload", b =>
+                {
+                    b.HasOne("final_project.Models.User.User", "Owner")
+                        .WithMany("FileUploads")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("final_project.Models.User.ProfileLink", b =>
                 {
                     b.HasOne("final_project.Models.User.User", null)
@@ -299,14 +285,11 @@ namespace final_project.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("final_project.Models.Course.Course", b =>
-                {
-                    b.Navigation("Assignment");
-                });
-
             modelBuilder.Entity("final_project.Models.User.User", b =>
                 {
                     b.Navigation("Address");
+
+                    b.Navigation("FileUploads");
 
                     b.Navigation("ProfileLinks");
                 });

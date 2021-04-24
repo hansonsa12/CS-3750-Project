@@ -10,8 +10,8 @@ using final_project.Data;
 namespace final_project.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20210329205524_updateAssignmentsTableFileTypeSize")]
-    partial class updateAssignmentsTableFileTypeSize
+    [Migration("20210319200531_CreateAssignmentTable")]
+    partial class CreateAssignmentTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,7 +45,7 @@ namespace final_project.Migrations
 
                     b.Property<string>("AssignmentType")
                         .IsRequired()
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -54,7 +54,7 @@ namespace final_project.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.Property<int?>("MaxPoints")
                         .HasColumnType("int");
@@ -164,11 +164,7 @@ namespace final_project.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Link")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("varchar(60)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -191,7 +187,7 @@ namespace final_project.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("Biography")
+                    b.Property<string>("Bio")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("BirthDay")
@@ -257,7 +253,7 @@ namespace final_project.Migrations
                     b.HasOne("final_project.Models.User.Student", null)
                         .WithMany()
                         .HasForeignKey("RegistrationsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

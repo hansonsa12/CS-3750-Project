@@ -10,6 +10,8 @@
         "eamodio.gitlens",
         "reptarsrage.vscode-manage-user-secrets",
         "ms-mssql.mssql",
-        "humao.rest-client"
+        "humao.rest-client",
+        "fernandoescolar.vscode-solution-explorer",
+        "ms-vsliveshare.vsliveshare-pack",
     ]
 }
