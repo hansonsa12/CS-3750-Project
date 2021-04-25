@@ -24,14 +24,20 @@ namespace final_project.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> PostTransaction([FromBody] Transaction transaction)
+        public async Task<IActionResult> PostTransaction([FromBody] Payment payment)
         {
             try
             {
                 User currentUser = await AuthHelpers.GetCurrentUser(_context, base.User);
-                currentUser.Transactions.Add(transaction);
+                var description = String.IsNullOrEmpty(payment.Description) ? "" : $" - {payment.Description}";
 
-                return Ok(transaction);
+                payment.UserId = currentUser.UserId;
+                payment.Description = $"Credit card payment{description}";
+
+                await _context.AddAsync(payment);
+                await _context.SaveChangesAsync();
+
+                return Ok(payment);
             }
             catch (Exception e)
             {
@@ -46,7 +52,8 @@ namespace final_project.Controllers
             try
             {
                 int userId = AuthHelpers.GetCurrentUserId(base.User);
-                var transactions = await _context.Transactions.Where(t => t.UserId == userId).ToListAsync();
+                var transactions = await _context.Transactions.Where(t => t.UserId == userId)
+                    .OrderByDescending(t => t.CreatedAt).ToListAsync();
                 return Ok(transactions);
             }
             catch (Exception e)

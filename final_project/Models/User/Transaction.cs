@@ -48,5 +48,8 @@ namespace final_project.Models.User
     }
 
 
-    public class Payment : Transaction { }
+    public class Payment : Transaction
+    {
+        public Payment() : base() { base.Type = "payment"; }
+    }
 }

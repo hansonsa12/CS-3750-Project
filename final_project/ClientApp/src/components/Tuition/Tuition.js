@@ -41,17 +41,25 @@ export default function Tuition() {
             },
             {
                 header: "Amount",
-                accessor: t => currencyFormatter.format(t.amountInCents / 100)
+                accessor: t => {
+                    const value = currencyFormatter.format(
+                        t.amountInCents / 100
+                    );
+                    return t.type === "charge" ? value : `(${value})`;
+                }
             }
         ],
         []
     );
 
-    const totalCost = useMemo(
+    const balanceDue = useMemo(
         () =>
             currencyFormatter.format(
                 transactions.reduce(
-                    (total, { amountInCents }) => total + amountInCents,
+                    (total, { amountInCents, type }) =>
+                        type === "charge"
+                            ? total + amountInCents
+                            : total - amountInCents,
                     0
                 ) / 100
             ),
@@ -64,10 +72,14 @@ export default function Tuition() {
                 <TableComponent columns={columns} rows={transactions} />
             </Grid>
             <Grid item style={{ marginRight: 10 }}>
-                <Typography variant="h6">Balance Due: {totalCost}</Typography>
+                <Typography variant="h6">Balance Due: {balanceDue}</Typography>
             </Grid>
             <Grid item>
-                <CreditCardForm />
+                <CreditCardForm
+                    updateTransactions={newTransaction =>
+                        setTransactions([newTransaction, ...transactions])
+                    }
+                />
             </Grid>
         </Grid>
     );
