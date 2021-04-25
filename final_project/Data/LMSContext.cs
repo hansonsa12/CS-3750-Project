@@ -24,6 +24,10 @@
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<AssignmentSubmission> AssignmentSubmissions { get; set; }
 
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Charge> Charges { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
@@ -31,6 +35,11 @@
                 .HasDiscriminator(u => u.AccountType)
                 .HasValue<Instructor>("instructor")
                 .HasValue<Student>("student");
+
+            modelBuilder.Entity<Transaction>()
+                .HasDiscriminator(t => t.Type)
+                .HasValue<Charge>("charge")
+                .HasValue<Payment>("payment");
         }
     }
 }

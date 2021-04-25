@@ -12,7 +12,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { makeValidate } from "mui-rff";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form as FForm } from "react-final-form";
 import * as Yup from "yup";
 import { testCreditCard } from "../../helpers/helpers";
@@ -23,9 +23,13 @@ import {
     TextEntryItem
 } from "../FormComponents";
 
-export default function CreditCardForm(props) {
+import { AuthContext } from "../../context/AuthProvider";
+
+export default function CreditCardForm({ updateTransactions }) {
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState();
+
+    const { authHeader } = useContext(AuthContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -53,12 +57,14 @@ export default function CreditCardForm(props) {
         expDate,
         cvc,
         nameOnCard,
-        amount
+        amount,
+        description
     }) => {
+        console.log(number);
         try {
             const expMonth = dayjs(expDate).format("M");
             const expYear = dayjs(expDate).format("YYYY");
-            const description = `Tuition payment from ${nameOnCard} on ${dayjs().format(
+            const stripeDescription = `Tuition payment from ${nameOnCard} on ${dayjs().format(
                 "M/D/YYYY @ h:mm A"
             )}`;
 
@@ -83,10 +89,18 @@ export default function CreditCardForm(props) {
                     amount: amount * 100,
                     currency: "usd",
                     source,
-                    description
+                    description: stripeDescription
                 }),
                 config
             );
+
+            const { data: newTransaction } = await axios.post(
+                "api/transactions",
+                { amountInCents: amount * 100, description },
+                authHeader
+            );
+
+            updateTransactions(newTransaction);
 
             handleClose();
 
@@ -125,7 +139,7 @@ export default function CreditCardForm(props) {
     const validate = makeValidate(validationSchema);
 
     return (
-        <div>
+        <>
             <Button onClick={handleClickOpen}>Make A Payment</Button>
             <FForm
                 onSubmit={onSubmit}
@@ -179,11 +193,7 @@ export default function CreditCardForm(props) {
                                         type="number"
                                     />
                                     <SectionHeaderItem />
-                                    <Grid item>
-                                        <Typography variant="h6">
-                                            Payment:
-                                        </Typography>
-                                    </Grid>
+                                    <TextEntryItem name="description" sm={8} />
                                     <TextEntryItem
                                         type="number"
                                         name="amount"
@@ -196,7 +206,6 @@ export default function CreditCardForm(props) {
                                         }}
                                         required={true}
                                         sm={4}
-                                        leftLabel="Payment"
                                     />
                                 </Grid>
                             </DialogContent>
@@ -218,6 +227,6 @@ export default function CreditCardForm(props) {
                     onClose={() => setAlertMessage(null)}
                 />
             )}
-        </div>
+        </>
     );
 }

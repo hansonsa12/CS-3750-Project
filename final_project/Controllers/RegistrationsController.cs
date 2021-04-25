@@ -61,13 +61,16 @@ namespace final_project.Controllers
 
                 int studentId = AuthHelpers.GetCurrentUserId(User);
                 Student student = await _context.Students.Where((s) => s.UserId == studentId)
-                    .Include((s) => s.Registrations).FirstOrDefaultAsync();
+                    .Include(s => s.Registrations).Include(s => s.Transactions)
+                    .FirstOrDefaultAsync();
 
                 if (student == null)
                 {
                     return StatusCode(404, new { error = "Student not found" });
                 }
                 student.Registrations.Add(courseToAdd);
+
+                student.Transactions.Add(new Charge(courseToAdd));
 
                 await _context.SaveChangesAsync();
 
@@ -93,13 +96,15 @@ namespace final_project.Controllers
 
                 int studentId = AuthHelpers.GetCurrentUserId(User);
                 Student student = await _context.Students.Where((s) => s.UserId == studentId)
-                    .Include((s) => s.Registrations).FirstOrDefaultAsync();
+                    .Include(s => s.Registrations).Include(s => s.Transactions)
+                    .FirstOrDefaultAsync();
 
                 if (student == null)
                 {
                     return StatusCode(404, new { error = "Student not found" });
                 }
                 student.Registrations.Remove(courseToRemove);
+                student.Transactions.RemoveAll(t => t.CourseId == courseToRemove.CourseId);
 
                 await _context.SaveChangesAsync();
 

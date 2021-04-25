@@ -15,36 +15,37 @@ export default function TodoList() {
 
     const getSortedAssignments = () => {
         // Get all assignments in chronological order
-        const sortedAssignments = assignments?.sort(function (a, b) {          
+        const sortedAssignments = assignments?.sort(function (a, b) {
             return new Date(a.dueDate) - new Date(b.dueDate);
         });
 
         // Get today's date and format it to fit with dueDate
         var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var dd = String(today.getDate()).padStart(2, "0");
+        var mm = String(today.getMonth() + 1).padStart(2, "0");
         var yyyy = today.getFullYear();
-        today = yyyy + '-'+ mm + '-' + dd;
+        today = yyyy + "-" + mm + "-" + dd;
 
-        var futureAssignments =[];
+        var futureAssignments = [];
         // Only keep items with a due date of today or later
-        for(var i = 0; i < sortedAssignments.length; i++){
-            if(sortedAssignments[i].dueDate >= today)
-            {
-                futureAssignments.push(sortedAssignments[i])
+        if (sortedAssignments) {
+            for (var i = 0; i < sortedAssignments?.length; i++) {
+                if (sortedAssignments[i].dueDate >= today) {
+                    futureAssignments.push(sortedAssignments[i]);
+                }
             }
         }
         // Show only 6 assignments
-        if(futureAssignments?.length > 6){
-            return sortedAssignments.slice(0,6);
+        if (futureAssignments?.length > 6) {
+            return sortedAssignments.slice(0, 6);
         }
         return futureAssignments;
     };
 
-    const handleTodoItemDelete = (id) => {
+    const handleTodoItemDelete = id => {
         let tempArray = [];
         if (todoList != undefined) {
-            tempArray = todoList.filter((item) => item.assignmentId != id);
+            tempArray = todoList.filter(item => item.assignmentId != id);
         }
         setTodoList(tempArray);
     };

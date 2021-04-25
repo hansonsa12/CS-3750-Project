@@ -1,0 +1,24 @@
+### Create Transaction
+POST https://localhost:5001/api/transactions
+Content-Type: application/json 
+Authorization: Bearer <replace with authToken> 
+
+{
+    "courseId": 1,
+    "amountInCents": 100000,
+    ""
+
+}
+
+### Get Transactions
+GET https://localhost:5001/api/transactions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE5MzAyMjYxLCJleHAiOjE2MTkzMTMwNjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.xcn2pQYX4dbKoYdNonD2433tAd0c0ERbRAWjjL6wJeM
+
+### Protected Route
+GET https://localhost:5001/api/users/current
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwibmJmIjoxNjE5MzAyMjYxLCJleHAiOjE2MTkzMTMwNjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.xcn2pQYX4dbKoYdNonD2433tAd0c0ERbRAWjjL6wJeM
+
+
+### Assignments
+GET https://localhost:5001/api/users/2/submissions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmJmIjoxNjE4NjE5NzY3LCJleHAiOjE2MTg2MzA1NjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.A01nC37Cb4PHRe98EPHTS-7tI0d7rRTnabRB0IMsxlA
