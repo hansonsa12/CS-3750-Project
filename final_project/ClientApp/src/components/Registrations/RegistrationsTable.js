@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import axios from "axios";
 import React, { useContext, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { DataContext } from "../../context/DataProvider";
 import { getFormattedLocation, getFormattedTime } from "../../helpers/helpers";
@@ -37,7 +38,17 @@ export default function RegistrationsTable({ rows }) {
     const columns = useMemo(
         () => [
             { header: "Course Number", accessor: "courseNumber" },
-            { accessor: "courseName" },
+            {
+                header: "Course Name",
+                accessor: c =>
+                    registeredCourseIds.includes(c.courseId) ? (
+                        <Link to={`courses/${c.courseId}/details`}>
+                            {c.courseName}
+                        </Link>
+                    ) : (
+                        c.courseName
+                    )
+            },
             { accessor: "department" },
             {
                 header: "Instructor",

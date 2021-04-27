@@ -14,19 +14,15 @@ import CourseForm from "../CourseForm";
 import AssignmentsTable from "./AssignmentsTable";
 
 export default function CourseDetails() {
-    const { isInstructor } = useContext(AuthContext);
+    const { isInstructor, isStudent } = useContext(AuthContext);
     const { id } = useParams(); // get params from route url
 
     const { userCourses } = useContext(DataContext);
 
     const [course, setCourse] = useState({});
 
-    const { assignments } = useContext(DataContext);
-    const { submissions } = useContext(DataContext);
-    const [finalGrade, setFinalGrade] = useState();
-    const [courseAssignments, setCourseAssignments] = useState();
     useEffect(() => {
-        setCourse(userCourses.find((c) => c.courseId.toString() === id));
+        setCourse(userCourses.find(c => c.courseId.toString() === id));
     }, [userCourses, id]);
 
     const actionProps = isInstructor
@@ -38,7 +34,7 @@ export default function CourseDetails() {
                       </IconButton>
                   </CourseForm>
               ),
-              actionTooltip: "Edit Course",
+              actionTooltip: "Edit Course"
           }
         : {};
 
@@ -53,16 +49,13 @@ export default function CourseDetails() {
                         )}
                         specialFormatters={{
                             // TODO Ky: Add missing instructor info to student registrations
-                            instructor: (c) =>
-                                getFormattedInstructorName(c.instructor || {}),
+                            instructor: c =>
+                                getFormattedInstructorName(c.instructor || {})
                         }}
-                    />
+                    >
+                        {isStudent && <CourseFinalGrade course={course} />}
+                    </DetailsContainer>
                 </Grid>
-
-                <Grid item xs={12}>
-                    <CourseFinalGrade course={course} />
-                </Grid>
-
                 <SectionHeaderItem
                     title="Assignments"
                     action={
