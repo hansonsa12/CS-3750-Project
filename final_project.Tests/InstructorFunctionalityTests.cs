@@ -3,12 +3,11 @@ using System;
 namespace final_project.Tests
 {
     using final_project.Controllers;
-    using final_project.Models.Course;
     using final_project.Tests.Shared;
     using Xunit;
+
     public class InstructorFunctionalityTests : IClassFixture<SharedDatabaseFixture>
     {
-
         public SharedDatabaseFixture Fixture { get; }
 
         public InstructorFunctionalityTests(SharedDatabaseFixture fixture)
@@ -17,9 +16,9 @@ namespace final_project.Tests
         }
 
         [Fact]
-        public async void InstructorCreateCourse () 
+        public async void InstructorCreateCourse()
         {
-            using(var context = Fixture.CreateContext())
+            using (var context = Fixture.CreateContext())
             {
                 #region Setup
                 var controller = new CoursesController(context);
@@ -27,7 +26,6 @@ namespace final_project.Tests
 
                 var instructor = testHelper.GetDefaultInstructor();
                 testHelper.Login(instructor);
-                var course = testHelper.CreateACourse();
 
                 var initialCourseCount = instructor.Courses.Count;
                 #endregion
@@ -46,11 +44,11 @@ namespace final_project.Tests
 
         }
 
-        
+
         [Fact]
-        public async void InstructorDeleteCourse () 
+        public async void InstructorDeleteCourse()
         {
-                        using(var context = Fixture.CreateContext())
+            using (var context = Fixture.CreateContext())
             {
                 #region Setup
                 var controller = new CoursesController(context);

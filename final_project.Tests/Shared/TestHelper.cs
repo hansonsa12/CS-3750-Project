@@ -1,5 +1,4 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using final_project.Data;
@@ -78,7 +77,7 @@ namespace final_project.Tests.Shared
 
         public Instructor GetDefaultInstructor()
         {
-            return _context.Instructors.FirstOrDefault();
+            return _context.Instructors.Include(i => i.Courses).FirstOrDefault();
         }
     }
 }
