@@ -9,8 +9,9 @@ import DetailsContainer from "../DetailsContainer";
 import { SectionHeaderItem } from "../FormComponents";
 
 export default function SubmissionDetails({ submission, assignment }) {
-    const percentageScore =
-        Math.round((submission?.receivedScore / assignment?.maxPoints) * 100);
+    const percentageScore = Math.round(
+        (submission?.receivedScore / assignment?.maxPoints) * 100
+    );
 
     return (
         <>

@@ -50,8 +50,14 @@ export default function DetailsContainer({
                             <Grid item xs={1}>
                                 <Divider orientation="vertical" />
                             </Grid>
-                            <Grid item xs={5}>
-                                {children}
+                            <Grid
+                                item
+                                container
+                                xs={5}
+                                justify="center"
+                                alignItems="center"
+                            >
+                                <Grid item>{children}</Grid>
                             </Grid>
                         </>
                     )}

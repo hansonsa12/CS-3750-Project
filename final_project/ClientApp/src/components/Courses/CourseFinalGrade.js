@@ -1,9 +1,11 @@
+import { Typography } from "@material-ui/core";
 import React, { useContext, useState, useEffect } from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
 import { AuthContext } from "../../context/AuthProvider";
 import { DataContext } from "../../context/DataProvider";
 
 export default function CourseFinalGrade({ course }) {
-    const { isInstructor } = useContext(AuthContext);
+    const { isStudent } = useContext(AuthContext);
     const { assignments, submissions } = useContext(DataContext);
     const [finalGrade, setFinalGrade] = useState();
 
@@ -13,18 +15,18 @@ export default function CourseFinalGrade({ course }) {
     }, [course]);
 
     const getFinalGrade = () => {
-        if (!isInstructor) {
+        if (isStudent) {
             //get assignments for this course
             const assignmentList = assignments.filter(
-                (a) => a.courseId == course.courseId
+                a => a.courseId == course.courseId
             );
             let totalPoints = 0;
             let totalReceivedScore = 0;
             if (assignmentList.length > 0) {
-                assignmentList.forEach((assignment) => {
+                assignmentList.forEach(assignment => {
                     //get submission for assignment
                     const assignmentSubmission = submissions?.filter(
-                        (a) => a.assignmentId == assignment.assignmentId
+                        a => a.assignmentId == assignment.assignmentId
                     );
 
                     if (assignmentSubmission[0]?.receivedScore != null) {
@@ -36,10 +38,33 @@ export default function CourseFinalGrade({ course }) {
 
                 let score = 0;
                 if (totalPoints > 0)
-                    score = (100 * (totalReceivedScore / totalPoints)).toFixed( 2 );
+                    score = Math.round(
+                        100 * (totalReceivedScore / totalPoints)
+                    );
                 return score;
             }
         }
     };
-    return <div>{isInstructor ? "" : "Final grade :" + finalGrade + "%"}</div>;
+    return (
+        <div
+            style={{
+                width: 180,
+                textAlign: "center"
+            }}
+        >
+            <Typography variant="h6" style={{ marginBottom: 10 }}>
+                Overall Grade
+            </Typography>
+            <CircularProgressbar
+                value={finalGrade}
+                text={
+                    finalGrade === Infinity
+                        ? `${finalGrade}pts.`
+                        : finalGrade === undefined
+                        ? "n/a"
+                        : `${finalGrade}%`
+                }
+            />
+        </div>
+    );
 }
