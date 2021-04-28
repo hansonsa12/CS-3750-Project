@@ -69,6 +69,22 @@ namespace final_project.Tests.Shared
             return course;
         }
 
+        public Assignment CreateAnAssignment(int courseId)
+        {
+            var aas = new AssignmentSubmission();
+            var assignment = new Assignment()
+            {
+                AssignmentId = 0,
+                CourseId = courseId,
+                Title = "Assignment unit",
+                Description = "unit test assignment",
+                MaxPoints = 10,
+                DueDate = new DateTime(),
+                AssignmentType = "Text Entry"
+            };
+            return assignment;
+        }
+
         public Student GetDefaultStudent()
         {
             return _context.Students.Include(s => s.Registrations).FirstOrDefault();
@@ -78,6 +94,11 @@ namespace final_project.Tests.Shared
         public Instructor GetDefaultInstructor()
         {
             return _context.Instructors.Include(i => i.Courses).FirstOrDefault();
+        }
+
+        public Course GetAssignmentFromContext()
+        {
+            return _context.Courses.Include(i => i.Assignment).FirstOrDefault();
         }
     }
 }

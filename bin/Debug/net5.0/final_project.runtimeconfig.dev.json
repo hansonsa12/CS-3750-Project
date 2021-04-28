@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Kronos\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Kronos\\.nuget\\packages"
+    ]
+  }
+}
