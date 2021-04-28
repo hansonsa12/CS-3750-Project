@@ -17,9 +17,9 @@ namespace final_project.Tests
         }
 
         [Fact]
-        public async void InstructorCanGradeAssignment() 
+        public async void InstructorCanGradeAssignment()
         {
-            using (var context = Fixture.CreateContext()) 
+            using (var context = Fixture.CreateContext())
             {
                 #region Setup
                 var controller = new CoursesController(context);
@@ -34,71 +34,27 @@ namespace final_project.Tests
                 // Create a course
                 var courseResult = await controller.PostCourse(testHelper.CreateACourse());
 
-                // Create an assignment
+                // Create an assignment & submit one
                 var cID = 1;// get id courseResult.
                 await aController.PostAssignment(testHelper.CreateAnAssignment(cID));
 
                 // Create student
                 var student = testHelper.GetDefaultStudent();
                 testHelper.Login(student);
-                //await 
-
-                // Submit assignment
-
-                // Get current score to compare? maybe
-                //?? Change this id
-                var assignmentID = 0;
-                var score = aController.GetAssignmentScores(assignmentID);
-
                 #endregion
 
                 #region Exercise
                 // Grade Assignment
+                instructor.Courses[0].Assignment[0].AssignmentSubmissions[0].GradeSubmission(testHelper.getGradedAssignment());
 
-                #endregion
-
-                #region Verfiy
-                //Assert.True( != score);
-                var newScore = aController.GetAssignmentScores(assignmentID);
-                Assert.True(newScore != score);
-                #endregion
-            }
-        }
-
-
-
-
-
-
-
-
-        [Fact]
-        public async void InstructorCreateCourse()
-        {
-            using (var context = Fixture.CreateContext())
-            {
-                #region Setup
-                var controller = new CoursesController(context);
-                TestHelper testHelper = new TestHelper(context, controller);
-
-                var instructor = testHelper.GetDefaultInstructor();
-                testHelper.Login(instructor);
-
-                var initialCourseCount = instructor.Courses.Count;
-                #endregion
-
-                #region Exercise
-                var result = await controller.PostCourse(testHelper.CreateACourse());
                 #endregion
 
                 #region Verify
-                Assert.True(instructor.Courses.Count == initialCourseCount + 1);
+                var expectedScore = 8;
+                var newScore = instructor.Courses[0].Assignment[0].AssignmentSubmissions[0].ReceivedScore;
+                Assert.True(newScore == expectedScore);
                 #endregion
-
-
-
             }
-
         }
     }
 }
