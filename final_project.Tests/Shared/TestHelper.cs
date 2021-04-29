@@ -69,15 +69,67 @@ namespace final_project.Tests.Shared
             return course;
         }
 
+        public Assignment CreateAnAssignment(int courseId)
+        {
+            var aas = new AssignmentSubmission();
+
+            aas.AssignmentId = 0;
+            aas.StudentId = GetDefaultStudent().UserId;
+            aas.Submission = "My Intro project";
+
+            var assignmentSubList = new System.Collections.Generic.List<AssignmentSubmission>();
+            assignmentSubList.Add(aas);
+
+            var assignment = new Assignment()
+            {
+                AssignmentId = 0,
+                CourseId = courseId,
+                Title = "Assignment unit",
+                Description = "unit test assignment",
+                MaxPoints = 10,
+                DueDate = new DateTime(),
+                AssignmentType = "Text Entry",
+                AssignmentSubmissions = assignmentSubList
+            };
+            return assignment;
+        }
+
+        public AssignmentSubmission getGradedAssignment() 
+        {
+            var gradedAssignment = new AssignmentSubmission();
+            gradedAssignment.ReceivedScore = 8;
+            gradedAssignment.GradedAt = DateTime.Now;
+            gradedAssignment.InstructorFeedback = "Unit test graded your assignment successfully!";
+            return gradedAssignment;
+        }
+
+
+        public UserInfo getUserInfo() 
+        {
+            var studentInfo = new UserInfo(GetDefaultStudent());
+            return studentInfo;
+        }
+
+        public UserInfo updateUserInfo(String phoneNum) 
+        {
+            var studentInfo = getUserInfo();
+            studentInfo.PhoneNumber = phoneNum;
+            return studentInfo;
+        } 
+
         public Student GetDefaultStudent()
         {
-            return _context.Students.Include(s => s.Registrations).FirstOrDefault();
+            return _context.Students
+                .Include(s => s.Registrations)
+                .FirstOrDefault();
 
         }
 
         public Instructor GetDefaultInstructor()
         {
-            return _context.Instructors.Include(i => i.Courses).FirstOrDefault();
+            return _context.Instructors
+                .Include(i => i.Courses)
+                .FirstOrDefault();
         }
     }
 }
