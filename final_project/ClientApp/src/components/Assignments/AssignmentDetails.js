@@ -49,10 +49,15 @@ export default function AssignmentDetails() {
                             dueDate: a => getFormattedDateTime(a.dueDate)
                         }}
                     >
-                        {submission?.receivedScore && (
+                        {isStudent && submission?.receivedScore && (
                             <AssignmentBarChart
                                 assignment={assignment}
                                 receivedScore={submission?.receivedScore}
+                            />
+                        )}
+                        {isInstructor && (
+                            <InstructorAssignmentBarChart
+                                assignment={assignment}
                             />
                         )}
                     </DetailsContainer>
@@ -69,9 +74,6 @@ export default function AssignmentDetails() {
                         <Grid item xs={12}>
                             <AssignmentSubmissionsTable
                                 rows={assignment.assignmentSubmissions}
-                            />
-                            <InstructorAssignmentBarChart 
-                                assignment={assignment}
                             />
                         </Grid>
                     </>

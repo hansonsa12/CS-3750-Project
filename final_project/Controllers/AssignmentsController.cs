@@ -131,23 +131,8 @@ namespace final_project.Controllers
                         low = scores.Min(),
                         average = scores.Average()
 
-                        // return Ok(new{
-                        //     //array for each bucket
-                        //     //assignment.MaxScor
-                        //     //loop over score
-                        //     //scores.ForEach()
-                        //     high = scores.Max(),
-                        //     ninety =
-                        //     eighty =
-                        //     seventy =
-                        //     sixty =
-                        //     low = scores.Min()
-
-                        // });
                     });
-
                 }
-
                 else
                 {
                     return Ok(scores);
